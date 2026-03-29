@@ -568,7 +568,7 @@ export default function PanchangPage() {
           <span>Om Panchang · Hindu Calendar & Vedic Almanac</span>
           <span>🕉️</span>
         </p>
-        <p className="mt-1">Astronomical calculations · Location-aware · Drik Panchang methodology</p>
+        <p className="mt-1">Astronomical calculations · Location-aware</p>
       </footer>
     </div>
   );
