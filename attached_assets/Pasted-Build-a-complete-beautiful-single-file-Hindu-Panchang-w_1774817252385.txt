@@ -1,0 +1,44 @@
+Build a complete, beautiful, single-file Hindu Panchang website in one index.html using HTML + Tailwind CSS (via CDN) + JavaScript.
+Website name: Om Panchang
+Tagline: Accurate Regional Hindu Calendar & Panchangam
+Design goal: Imitate the clean, professional layout and color scheme of https://www.drikpanchang.com (orange/saffron theme, left sidebar with daily timings like Sunrise/Sunset/Moonrise, Tithi, Nakshatra, Yoga, Karana, right/main area with monthly calendar grid).
+But make it original and different: Use your own branding ("Om Panchang"), modern rounded cards, subtle shadows, better mobile responsiveness, and a premium devotional feel. Do not copy text or exact wording from DrikPanchang.
+Features required:
+
+Header with logo (use 🕉️ or "Om" icon), website name, city selector dropdown, and date picker (default to March 24, 2026)
+Left sidebar (daily details panel) showing:
+Selected date (big)
+Sunrise, Sunset
+Tithi + end time if available
+Nakshatra
+Yoga
+Karana
+Paksha
+Rahu Kalam (or placeholder if not exact)
+Any festivals in a highlighted box
+
+Main area: Monthly calendar grid (7 columns). Each day card shows:
+Weekday (Mon, Tue...)
+Date number (large)
+Tithi name
+Nakshatra name
+Small red badge for festival if any
+Click any day to update the left sidebar details
+
+"Today" button
+Navigation buttons for Previous Month / Next Month
+Default city: Detroit, United States (lat 42.3314, lon -83.0458)
+Include at least 8 cities in the dropdown (Detroit, New York, Chicago, Los Angeles, London, Bangalore, Mumbai, Delhi)
+
+Technical requirements:
+
+Load Tailwind CSS from CDN: <script src="https://cdn.tailwindcss.com"></script>
+Load the panchang library from CDN: <script src="https://cdn.jsdelivr.net/npm/@ishubhamx/panchangam-js@2.2.6/dist/index.min.js"></script>
+Use Observer and getPanchangam from the library (create Observer with lat, lon, elevation=0)
+Calculate the full month asynchronously and show a nice loading message
+Make it responsive (stack sidebar below grid on mobile)
+Use nice fonts, orange-amber color palette (bg-orange-50, accents orange-700, green for today)
+Add Font Awesome for icons: <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+Output only the complete single index.html file with all code embedded (no external files). Make sure the JavaScript handles the library correctly and falls back gracefully if some fields are missing.
+Make the UI look premium, devotional, and ready for users to visit daily.
