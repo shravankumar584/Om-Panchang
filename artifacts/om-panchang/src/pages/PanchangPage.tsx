@@ -116,8 +116,12 @@ export default function PanchangPage() {
     for (let i = 0; i < currentMonthDays.length; i += batchSize) {
       const batch = currentMonthDays.slice(i, i + batchSize);
       await Promise.all(batch.map(async (day) => {
-        const panchang = await computeAndCache(day.date, city);
-        day.panchang = panchang;
+        try {
+          const panchang = await computeAndCache(day.date, city);
+          day.panchang = panchang;
+        } catch {
+          // Leave panchang as null; cell will show empty gracefully
+        }
       }));
       setCalendarDays(prev => [...prev]);
     }
@@ -128,16 +132,22 @@ export default function PanchangPage() {
   useEffect(() => {
     if (!libraryLoaded) return;
     panchangCacheRef.current.clear();
-    buildCalendar(viewDate.getFullYear(), viewDate.getMonth(), selectedCity, selectedDate);
+    buildCalendar(viewDate.getFullYear(), viewDate.getMonth(), selectedCity, selectedDate).catch(() => {
+      setIsLoadingMonth(false);
+    });
   }, [libraryLoaded, viewDate.getFullYear(), viewDate.getMonth(), selectedCity]);
 
   useEffect(() => {
     if (!libraryLoaded) return;
     setIsLoadingSidebar(true);
-    computeAndCache(selectedDate, selectedCity).then((result) => {
-      setSelectedPanchang(result);
-      setIsLoadingSidebar(false);
-    });
+    computeAndCache(selectedDate, selectedCity)
+      .then((result) => {
+        setSelectedPanchang(result);
+        setIsLoadingSidebar(false);
+      })
+      .catch(() => {
+        setIsLoadingSidebar(false);
+      });
   }, [libraryLoaded, selectedDate, selectedCity, computeAndCache]);
 
   const handleDayClick = (day: CalendarDay) => {
