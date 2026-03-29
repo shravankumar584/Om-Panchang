@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "k30xramlEh7Y9c4LxrSVK"
+uri = "file://om-panchang-source.tar.gz"
+type = "unspecified"
+title = "Om Panchang — Source Code"
