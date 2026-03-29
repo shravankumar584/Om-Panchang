@@ -203,14 +203,38 @@ export function getUpcomingFestivals(from: Date, count = 8): { dateStr: string; 
 }
 
 // --- Helper time functions ---
-function formatTime(date: Date | null | undefined, timezone: string): string {
+
+// Reliable time formatter: manually applies UTC offset so it works in any browser
+// timezone and sandboxed iframe environment (no Intl timezone support required).
+function formatTimeWithOffset(date: Date | null | undefined, utcOffsetMin: number): string {
   if (!date) return "N/A";
   try {
-    return new Intl.DateTimeFormat("en-IN", {
+    const shifted = new Date(date.getTime() + utcOffsetMin * 60000);
+    const h = shifted.getUTCHours();
+    const m = shifted.getUTCMinutes();
+    const ampm = h >= 12 ? "PM" : "AM";
+    const displayH = h > 12 ? h - 12 : h === 0 ? 12 : h;
+    return `${String(displayH).padStart(2, "0")}:${String(m).padStart(2, "0")} ${ampm}`;
+  } catch {
+    return "N/A";
+  }
+}
+
+// Fallback that still tries Intl, used when we have a timezone string but no offset
+function formatTime(date: Date | null | undefined, timezone: string): string {
+  if (!date) return "N/A";
+  // First attempt: manual offset (always works regardless of browser environment)
+  try {
+    const offsetMin = getTimezoneOffsetMinutes(date, timezone);
+    return formatTimeWithOffset(date, offsetMin);
+  } catch { /* fall through */ }
+  // Last resort: Intl (may ignore timezone in some sandboxed environments)
+  try {
+    return new Intl.DateTimeFormat("en-US", {
       hour: "2-digit", minute: "2-digit", hour12: true, timeZone: timezone,
     }).format(date);
   } catch {
-    return new Intl.DateTimeFormat("en-IN", {
+    return new Intl.DateTimeFormat("en-US", {
       hour: "2-digit", minute: "2-digit", hour12: true,
     }).format(date);
   }
@@ -227,10 +251,8 @@ function getMuhurtaTime(
   const segMs = totalMs / 8;
   const start = new Date(sunrise.getTime() + (slot - 1) * segMs);
   const end = new Date(start.getTime() + segMs);
-  const fmt = (d: Date) => new Intl.DateTimeFormat("en-IN", {
-    hour: "2-digit", minute: "2-digit", hour12: true, timeZone: timezone,
-  }).format(d);
-  return `${fmt(start)} – ${fmt(end)}`;
+  const offsetMin = getTimezoneOffsetMinutes(date, timezone);
+  return `${formatTimeWithOffset(start, offsetMin)} – ${formatTimeWithOffset(end, offsetMin)}`;
 }
 
 function getRahuKalam(date: Date, sunrise: Date | null, sunset: Date | null, timezone?: string): string {
@@ -256,10 +278,8 @@ function getAbhijitMuhurta(sunrise: Date | null, sunset: Date | null, timezone: 
   const noonMs = (sunrise.getTime() + sunset.getTime()) / 2;
   const start = new Date(noonMs - 24 * 60 * 1000);
   const end = new Date(noonMs + 24 * 60 * 1000);
-  const fmt = (d: Date) => new Intl.DateTimeFormat("en-IN", {
-    hour: "2-digit", minute: "2-digit", hour12: true, timeZone: timezone,
-  }).format(d);
-  return `${fmt(start)} – ${fmt(end)}`;
+  const offsetMin = getTimezoneOffsetMinutes(sunrise, timezone);
+  return `${formatTimeWithOffset(start, offsetMin)} – ${formatTimeWithOffset(end, offsetMin)}`;
 }
 
 // --- Vedic calendar helpers ---
@@ -571,7 +591,9 @@ function approximateSunriseSunsetDates(date: Date, lat: number, lon: number, tim
     const solarNoon = 12 + utcOffsetHours - lon / 15 - ET / 60;
     const sunriseHour = solarNoon - hourAngle / 15;
     const sunsetHour = solarNoon + hourAngle / 15;
-    const baseMs = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    // Use Date.UTC to get midnight UTC — never midnight in the browser's local timezone,
+    // which would corrupt all subsequent city time calculations for non-local timezones.
+    const baseMs = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
     const utcOffsetMs = utcOffsetMin * 60000;
     return {
       sunriseDate: new Date(baseMs + sunriseHour * 3600000 - utcOffsetMs),
