@@ -9,7 +9,7 @@ function NakshatraModal({ info, onClose }: { info: NakshatraInfo; onClose: () =>
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="om-gradient px-6 py-4 rounded-t-2xl">
+        <div className="panchang-gradient px-6 py-4 rounded-t-2xl">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -21,7 +21,7 @@ function NakshatraModal({ info, onClose }: { info: NakshatraInfo; onClose: () =>
                 </span>
               </div>
               <h2 className="text-2xl font-bold text-white">{info.name}</h2>
-              <p className="text-orange-100 text-sm mt-0.5">{info.rashi} · Ruled by {info.ruler}</p>
+              <p className="text-indigo-200 text-sm mt-0.5">{info.rashi} · Ruled by {info.ruler}</p>
             </div>
             <button onClick={onClose} className="text-white/80 hover:text-white text-2xl leading-none ml-4 mt-1">✕</button>
           </div>
@@ -30,20 +30,20 @@ function NakshatraModal({ info, onClose }: { info: NakshatraInfo; onClose: () =>
         <div className="p-6 space-y-5">
           {/* Quick facts */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-orange-50 rounded-xl p-3 border border-orange-100">
-              <p className="text-xs text-orange-600 font-semibold uppercase tracking-wide mb-1">Symbol</p>
+            <div className="bg-indigo-50 rounded-xl p-3 border border-indigo-100">
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Symbol</p>
               <p className="text-sm font-medium text-stone-800">{info.symbol}</p>
             </div>
-            <div className="bg-orange-50 rounded-xl p-3 border border-orange-100">
-              <p className="text-xs text-orange-600 font-semibold uppercase tracking-wide mb-1">Presiding Deity</p>
+            <div className="bg-indigo-50 rounded-xl p-3 border border-indigo-100">
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Presiding Deity</p>
               <p className="text-sm font-medium text-stone-800">{info.deity}</p>
             </div>
-            <div className="bg-orange-50 rounded-xl p-3 border border-orange-100">
-              <p className="text-xs text-orange-600 font-semibold uppercase tracking-wide mb-1">Quality</p>
+            <div className="bg-indigo-50 rounded-xl p-3 border border-indigo-100">
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Quality</p>
               <p className="text-sm font-medium text-stone-800">{info.quality}</p>
             </div>
-            <div className="bg-orange-50 rounded-xl p-3 border border-orange-100">
-              <p className="text-xs text-orange-600 font-semibold uppercase tracking-wide mb-1">Planetary Ruler</p>
+            <div className="bg-indigo-50 rounded-xl p-3 border border-indigo-100">
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Planetary Ruler</p>
               <p className="text-sm font-medium text-stone-800">{info.ruler}</p>
             </div>
           </div>
@@ -51,7 +51,7 @@ function NakshatraModal({ info, onClose }: { info: NakshatraInfo; onClose: () =>
           {/* Description */}
           <div>
             <h3 className="text-sm font-bold text-stone-700 mb-2 flex items-center gap-2">
-              <span className="text-orange-500">📖</span> About {info.name} Nakshatra
+              <span className="text-indigo-500">📖</span> About {info.name} Nakshatra
             </h3>
             <p className="text-sm text-stone-600 leading-relaxed">{info.description}</p>
           </div>
@@ -59,7 +59,7 @@ function NakshatraModal({ info, onClose }: { info: NakshatraInfo; onClose: () =>
           {/* Characteristics */}
           <div>
             <h3 className="text-sm font-bold text-stone-700 mb-2 flex items-center gap-2">
-              <span className="text-orange-500">✨</span> Key Characteristics
+              <span className="text-indigo-500">✨</span> Key Characteristics
             </h3>
             <ul className="space-y-1.5">
               {info.characteristics.map((c, i) => (
@@ -111,7 +111,7 @@ function TithiModal({ info, onClose }: { info: TithiInfo; onClose: () => void })
         className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
-        <div className="om-gradient px-6 py-4 rounded-t-2xl">
+        <div className="panchang-gradient px-6 py-4 rounded-t-2xl">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -123,21 +123,21 @@ function TithiModal({ info, onClose }: { info: TithiInfo; onClose: () => void })
                 </span>
               </div>
               <h2 className="text-2xl font-bold text-white">{info.symbol} {info.name}</h2>
-              <p className="text-orange-100 text-sm mt-0.5">Deity: {info.deity}</p>
+              <p className="text-indigo-200 text-sm mt-0.5">Deity: {info.deity}</p>
             </div>
             <button onClick={onClose} className="text-white/80 hover:text-white text-2xl leading-none ml-4 mt-1">✕</button>
           </div>
         </div>
 
         <div className="p-6 space-y-5">
-          <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-            <p className="text-xs text-orange-600 font-semibold uppercase tracking-wide mb-1">Paksha</p>
+          <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+            <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Paksha</p>
             <p className="text-sm font-medium text-stone-800">{info.paksha} Paksha</p>
           </div>
 
           <div>
             <h3 className="text-sm font-bold text-stone-700 mb-2 flex items-center gap-2">
-              <span className="text-orange-500">📖</span> About {info.name}
+              <span className="text-indigo-500">📖</span> About {info.name}
             </h3>
             <p className="text-sm text-stone-600 leading-relaxed">{info.description}</p>
           </div>
@@ -192,7 +192,7 @@ function YogaModal({ info, onClose }: { info: YogaInfo; onClose: () => void }) {
           <div className={`mt-4 rounded-xl p-3 text-xs font-semibold text-center ${
             info.nature === "Auspicious" ? "bg-green-50 text-green-700 border border-green-200" :
             info.nature === "Inauspicious" ? "bg-red-50 text-red-700 border border-red-200" :
-            "bg-orange-50 text-orange-700 border border-orange-200"
+            "bg-indigo-50 text-indigo-700 border border-indigo-200"
           }`}>
             {info.nature === "Auspicious" ? "✅ Generally Auspicious for activities" :
              info.nature === "Inauspicious" ? "⚠️ Avoid important undertakings" :
@@ -223,25 +223,25 @@ export default function ReferenceSection() {
     <div className="mt-6">
       <div className="bg-white rounded-2xl shadow-md overflow-hidden">
         {/* Section header */}
-        <div className="om-gradient px-6 py-4">
+        <div className="panchang-gradient px-6 py-4">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <span>📚</span> Panchang Reference Guide
           </h2>
-          <p className="text-orange-100 text-sm mt-0.5">
+          <p className="text-indigo-200 text-sm mt-0.5">
             Click any name below to learn its meaning, mythology, and significance
           </p>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-orange-100 overflow-x-auto">
+        <div className="flex border-b border-indigo-100 overflow-x-auto">
           {tabs.map(tab => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`flex items-center gap-1.5 px-4 py-3 text-sm font-semibold whitespace-nowrap transition border-b-2 ${
                 activeTab === tab.key
-                  ? "border-orange-500 text-orange-600 bg-orange-50"
-                  : "border-transparent text-stone-500 hover:text-orange-500 hover:bg-orange-50"
+                  ? "border-orange-500 text-indigo-600 bg-indigo-50"
+                  : "border-transparent text-stone-500 hover:text-indigo-500 hover:bg-indigo-50"
               }`}
             >
               <span>{tab.icon}</span>
@@ -263,12 +263,12 @@ export default function ReferenceSection() {
                   <button
                     key={n.index}
                     onClick={() => setSelectedNakshatra(n)}
-                    className="group flex items-center gap-2.5 p-2.5 rounded-xl border border-orange-100 hover:border-orange-300 hover:bg-orange-50 transition text-left"
+                    className="group flex items-center gap-2.5 p-2.5 rounded-xl border border-indigo-100 hover:border-orange-300 hover:bg-indigo-50 transition text-left"
                   >
-                    <span className="w-6 h-6 flex-shrink-0 rounded-full text-xs font-bold flex items-center justify-center bg-orange-100 text-orange-700 group-hover:bg-orange-500 group-hover:text-white transition">
+                    <span className="w-6 h-6 flex-shrink-0 rounded-full text-xs font-bold flex items-center justify-center bg-orange-100 text-indigo-700 group-hover:bg-indigo-500 group-hover:text-white transition">
                       {n.index}
                     </span>
-                    <span className="text-sm font-medium text-stone-700 group-hover:text-orange-700 transition leading-tight">
+                    <span className="text-sm font-medium text-stone-700 group-hover:text-indigo-700 transition leading-tight">
                       {n.name}
                     </span>
                   </button>
@@ -291,7 +291,7 @@ export default function ReferenceSection() {
                 <div className="mb-4">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="h-px flex-1 bg-orange-100"></div>
-                    <span className="text-xs font-bold text-orange-600 uppercase tracking-widest px-2">🌕 Shukla Paksha (Waxing Moon)</span>
+                    <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest px-2">🌕 Shukla Paksha (Waxing Moon)</span>
                     <div className="h-px flex-1 bg-orange-100"></div>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
@@ -299,12 +299,12 @@ export default function ReferenceSection() {
                       <button
                         key={t.index}
                         onClick={() => setSelectedTithi(t)}
-                        className="group flex items-center gap-2 p-2.5 rounded-xl border border-orange-100 hover:border-orange-300 hover:bg-orange-50 transition text-left"
+                        className="group flex items-center gap-2 p-2.5 rounded-xl border border-indigo-100 hover:border-orange-300 hover:bg-indigo-50 transition text-left"
                       >
                         <span className="text-base">{t.symbol.split("")[0]}</span>
                         <div className="min-w-0">
                           <p className="text-xs font-bold text-stone-500">#{t.index}</p>
-                          <p className="text-sm font-medium text-stone-700 group-hover:text-orange-700 transition leading-tight truncate">{t.name}</p>
+                          <p className="text-sm font-medium text-stone-700 group-hover:text-indigo-700 transition leading-tight truncate">{t.name}</p>
                         </div>
                       </button>
                     ))}
@@ -322,12 +322,12 @@ export default function ReferenceSection() {
                       <button
                         key={t.index + 15}
                         onClick={() => setSelectedTithi(t)}
-                        className="group flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 hover:border-orange-300 hover:bg-orange-50 transition text-left"
+                        className="group flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 hover:border-orange-300 hover:bg-indigo-50 transition text-left"
                       >
                         <span className="text-base">🌑</span>
                         <div className="min-w-0">
                           <p className="text-xs font-bold text-stone-400">#{t.index}</p>
-                          <p className="text-sm font-medium text-stone-600 group-hover:text-orange-700 transition leading-tight truncate">{t.name}</p>
+                          <p className="text-sm font-medium text-stone-600 group-hover:text-indigo-700 transition leading-tight truncate">{t.name}</p>
                         </div>
                       </button>
                     ))}
@@ -356,13 +356,13 @@ export default function ReferenceSection() {
                         ? "border-green-200 hover:bg-green-50 hover:border-green-400"
                         : y.nature === "Inauspicious"
                         ? "border-red-200 hover:bg-red-50 hover:border-red-400"
-                        : "border-orange-200 hover:bg-orange-50 hover:border-orange-400"
+                        : "border-indigo-200 hover:bg-indigo-50 hover:border-orange-400"
                     }`}
                   >
                     <span className={`w-6 h-6 flex-shrink-0 rounded-full text-xs font-bold flex items-center justify-center ${
                       y.nature === "Auspicious" ? "bg-green-100 text-green-700 group-hover:bg-green-500 group-hover:text-white" :
                       y.nature === "Inauspicious" ? "bg-red-100 text-red-700 group-hover:bg-red-500 group-hover:text-white" :
-                      "bg-orange-100 text-orange-700 group-hover:bg-orange-500 group-hover:text-white"
+                      "bg-orange-100 text-indigo-700 group-hover:bg-indigo-500 group-hover:text-white"
                     } transition`}>
                       {y.index}
                     </span>
@@ -370,7 +370,7 @@ export default function ReferenceSection() {
                       <p className="text-sm font-medium text-stone-700 leading-tight truncate">{y.name}</p>
                       <p className={`text-xs font-semibold ${
                         y.nature === "Auspicious" ? "text-green-600" :
-                        y.nature === "Inauspicious" ? "text-red-600" : "text-orange-600"
+                        y.nature === "Inauspicious" ? "text-red-600" : "text-indigo-600"
                       }`}>
                         {y.nature === "Auspicious" ? "✅" : y.nature === "Inauspicious" ? "⚠️" : "🔄"} {y.nature}
                       </p>
@@ -381,7 +381,7 @@ export default function ReferenceSection() {
               <div className="mt-4 flex items-center justify-center gap-6 text-xs text-stone-500">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 inline-block"></span> Auspicious</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span> Inauspicious</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-500 inline-block"></span> Mixed</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-indigo-500 inline-block"></span> Mixed</span>
               </div>
             </div>
           )}
@@ -394,16 +394,16 @@ export default function ReferenceSection() {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {LUNAR_MONTHS.map(m => (
-                  <div key={m.index} className="border border-orange-100 rounded-xl p-4 hover:bg-orange-50 hover:border-orange-200 transition">
+                  <div key={m.index} className="border border-indigo-100 rounded-xl p-4 hover:bg-indigo-50 hover:border-indigo-200 transition">
                     <div className="flex items-start gap-3">
-                      <span className="w-8 h-8 rounded-full bg-orange-100 text-orange-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
+                      <span className="w-8 h-8 rounded-full bg-orange-100 text-indigo-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
                         {m.index}
                       </span>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-baseline gap-2 flex-wrap">
                           <h3 className="font-bold text-stone-800">{m.name}</h3>
                           <span className="text-xs text-stone-500">{m.englishName}</span>
-                          <span className="text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full font-medium">{m.deity}</span>
+                          <span className="text-xs bg-orange-100 text-indigo-700 px-1.5 py-0.5 rounded-full font-medium">{m.deity}</span>
                         </div>
                         <p className="text-xs text-stone-600 mt-1.5 leading-relaxed">{m.description}</p>
                       </div>
