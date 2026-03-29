@@ -85,11 +85,12 @@ function formatTime(date: Date | null | undefined, timezone: string): string {
   }
 }
 
-function getRahuKalam(date: Date, sunrise: Date | null, sunset: Date | null): string {
+function getRahuKalam(date: Date, sunrise: Date | null, sunset: Date | null, timezone?: string): string {
   if (!sunrise || !sunset) return "N/A";
   
   const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon, ...
-  const rahuSlots = [8, 2, 7, 5, 6, 4, 3]; // index by day of week -> portion of day (1-8)
+  // Rahu Kalam segments by weekday: Sun=8, Mon=2, Tue=7, Wed=5, Thu=6, Fri=4, Sat=3
+  const rahuSlots = [8, 2, 7, 5, 6, 4, 3];
   const slot = rahuSlots[dayOfWeek];
   
   const totalMs = sunset.getTime() - sunrise.getTime();
@@ -100,7 +101,14 @@ function getRahuKalam(date: Date, sunrise: Date | null, sunset: Date | null): st
   const start = new Date(startMs);
   const end = new Date(endMs);
   
-  const fmt = (d: Date) => d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
+  const fmt = (d: Date) => {
+    if (timezone) {
+      return new Intl.DateTimeFormat("en-IN", {
+        hour: "2-digit", minute: "2-digit", hour12: true, timeZone: timezone,
+      }).format(d);
+    }
+    return d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
+  };
   return `${fmt(start)} – ${fmt(end)}`;
 }
 
@@ -189,6 +197,32 @@ export function getFestivalsForDate(date: Date): string[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extractValue(obj: any, ...keys: string[]): number | undefined {
+  for (const key of keys) {
+    const val = obj?.[key];
+    if (val !== undefined && val !== null) {
+      if (typeof val === "number") return val;
+      if (typeof val === "object" && typeof val.index === "number") return val.index;
+    }
+  }
+  return undefined;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extractDate(obj: any, ...keys: string[]): Date | null {
+  for (const key of keys) {
+    const val = obj?.[key];
+    if (val) {
+      try {
+        const d = new Date(val);
+        if (!isNaN(d.getTime())) return d;
+      } catch { /* ignore */ }
+    }
+  }
+  return null;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function computeDayPanchang(date: Date, city: City): Promise<DayPanchang> {
   const festivals = getFestivalsForDate(date);
   
@@ -200,35 +234,51 @@ export async function computeDayPanchang(date: Date, city: City): Promise<DayPan
     }
 
     const { Observer, getPanchangam } = Panchangam;
+    if (!Observer || !getPanchangam) {
+      throw new Error("Panchangam API not found");
+    }
+
     const observer = new Observer(city.lat, city.lon, 0);
     const result = await getPanchangam(date, observer);
 
-    const tithi = getTithiName(result?.tithi?.index ?? result?.tithi);
-    const nakshatra = getNakshatraName(result?.nakshatra?.index ?? result?.nakshatra);
-    const yoga = getYogaName(result?.yoga?.index ?? result?.yoga);
-    const karana = getKaranaName(result?.karana?.index ?? result?.karana);
-    const paksha = getPaksha(result?.tithi?.index ?? result?.tithi);
+    if (!result) throw new Error("No result from Panchangam");
 
-    const sunriseDate = result?.sunrise ? new Date(result.sunrise) : null;
-    const sunsetDate = result?.sunset ? new Date(result.sunset) : null;
-    const moonriseDate = result?.moonrise ? new Date(result.moonrise) : null;
-    const moonsetDate = result?.moonset ? new Date(result.moonset) : null;
+    // Extract panchang values — handle multiple possible response shapes
+    const tithiNum = extractValue(result, "tithi", "Tithi");
+    const nakshatraNum = extractValue(result, "nakshatra", "Nakshatra");
+    const yogaNum = extractValue(result, "yoga", "Yoga");
+    const karanaNum = extractValue(result, "karana", "Karana");
 
-    const sunrise = formatTime(sunriseDate, city.timezone);
-    const sunset = formatTime(sunsetDate, city.timezone);
+    const tithi = getTithiName(tithiNum);
+    const nakshatra = getNakshatraName(nakshatraNum);
+    const yoga = getYogaName(yogaNum);
+    const karana = getKaranaName(karanaNum);
+    const paksha = getPaksha(tithiNum);
+
+    // Extract times
+    const sunriseDate = extractDate(result, "sunrise", "Sunrise");
+    const sunsetDate = extractDate(result, "sunset", "Sunset");
+    const moonriseDate = extractDate(result, "moonrise", "Moonrise");
+    const moonsetDate = extractDate(result, "moonset", "Moonset");
+
+    const sunrise = sunriseDate ? formatTime(sunriseDate, city.timezone) : approximateSunriseSunset(date, city.lat, city.lon, city.timezone).sunrise;
+    const sunset = sunsetDate ? formatTime(sunsetDate, city.timezone) : approximateSunriseSunset(date, city.lat, city.lon, city.timezone).sunset;
     const moonrise = formatTime(moonriseDate, city.timezone);
     const moonset = formatTime(moonsetDate, city.timezone);
 
-    let tithiEnd = undefined;
-    if (result?.tithi?.end) {
-      tithiEnd = formatTime(new Date(result.tithi.end), city.timezone);
-    }
-    let nakshatraEnd = undefined;
-    if (result?.nakshatra?.end) {
-      nakshatraEnd = formatTime(new Date(result.nakshatra.end), city.timezone);
-    }
+    // Extract end times
+    let tithiEnd: string | undefined;
+    const tithiEndDate = extractDate(result?.tithi, "end", "endTime") ?? extractDate(result, "tithiEnd");
+    if (tithiEndDate) tithiEnd = formatTime(tithiEndDate, city.timezone);
 
-    const rahuKalam = getRahuKalam(date, sunriseDate, sunsetDate);
+    let nakshatraEnd: string | undefined;
+    const nakshatraEndDate = extractDate(result?.nakshatra, "end", "endTime") ?? extractDate(result, "nakshatraEnd");
+    if (nakshatraEndDate) nakshatraEnd = formatTime(nakshatraEndDate, city.timezone);
+
+    // Use actual sunrise/sunset dates for rahu kalam if available
+    const rahuKalam = sunriseDate && sunsetDate
+      ? getRahuKalam(date, sunriseDate, sunsetDate, city.timezone)
+      : "N/A";
 
     return {
       date,
@@ -247,7 +297,7 @@ export async function computeDayPanchang(date: Date, city: City): Promise<DayPan
       festivals,
       loading: false,
     };
-  } catch (err) {
+  } catch {
     // Fallback: compute approximate values using simple astronomical formulas
     return computeFallbackPanchang(date, city, festivals);
   }
@@ -258,29 +308,31 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
   const jd = dateToJD(date);
   
   // Moon's mean longitude approximation
-  const T = (jd - 2451545.0) / 36525;
-  const moonLon = (218.316 + 13.176396 * (jd - 2451545.0)) % 360;
-  const sunLon = (280.460 + 0.9856474 * (jd - 2451545.0)) % 360;
+  const moonLon = ((218.316 + 13.176396 * (jd - 2451545.0)) % 360 + 360) % 360;
+  const sunLon = ((280.460 + 0.9856474 * (jd - 2451545.0)) % 360 + 360) % 360;
   
-  // Tithi: based on elongation
-  let elongation = (moonLon - sunLon + 360) % 360;
+  // Tithi: based on elongation (1 tithi = 12 degrees of lunar elongation)
+  const elongation = (moonLon - sunLon + 360) % 360;
   const tithiNum = Math.floor(elongation / 12);
   
-  // Nakshatra: moon's position in 27 nakshatras
+  // Nakshatra: moon's position in 27 nakshatras (each = 13.33 degrees)
   const nakshatraNum = Math.floor((moonLon % 360) / (360 / 27));
   
-  // Yoga
+  // Yoga (sun + moon longitude, divided into 27 equal parts)
   const yogaLon = (moonLon + sunLon) % 360;
   const yogaNum = Math.floor(yogaLon / (360 / 27));
   
-  // Karana (half-tithi)
+  // Karana (half-tithi, 11 types cycle)
   const karanaNum = Math.floor(elongation / 6) % 11;
   
   // Paksha
   const paksha = tithiNum < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
   
-  // Approximate sunrise/sunset
-  const { sunrise, sunset } = approximateSunriseSunset(date, city.lat, city.lon, city.timezone);
+  // Compute approximate sunrise/sunset as Date objects for Rahu Kalam
+  const { sunriseDate, sunsetDate } = approximateSunriseSunsetDates(date, city.lat, city.lon, city.timezone);
+  const sunrise = formatTime(sunriseDate, city.timezone);
+  const sunset = formatTime(sunsetDate, city.timezone);
+  const rahuKalam = sunriseDate && sunsetDate ? getRahuKalam(date, sunriseDate, sunsetDate, city.timezone) : "N/A";
   
   return {
     date,
@@ -293,7 +345,7 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
     sunset,
     moonrise: "N/A",
     moonset: "N/A",
-    rahuKalam: "N/A",
+    rahuKalam,
     festivals,
     loading: false,
   };
@@ -307,6 +359,30 @@ function dateToJD(date: Date): number {
   const Y = y + 4800 - A;
   const M = m + 12 * A - 3;
   return d + Math.floor((153 * M + 2) / 5) + 365 * Y + Math.floor(Y / 4) - Math.floor(Y / 100) + Math.floor(Y / 400) - 32045;
+}
+
+function approximateSunriseSunsetDates(date: Date, lat: number, lon: number, timezone: string): { sunriseDate: Date | null; sunsetDate: Date | null } {
+  try {
+    const utcOffsetMin = getTimezoneOffsetMinutes(date, timezone);
+    const utcOffsetHours = utcOffsetMin / 60;
+    const doy = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 86400000);
+    const B = (360 / 365) * (doy - 81) * (Math.PI / 180);
+    const ET = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+    const declination = 23.45 * Math.sin(B) * (Math.PI / 180);
+    const latRad = lat * (Math.PI / 180);
+    const hourAngle = Math.acos(-Math.tan(latRad) * Math.tan(declination)) * (180 / Math.PI);
+    const solarNoon = 12 + utcOffsetHours - lon / 15 - ET / 60;
+    const sunriseHour = solarNoon - hourAngle / 15;
+    const sunsetHour = solarNoon + hourAngle / 15;
+    const baseMs = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    const utcOffsetMs = utcOffsetMin * 60000;
+    // Convert local hour to UTC ms
+    const sunriseMs = baseMs + sunriseHour * 3600000 - utcOffsetMs;
+    const sunsetMs = baseMs + sunsetHour * 3600000 - utcOffsetMs;
+    return { sunriseDate: new Date(sunriseMs), sunsetDate: new Date(sunsetMs) };
+  } catch {
+    return { sunriseDate: null, sunsetDate: null };
+  }
 }
 
 function approximateSunriseSunset(date: Date, lat: number, lon: number, timezone: string): { sunrise: string; sunset: string } {

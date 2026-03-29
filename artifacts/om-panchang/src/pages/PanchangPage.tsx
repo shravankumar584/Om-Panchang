@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { CITIES, City, DayPanchang, computeDayPanchang, getFestivalsForDate } from "@/lib/panchangData";
+import ReferenceSection from "@/components/ReferenceSection";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
@@ -178,11 +179,6 @@ export default function PanchangPage() {
       day: "numeric",
     }).format(date);
   };
-
-  const isSameDay = (a: Date, b: Date) =>
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
 
   const selectedDateFormatted = formatSelectedDate(selectedDate);
   const selectedFestivals = getFestivalsForDate(selectedDate);
@@ -435,14 +431,19 @@ export default function PanchangPage() {
         </div>
       </main>
 
+      {/* Reference Section */}
+      <div className="max-w-7xl mx-auto px-4">
+        <ReferenceSection />
+      </div>
+
       {/* Footer */}
-      <footer className="text-center py-6 text-stone-500 text-xs mt-4">
+      <footer className="text-center py-8 text-stone-500 text-xs mt-6">
         <p className="flex items-center justify-center gap-2">
           <span>🕉️</span>
           <span>Om Panchang · Accurate Hindu Calendar & Panchangam</span>
           <span>🕉️</span>
         </p>
-        <p className="mt-1 text-stone-400">Calculations based on Drik Panchang methodology</p>
+        <p className="mt-1 text-stone-400">Calculations based on Drik Panchang methodology · Location-based sunrise/sunset</p>
       </footer>
     </div>
   );
