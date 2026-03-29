@@ -6,6 +6,96 @@ import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+interface RashiInfo {
+  index: number;
+  name: string;
+  english: string;
+  symbol: string;
+  lord: string;
+  element: string;
+  quality: string;
+  description: string;
+  traits: string[];
+}
+
+const RASHI_DATA: RashiInfo[] = [
+  { index: 1, name: "Mesha", english: "Aries", symbol: "♈", lord: "Mangal (Mars)", element: "Fire (Agni)", quality: "Movable (Chara)", description: "Mesha is the first rashi, symbolizing new beginnings, courage, and raw energy. Ruled by Mangal (Mars), it bestows a pioneering, fearless spirit. Those with a strong Mesha influence are natural leaders who act decisively and thrive on challenges. The ram charges forward without hesitation.", traits: ["Courageous and pioneering", "Impulsive and action-oriented", "Natural leader", "Competitive and energetic", "Can be impatient or aggressive"] },
+  { index: 2, name: "Vrishabha", english: "Taurus", symbol: "♉", lord: "Shukra (Venus)", element: "Earth (Prithvi)", quality: "Fixed (Sthira)", description: "Vrishabha is ruled by Shukra (Venus), bestowing a love of beauty, comfort, and sensory pleasures. The bull is steady, patient, and immovable once rooted. Vrishabha natives excel in accumulating wealth and creating beautiful, stable environments. They are deeply loyal but can be stubborn.", traits: ["Patient and reliable", "Love of luxury and comfort", "Strong material instincts", "Stubborn but devoted", "Artistic and sensual"] },
+  { index: 3, name: "Mithuna", english: "Gemini", symbol: "♊", lord: "Budha (Mercury)", element: "Air (Vayu)", quality: "Dual (Dwiswabhava)", description: "Mithuna, ruled by Budha (Mercury), represents duality, communication, and intellectual curiosity. The twins embody the ability to see multiple sides of every situation. Mithuna natives are witty, adaptable, and excellent communicators — but can be scattered or inconsistent.", traits: ["Quick-witted and communicative", "Curious and adaptable", "Sociable and charming", "Can be indecisive or superficial", "Excellent with language and writing"] },
+  { index: 4, name: "Karka", english: "Cancer", symbol: "♋", lord: "Chandra (Moon)", element: "Water (Jala)", quality: "Movable (Chara)", description: "Karka is ruled by Chandra (Moon), making it the most emotionally sensitive and nurturing rashi. The crab carries its home on its back — symbolizing the deep attachment to home, family, and roots. Karka natives are intuitive, protective, and deeply empathetic.", traits: ["Deeply nurturing and protective", "Emotionally sensitive and intuitive", "Strong attachment to home and family", "Can be moody or clingy", "Excellent memory and imagination"] },
+  { index: 5, name: "Simha", english: "Leo", symbol: "♌", lord: "Surya (Sun)", element: "Fire (Agni)", quality: "Fixed (Sthira)", description: "Simha is ruled by Surya (Sun), the king of the planets, bestowing natural authority, dignity, and a desire to shine. The lion is the king of the jungle — proud, generous, and commanding. Simha natives are natural performers and leaders who radiate warmth and confidence.", traits: ["Natural leader and performer", "Generous and magnanimous", "Proud and dignified", "Creative and dramatic", "Can be arrogant or attention-seeking"] },
+  { index: 6, name: "Kanya", english: "Virgo", symbol: "♍", lord: "Budha (Mercury)", element: "Earth (Prithvi)", quality: "Dual (Dwiswabhava)", description: "Kanya, the maiden, is ruled by Budha (Mercury) and represents discernment, service, and attention to detail. Kanya natives have sharp analytical minds and a desire to be of practical service. They excel in fields requiring precision — medicine, science, accounting, and editing.", traits: ["Analytical and detail-oriented", "Service-minded and helpful", "Health-conscious and practical", "Can be critical or overly perfectionist", "Excellent at organization and analysis"] },
+  { index: 7, name: "Tula", english: "Libra", symbol: "♎", lord: "Shukra (Venus)", element: "Air (Vayu)", quality: "Movable (Chara)", description: "Tula, the scales, is ruled by Shukra (Venus) and represents balance, justice, and harmonious relationships. Tula natives are natural diplomats who seek fairness and beauty in all things. They excel in law, art, and partnerships. The challenge is decisiveness — the scales always weigh both sides.", traits: ["Diplomatic and fair-minded", "Charming and sociable", "Love of beauty and harmony", "Can be indecisive or overly people-pleasing", "Excellent in partnerships and negotiations"] },
+  { index: 8, name: "Vrishchika", english: "Scorpio", symbol: "♏", lord: "Mangal (Mars)", element: "Water (Jala)", quality: "Fixed (Sthira)", description: "Vrishchika is ruled by Mangal (Mars) and represents intensity, transformation, and penetrating insight. The scorpion strikes precisely and powerfully. Vrishchika natives are deeply perceptive, passionate, and capable of profound transformation. They are drawn to mysteries, occult knowledge, and hidden truths.", traits: ["Intense and perceptive", "Deeply passionate and loyal", "Access to occult and hidden knowledge", "Capable of profound transformation", "Can be secretive, jealous, or vengeful"] },
+  { index: 9, name: "Dhanu", english: "Sagittarius", symbol: "♐", lord: "Guru (Jupiter)", element: "Fire (Agni)", quality: "Dual (Dwiswabhava)", description: "Dhanu, the archer, is ruled by Guru (Jupiter) and represents wisdom, philosophy, and the aspiration for higher truth. The archer aims for distant horizons. Dhanu natives are optimistic, truth-seeking, and love travel, philosophy, and religious study. They are the teachers and explorers of the zodiac.", traits: ["Optimistic and philosophical", "Love of travel and exploration", "Truth-seeking and ethical", "Generous and enthusiastic", "Can be blunt, restless, or overconfident"] },
+  { index: 10, name: "Makara", english: "Capricorn", symbol: "♑", lord: "Shani (Saturn)", element: "Earth (Prithvi)", quality: "Movable (Chara)", description: "Makara is ruled by Shani (Saturn) and represents discipline, ambition, and the mastery achieved through sustained effort. The sea-goat climbs steadily to the mountaintop. Makara natives are patient, responsible, and achieve great success through hard work and perseverance.", traits: ["Disciplined and ambitious", "Patient and persistent", "Responsible and dutiful", "Practical and career-oriented", "Can be overly serious or controlling"] },
+  { index: 11, name: "Kumbha", english: "Aquarius", symbol: "♒", lord: "Shani (Saturn)", element: "Air (Vayu)", quality: "Fixed (Sthira)", description: "Kumbha, the water-bearer, is ruled by Shani (Saturn) and represents humanitarianism, innovation, and universal ideals. The water-bearer pours wisdom upon the world. Kumbha natives are visionary, independent, and committed to social progress. They see beyond the individual to the collective.", traits: ["Visionary and humanitarian", "Intellectually independent", "Innovative and unconventional", "Friendly yet detached", "Can be rebellious or emotionally aloof"] },
+  { index: 12, name: "Meena", english: "Pisces", symbol: "♓", lord: "Guru (Jupiter)", element: "Water (Jala)", quality: "Dual (Dwiswabhava)", description: "Meena, the fish, is ruled by Guru (Jupiter) and represents compassion, imagination, and spiritual dissolution. The two fish swim in opposite directions — between the material and spiritual worlds. Meena natives are deeply empathetic, artistic, and spiritually gifted, but can lose themselves in illusion or escapism.", traits: ["Deeply compassionate and empathetic", "Artistic and imaginative", "Spiritually sensitive", "Intuitive and psychic", "Can be escapist, boundary-less, or easily influenced"] },
+];
+
+function RashiModal({ info, onClose }: { info: RashiInfo; onClose: () => void }) {
+  const elementColors: Record<string, string> = {
+    "Fire (Agni)": "bg-orange-50 border-orange-200 text-orange-700",
+    "Earth (Prithvi)": "bg-green-50 border-green-200 text-green-700",
+    "Air (Vayu)": "bg-sky-50 border-sky-200 text-sky-700",
+    "Water (Jala)": "bg-blue-50 border-blue-200 text-blue-700",
+  };
+  const elClass = elementColors[info.element] ?? "bg-indigo-50 border-indigo-200 text-indigo-700";
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <div className="panchang-gradient px-6 py-4 rounded-t-2xl">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="bg-white/20 text-white text-lg font-bold px-2 py-0.5 rounded-full">{info.symbol}</span>
+                <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full">Rashi {info.index}</span>
+              </div>
+              <h2 className="text-2xl font-bold text-white">{info.name}</h2>
+              <p className="text-indigo-200 text-sm mt-0.5">{info.english} · Ruled by {info.lord}</p>
+            </div>
+            <button onClick={onClose} className="text-white/80 hover:text-white text-2xl leading-none ml-4 mt-1">✕</button>
+          </div>
+        </div>
+        <div className="p-6 space-y-4">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="bg-indigo-50 rounded-xl p-3 border border-indigo-100 text-center">
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Lord</p>
+              <p className="text-sm font-bold text-stone-800">{info.lord.split(" ")[0]}</p>
+            </div>
+            <div className={`rounded-xl p-3 border text-center ${elClass}`}>
+              <p className="text-xs font-semibold uppercase tracking-wide mb-1">Element</p>
+              <p className="text-sm font-bold">{info.element.split(" ")[0]}</p>
+            </div>
+            <div className="bg-indigo-50 rounded-xl p-3 border border-indigo-100 text-center">
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wide mb-1">Quality</p>
+              <p className="text-sm font-bold text-stone-800">{info.quality.split(" ")[0]}</p>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-stone-700 mb-2 flex items-center gap-2">
+              <span className="text-indigo-500">📖</span> About {info.name} ({info.english})
+            </h3>
+            <p className="text-sm text-stone-600 leading-relaxed">{info.description}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-stone-700 mb-2 flex items-center gap-2">
+              <span className="text-indigo-500">✨</span> Key Traits
+            </h3>
+            <ul className="space-y-1.5">
+              {info.traits.map((t, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-stone-600">
+                  <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>{t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -96,6 +186,7 @@ export default function PanchangPage() {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("home");
   const [selectedCity, setSelectedCity] = useState<City>(CITIES[0]);
+  const [selectedRashi, setSelectedRashi] = useState<RashiInfo | null>(null);
   const [viewDate, setViewDate] = useState<Date>(new Date(today));
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(today));
   const [selectedPanchang, setSelectedPanchang] = useState<DayPanchang | null>(null);
@@ -543,10 +634,15 @@ export default function PanchangPage() {
                 (zodiac signs) determine auspicious periods, dashas, and life events in Vedic astrology.
               </p>
               <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                {["Mesha (Aries)", "Vrishabha (Taurus)", "Mithuna (Gemini)", "Karka (Cancer)", "Simha (Leo)", "Kanya (Virgo)", "Tula (Libra)", "Vrishchika (Scorpio)", "Dhanu (Sagittarius)", "Makara (Capricorn)", "Kumbha (Aquarius)", "Meena (Pisces)"].map((sign, i) => (
-                  <div key={sign} className="bg-indigo-50 rounded-lg px-2 py-1.5 text-indigo-700 font-medium">
-                    {i + 1}. {sign}
-                  </div>
+                {RASHI_DATA.map((rashi) => (
+                  <button
+                    key={rashi.index}
+                    onClick={() => setSelectedRashi(rashi)}
+                    className="group flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 hover:border-orange-300 border border-transparent rounded-lg px-2 py-1.5 text-indigo-700 font-medium transition text-left"
+                  >
+                    <span className="text-base group-hover:scale-110 transition-transform">{rashi.symbol}</span>
+                    <span>{rashi.index}. {rashi.name} ({rashi.english})</span>
+                  </button>
                 ))}
               </div>
             </div>
@@ -570,6 +666,11 @@ export default function PanchangPage() {
         </p>
         <p className="mt-1">Astronomical calculations · Location-aware</p>
       </footer>
+
+      {/* Rashi Modal */}
+      {selectedRashi && (
+        <RashiModal info={selectedRashi} onClose={() => setSelectedRashi(null)} />
+      )}
     </div>
   );
 }
