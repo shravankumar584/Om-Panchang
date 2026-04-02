@@ -615,7 +615,7 @@ export default function PanchangPage() {
         <main className="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
           {Sidebar}
           <div className="flex-1">
-            <UpcomingFestivals today={today} />
+            <UpcomingFestivals today={today} count={50} />
           </div>
         </main>
       )}

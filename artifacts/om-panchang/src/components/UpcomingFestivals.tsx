@@ -31,10 +31,11 @@ function formatDate(dateStr: string): string {
 
 interface Props {
   today: Date;
+  count?: number;
 }
 
-export default function UpcomingFestivals({ today }: Props) {
-  const festivals = useMemo(() => getUpcomingFestivals(today, 10), [today]);
+export default function UpcomingFestivals({ today, count = 10 }: Props) {
+  const festivals = useMemo(() => getUpcomingFestivals(today, count), [today, count]);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm card-glow overflow-hidden border border-indigo-100">
@@ -85,7 +86,7 @@ export default function UpcomingFestivals({ today }: Props) {
       </div>
 
       <div className="px-4 py-2 bg-slate-50 border-t border-indigo-50">
-        <p className="text-xs text-slate-400 text-center">Showing next 10 festivals & observances</p>
+        <p className="text-xs text-slate-400 text-center">Showing next {festivals.length} festivals & observances</p>
       </div>
     </div>
   );
