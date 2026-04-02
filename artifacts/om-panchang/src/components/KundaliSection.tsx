@@ -491,7 +491,9 @@ export default function KundaliSection() {
       // Convert local birth time → UTC using the location's UTC offset
       let offsetHours = birthLoc.utcOffset;
 
-      // If we have a timezone string, compute the exact DST-aware offset for that date
+      // If we have a timezone string, compute the exact DST-aware offset for that date.
+      // Strategy: treat local birth time as UTC ("probe"), convert probe → local timezone,
+      // then offset = localTime - probe (positive for UTC+ zones like IST +5.5).
       if (birthLoc.timezone) {
         try {
           const probe = new Date(Date.UTC(year, month - 1, day, hour, minute));
@@ -504,7 +506,8 @@ export default function KundaliSection() {
           const [mm, dd, yyyy] = datePart.split("/").map(Number);
           const [hh, mi] = timePart.replace(/^24/, "00").split(":").map(Number);
           const localAsUtc = Date.UTC(yyyy, mm - 1, dd, hh, mi);
-          offsetHours = (probe.getTime() - localAsUtc) / 3600000;
+          // localAsUtc - probe gives the positive offset for UTC+ (e.g. +5.5 for IST)
+          offsetHours = (localAsUtc - probe.getTime()) / 3600000;
         } catch { /* fall back to fixed offset */ }
       }
 
