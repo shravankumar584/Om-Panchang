@@ -1,29 +1,161 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { CITIES, City } from "@/lib/panchangData";
 import {
   computeKundali, formatDegree, formatDate, dashaProgress,
   KundaliData, PLANET_COLORS, LAGNA_INTERPRETATIONS,
 } from "@/lib/jyotishData";
 
-// ─── City selector (reused style) ─────────────────────────────────────────────
-function BirthCitySelect({ value, onChange }: { value: City; onChange: (c: City) => void }) {
-  const groups = CITIES.reduce<Record<string, City[]>>((acc, c) => {
-    if (!acc[c.country]) acc[c.country] = [];
-    acc[c.country].push(c);
-    return acc;
-  }, {});
+// ─── Searchable city combobox ──────────────────────────────────────────────────
+interface LocationValue {
+  name: string;
+  lat: number;
+  lon: number;
+  utcOffset: number; // in hours
+  timezone?: string;
+}
+
+function CitySearch({
+  value,
+  onChange,
+}: {
+  value: LocationValue;
+  onChange: (v: LocationValue) => void;
+}) {
+  const [query, setQuery] = useState(value.name);
+  const [open, setOpen] = useState(false);
+  const [custom, setCustom] = useState(false);
+  const [customLat, setCustomLat] = useState(String(value.lat));
+  const [customLon, setCustomLon] = useState(String(value.lon));
+  const [customOffset, setCustomOffset] = useState(String(value.utcOffset));
+  const ref = useRef<HTMLDivElement>(null);
+
+  const filtered = query.length > 0
+    ? CITIES.filter(c => c.name.toLowerCase().includes(query.toLowerCase())).slice(0, 12)
+    : CITIES.slice(0, 12);
+
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  function selectCity(c: City) {
+    const offset = getUtcOffset(c.timezone);
+    setQuery(c.name);
+    setCustom(false);
+    setOpen(false);
+    onChange({ name: c.name, lat: c.lat, lon: c.lon, utcOffset: offset, timezone: c.timezone });
+  }
+
+  function getUtcOffset(tz: string): number {
+    try {
+      const now = new Date();
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: tz, hour: "numeric", hour12: false, timeZoneName: "short",
+      }).formatToParts(now);
+      const tzStr = parts.find(p => p.type === "timeZoneName")?.value ?? "UTC+0";
+      const match = tzStr.match(/([+-])(\d+)(?::(\d+))?/);
+      if (!match) return 0;
+      const sign = match[1] === "+" ? 1 : -1;
+      return sign * (parseInt(match[2]) + (parseInt(match[3] ?? "0")) / 60);
+    } catch { return 0; }
+  }
+
+  function applyCustom() {
+    const lat = parseFloat(customLat);
+    const lon = parseFloat(customLon);
+    const off = parseFloat(customOffset);
+    if (isNaN(lat) || isNaN(lon) || isNaN(off)) return;
+    onChange({ name: query || "Custom Location", lat, lon, utcOffset: off });
+    setOpen(false);
+  }
+
   return (
-    <select
-      value={value.name}
-      onChange={e => { const c = CITIES.find(x => x.name === e.target.value); if (c) onChange(c); }}
-      className="w-full px-3 py-2 rounded-xl border border-indigo-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
-    >
-      {Object.entries(groups).map(([country, cities]) => (
-        <optgroup key={country} label={`— ${country} —`}>
-          {cities.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-        </optgroup>
-      ))}
-    </select>
+    <div ref={ref} className="relative">
+      <input
+        type="text"
+        placeholder="Search city..."
+        value={query}
+        onChange={e => { setQuery(e.target.value); setOpen(true); setCustom(false); }}
+        onFocus={() => setOpen(true)}
+        className="w-full px-3 py-2 rounded-xl border border-indigo-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+      />
+      {open && (
+        <div className="absolute z-50 mt-1 w-full bg-white border border-indigo-200 rounded-xl shadow-lg overflow-hidden">
+          <div className="max-h-52 overflow-y-auto">
+            {filtered.length > 0
+              ? filtered.map(c => (
+                  <button
+                    key={c.name}
+                    onMouseDown={() => selectCity(c)}
+                    className="w-full text-left px-3 py-2 text-sm hover:bg-indigo-50 flex justify-between items-center"
+                  >
+                    <span className="font-medium text-slate-800">{c.name}</span>
+                    <span className="text-xs text-slate-400">{c.country}</span>
+                  </button>
+                ))
+              : (
+                  <p className="px-3 py-2 text-sm text-slate-400 italic">No city found</p>
+                )
+            }
+          </div>
+          <button
+            onMouseDown={() => { setCustom(true); setOpen(false); }}
+            className="w-full text-left px-3 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 border-t border-indigo-100 hover:bg-indigo-100"
+          >
+            ＋ Enter custom coordinates
+          </button>
+        </div>
+      )}
+      {custom && (
+        <div className="mt-2 p-3 bg-indigo-50 rounded-xl border border-indigo-200 space-y-2">
+          <p className="text-xs font-semibold text-indigo-700">Custom Location</p>
+          <div className="grid grid-cols-3 gap-2">
+            <div>
+              <label className="text-xs text-slate-500 block mb-0.5">Latitude</label>
+              <input
+                type="number" step="0.0001" value={customLat}
+                onChange={e => setCustomLat(e.target.value)}
+                placeholder="e.g. 28.6"
+                className="w-full px-2 py-1.5 rounded-lg border border-indigo-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-slate-500 block mb-0.5">Longitude</label>
+              <input
+                type="number" step="0.0001" value={customLon}
+                onChange={e => setCustomLon(e.target.value)}
+                placeholder="e.g. 77.2"
+                className="w-full px-2 py-1.5 rounded-lg border border-indigo-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-slate-500 block mb-0.5">UTC Offset (hrs)</label>
+              <input
+                type="number" step="0.5" value={customOffset}
+                onChange={e => setCustomOffset(e.target.value)}
+                placeholder="e.g. 5.5"
+                className="w-full px-2 py-1.5 rounded-lg border border-indigo-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
+              />
+            </div>
+          </div>
+          <button
+            onClick={applyCustom}
+            className="w-full mt-1 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition-colors"
+          >
+            Apply
+          </button>
+        </div>
+      )}
+      {!open && !custom && value.lat !== 0 && (
+        <p className="text-xs text-slate-400 mt-1">
+          {value.lat.toFixed(4)}°N, {value.lon.toFixed(4)}°E
+          {value.utcOffset >= 0 ? ` · UTC+${value.utcOffset}` : ` · UTC${value.utcOffset}`}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -354,11 +486,17 @@ function InfoTile({ icon, label, value, sub }: { icon: string; label: string; va
 // ─── Main KundaliSection ───────────────────────────────────────────────────────
 type KundaliTab = "chart" | "dasha" | "navamsa" | "reading";
 
+const defaultCity = CITIES[0];
+
+function cityToLocation(c: City): LocationValue {
+  return { name: c.name, lat: c.lat, lon: c.lon, utcOffset: 5.5, timezone: c.timezone };
+}
+
 export default function KundaliSection() {
   const today = new Date();
   const [birthDate, setBirthDate] = useState(`${today.getFullYear() - 30}-06-15`);
   const [birthTime, setBirthTime] = useState("06:30");
-  const [birthCity, setBirthCity] = useState<City>(CITIES[0]);
+  const [birthLoc, setBirthLoc] = useState<LocationValue>(cityToLocation(defaultCity));
   const [kundali, setKundali] = useState<KundaliData | null>(null);
   const [innerTab, setInnerTab] = useState<KundaliTab>("chart");
   const [error, setError] = useState("");
@@ -371,25 +509,31 @@ export default function KundaliSection() {
       const [hour, minute] = birthTime.split(":").map(Number);
       if (!year || !month || !day) { setError("Invalid date."); return; }
 
-      // Convert local birth time to UTC using city's timezone offset
-      // Use toLocaleString trick to get offset
-      const localStr = `${year}-${String(month).padStart(2,"0")}-${String(day).padStart(2,"0")}T${String(hour).padStart(2,"0")}:${String(minute).padStart(2,"0")}:00`;
-      const localDate = new Date(localStr);
-      // Get offset using Intl
-      let offsetMin = 0;
-      try {
-        const tz = birthCity.timezone;
-        const testDate = new Date(localDate.getTime());
-        const usLocale = testDate.toLocaleString("en-US", { timeZone: tz, hour12: false, year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
-        const [datePart, timePart] = usLocale.split(", ");
-        const [mm, dd, yyyy] = datePart.split("/").map(Number);
-        const [hh, mi] = timePart.split(":").map(Number);
-        const localAsUtc = Date.UTC(yyyy, mm-1, dd, hh, mi);
-        offsetMin = (testDate.getTime() - localAsUtc) / 60000;
-      } catch {}
-      const utcDate = new Date(localDate.getTime() - offsetMin * 60000);
+      // Convert local birth time → UTC using the location's UTC offset
+      let offsetHours = birthLoc.utcOffset;
 
-      const result = computeKundali(utcDate, birthCity.lat, birthCity.lon);
+      // If we have a timezone string, compute the exact DST-aware offset for that date
+      if (birthLoc.timezone) {
+        try {
+          const probe = new Date(Date.UTC(year, month - 1, day, hour, minute));
+          const localStr = probe.toLocaleString("en-US", {
+            timeZone: birthLoc.timezone, hour12: false,
+            year: "numeric", month: "2-digit", day: "2-digit",
+            hour: "2-digit", minute: "2-digit",
+          });
+          const [datePart, timePart] = localStr.split(", ");
+          const [mm, dd, yyyy] = datePart.split("/").map(Number);
+          const [hh, mi] = timePart.replace(/^24/, "00").split(":").map(Number);
+          const localAsUtc = Date.UTC(yyyy, mm - 1, dd, hh, mi);
+          offsetHours = (probe.getTime() - localAsUtc) / 3600000;
+        } catch { /* fall back to fixed offset */ }
+      }
+
+      // Birth time in UTC
+      const utcMs = Date.UTC(year, month - 1, day, hour, minute) - offsetHours * 3600000;
+      const utcDate = new Date(utcMs);
+
+      const result = computeKundali(utcDate, birthLoc.lat, birthLoc.lon);
       setKundali(result);
       setInnerTab("chart");
     } catch (e: unknown) {
@@ -434,7 +578,7 @@ export default function KundaliSection() {
           </div>
           <div>
             <label className="text-xs font-semibold text-indigo-600 uppercase tracking-wide block mb-1">Birth Place</label>
-            <BirthCitySelect value={birthCity} onChange={setBirthCity} />
+            <CitySearch value={birthLoc} onChange={setBirthLoc} />
           </div>
           {error && <p className="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{error}</p>}
           <button
