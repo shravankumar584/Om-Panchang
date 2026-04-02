@@ -56,14 +56,20 @@ export interface AntarDasha {
 const R = Math.PI / 180;
 const mod360 = (x: number) => ((x % 360) + 360) % 360;
 
+// Meeus "Astronomical Algorithms" Ch. 7 — Julian Day starts at noon UT
 function julianDay(date: Date): number {
-  const Y = date.getUTCFullYear();
-  const M = date.getUTCMonth() + 1;
-  const D = date.getUTCDate() + date.getUTCHours() / 24 + date.getUTCMinutes() / 1440 + date.getUTCSeconds() / 86400;
-  const A = Math.floor((14 - M) / 12);
-  const y = Y + 4800 - A;
-  const m = M + 12 * A - 3;
-  return D + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+  let Y = date.getUTCFullYear();
+  let M = date.getUTCMonth() + 1;
+  const D = date.getUTCDate()
+          + date.getUTCHours()   / 24
+          + date.getUTCMinutes() / 1440
+          + date.getUTCSeconds() / 86400;
+  if (M <= 2) { Y -= 1; M += 12; }
+  const A = Math.floor(Y / 100);
+  const B = 2 - A + Math.floor(A / 4); // Gregorian calendar correction
+  return Math.floor(365.25 * (Y + 4716))
+       + Math.floor(30.6001 * (M + 1))
+       + D + B - 1524.5;
 }
 
 // Corrected Lahiri ayanamsha — rate is 1.3972°/century (50.3"/year), not 0.0136
