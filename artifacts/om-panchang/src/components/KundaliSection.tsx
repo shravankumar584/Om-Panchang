@@ -5,33 +5,39 @@ import {
   KundaliData, PLANET_COLORS, LAGNA_INTERPRETATIONS,
 } from "@/lib/jyotishData";
 
-// ─── Searchable city combobox ──────────────────────────────────────────────────
+// ─── Searchable city combobox (geocoding via Nominatim + timezone via Open-Meteo) ─
 interface LocationValue {
   name: string;
   lat: number;
   lon: number;
-  utcOffset: number; // in hours
+  utcOffset: number;
   timezone?: string;
 }
 
-function CitySearch({
-  value,
-  onChange,
-}: {
-  value: LocationValue;
-  onChange: (v: LocationValue) => void;
-}) {
-  const [query, setQuery] = useState(value.name);
-  const [open, setOpen] = useState(false);
-  const [custom, setCustom] = useState(false);
-  const [customLat, setCustomLat] = useState(String(value.lat));
-  const [customLon, setCustomLon] = useState(String(value.lon));
-  const [customOffset, setCustomOffset] = useState(String(value.utcOffset));
-  const ref = useRef<HTMLDivElement>(null);
+interface NominatimResult {
+  place_id: number;
+  display_name: string;
+  lat: string;
+  lon: string;
+  address?: { city?: string; town?: string; village?: string; county?: string; state?: string; country?: string };
+}
 
-  const filtered = query.length > 0
-    ? CITIES.filter(c => c.name.toLowerCase().includes(query.toLowerCase())).slice(0, 12)
-    : CITIES.slice(0, 12);
+function friendlyName(r: NominatimResult): string {
+  const a = r.address ?? {};
+  const city = a.city ?? a.town ?? a.village ?? a.county ?? "";
+  const state = a.state ?? "";
+  const country = a.country ?? "";
+  return [city, state, country].filter(Boolean).join(", ");
+}
+
+function CitySearch({ value, onChange }: { value: LocationValue; onChange: (v: LocationValue) => void }) {
+  const [query, setQuery] = useState(value.name);
+  const [results, setResults] = useState<NominatimResult[]>([]);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<string>("");
+  const ref = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
@@ -41,118 +47,91 @@ function CitySearch({
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
-  function selectCity(c: City) {
-    const offset = getUtcOffset(c.timezone);
-    setQuery(c.name);
-    setCustom(false);
-    setOpen(false);
-    onChange({ name: c.name, lat: c.lat, lon: c.lon, utcOffset: offset, timezone: c.timezone });
+  function handleInput(q: string) {
+    setQuery(q);
+    setOpen(true);
+    setStatus("");
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (q.trim().length < 2) { setResults([]); return; }
+    debounceRef.current = setTimeout(() => fetchCities(q.trim()), 400);
   }
 
-  function getUtcOffset(tz: string): number {
+  async function fetchCities(q: string) {
+    setLoading(true);
     try {
-      const now = new Date();
-      const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: tz, hour: "numeric", hour12: false, timeZoneName: "short",
-      }).formatToParts(now);
-      const tzStr = parts.find(p => p.type === "timeZoneName")?.value ?? "UTC+0";
-      const match = tzStr.match(/([+-])(\d+)(?::(\d+))?/);
-      if (!match) return 0;
-      const sign = match[1] === "+" ? 1 : -1;
-      return sign * (parseInt(match[2]) + (parseInt(match[3] ?? "0")) / 60);
-    } catch { return 0; }
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&addressdetails=1&limit=8`;
+      const res = await fetch(url, { headers: { "Accept-Language": "en" } });
+      const data: NominatimResult[] = await res.json();
+      setResults(data);
+      if (data.length === 0) setStatus("No results found");
+    } catch {
+      setStatus("Search unavailable — check connection");
+    }
+    setLoading(false);
   }
 
-  function applyCustom() {
-    const lat = parseFloat(customLat);
-    const lon = parseFloat(customLon);
-    const off = parseFloat(customOffset);
-    if (isNaN(lat) || isNaN(lon) || isNaN(off)) return;
-    onChange({ name: query || "Custom Location", lat, lon, utcOffset: off });
+  async function selectResult(r: NominatimResult) {
+    const lat = parseFloat(r.lat);
+    const lon = parseFloat(r.lon);
+    const name = friendlyName(r);
+    setQuery(name);
     setOpen(false);
+    setResults([]);
+    setStatus("Getting timezone…");
+    // Fetch timezone from Open-Meteo (free, no API key)
+    try {
+      const tzRes = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat.toFixed(4)}&longitude=${lon.toFixed(4)}&timezone=auto&forecast_days=0&hourly=temperature_2m`
+      );
+      const tzData = await tzRes.json();
+      const timezone: string = tzData.timezone ?? "UTC";
+      const utcOffset = tzData.utc_offset_seconds ? tzData.utc_offset_seconds / 3600 : lon / 15;
+      setStatus("");
+      onChange({ name, lat, lon, utcOffset, timezone });
+    } catch {
+      // Fall back to longitude-based offset
+      const utcOffset = Math.round(lon / 15 * 2) / 2;
+      setStatus("");
+      onChange({ name, lat, lon, utcOffset });
+    }
   }
 
   return (
     <div ref={ref} className="relative">
-      <input
-        type="text"
-        placeholder="Search city..."
-        value={query}
-        onChange={e => { setQuery(e.target.value); setOpen(true); setCustom(false); }}
-        onFocus={() => setOpen(true)}
-        className="w-full px-3 py-2 rounded-xl border border-indigo-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      {open && (
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Type any city name…"
+          value={query}
+          onChange={e => handleInput(e.target.value)}
+          onFocus={() => { if (results.length > 0) setOpen(true); }}
+          className="w-full px-3 py-2 pr-8 rounded-xl border border-indigo-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+        {loading && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-indigo-400 animate-spin text-sm">◌</span>
+        )}
+      </div>
+
+      {open && results.length > 0 && (
         <div className="absolute z-50 mt-1 w-full bg-white border border-indigo-200 rounded-xl shadow-lg overflow-hidden">
           <div className="max-h-52 overflow-y-auto">
-            {filtered.length > 0
-              ? filtered.map(c => (
-                  <button
-                    key={c.name}
-                    onMouseDown={() => selectCity(c)}
-                    className="w-full text-left px-3 py-2 text-sm hover:bg-indigo-50 flex justify-between items-center"
-                  >
-                    <span className="font-medium text-slate-800">{c.name}</span>
-                    <span className="text-xs text-slate-400">{c.country}</span>
-                  </button>
-                ))
-              : (
-                  <p className="px-3 py-2 text-sm text-slate-400 italic">No city found</p>
-                )
-            }
+            {results.map(r => (
+              <button
+                key={r.place_id}
+                onMouseDown={() => selectResult(r)}
+                className="w-full text-left px-3 py-2 text-sm hover:bg-indigo-50 border-b border-indigo-50 last:border-0"
+              >
+                <span className="font-medium text-slate-800 block leading-tight">{friendlyName(r)}</span>
+                <span className="text-xs text-slate-400">{r.lat}°N, {r.lon}°E</span>
+              </button>
+            ))}
           </div>
-          <button
-            onMouseDown={() => { setCustom(true); setOpen(false); }}
-            className="w-full text-left px-3 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 border-t border-indigo-100 hover:bg-indigo-100"
-          >
-            ＋ Enter custom coordinates
-          </button>
         </div>
       )}
-      {custom && (
-        <div className="mt-2 p-3 bg-indigo-50 rounded-xl border border-indigo-200 space-y-2">
-          <p className="text-xs font-semibold text-indigo-700">Custom Location</p>
-          <div className="grid grid-cols-3 gap-2">
-            <div>
-              <label className="text-xs text-slate-500 block mb-0.5">Latitude</label>
-              <input
-                type="number" step="0.0001" value={customLat}
-                onChange={e => setCustomLat(e.target.value)}
-                placeholder="e.g. 28.6"
-                className="w-full px-2 py-1.5 rounded-lg border border-indigo-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-slate-500 block mb-0.5">Longitude</label>
-              <input
-                type="number" step="0.0001" value={customLon}
-                onChange={e => setCustomLon(e.target.value)}
-                placeholder="e.g. 77.2"
-                className="w-full px-2 py-1.5 rounded-lg border border-indigo-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-slate-500 block mb-0.5">UTC Offset (hrs)</label>
-              <input
-                type="number" step="0.5" value={customOffset}
-                onChange={e => setCustomOffset(e.target.value)}
-                placeholder="e.g. 5.5"
-                className="w-full px-2 py-1.5 rounded-lg border border-indigo-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400"
-              />
-            </div>
-          </div>
-          <button
-            onClick={applyCustom}
-            className="w-full mt-1 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition-colors"
-          >
-            Apply
-          </button>
-        </div>
-      )}
-      {!open && !custom && value.lat !== 0 && (
+
+      {(status || (!open && value.lat !== 0)) && (
         <p className="text-xs text-slate-400 mt-1">
-          {value.lat.toFixed(4)}°N, {value.lon.toFixed(4)}°E
-          {value.utcOffset >= 0 ? ` · UTC+${value.utcOffset}` : ` · UTC${value.utcOffset}`}
+          {status || `${value.lat.toFixed(4)}°, ${value.lon.toFixed(4)}° · ${value.timezone ?? ("UTC" + (value.utcOffset >= 0 ? "+" : "") + value.utcOffset)}`}
         </p>
       )}
     </div>
