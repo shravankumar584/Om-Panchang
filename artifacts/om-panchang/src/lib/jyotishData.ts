@@ -267,9 +267,11 @@ export function computeKundali(birthDate: Date, lat: number, lon: number): Kunda
   const LST_deg     = mod360(GMST_deg + lon);
   const RAMC        = LST_deg * R;
   const latR        = lat * R;
+  // Meeus eq. for Ascendant — atan2 gives the Descendant side; +180° flips to Ascendant.
+  // Proof: at RAMC=0, equator → atan2(-1,0)=-90°; correct ASC=90°; +180° ✓
   const ascTropical = mod360((Math.atan2(-Math.cos(RAMC),
     Math.sin(RAMC) * Math.cos(obliquity) + Math.tan(latR) * Math.sin(obliquity)
-  ) * 180) / Math.PI);
+  ) * 180) / Math.PI + 180);
   const lagnaLon    = mod360(ascTropical - ayanamsa);
   const lagnaSignIndex = Math.floor(lagnaLon / 30);
 

@@ -463,8 +463,6 @@ function InfoTile({ icon, label, value, sub }: { icon: string; label: string; va
 }
 
 // ─── Main KundaliSection ───────────────────────────────────────────────────────
-type KundaliTab = "chart" | "dasha" | "navamsa" | "reading";
-
 const defaultCity = CITIES[0];
 
 function cityToLocation(c: City): LocationValue {
@@ -477,7 +475,6 @@ export default function KundaliSection() {
   const [birthTime, setBirthTime] = useState("06:30");
   const [birthLoc, setBirthLoc] = useState<LocationValue>(cityToLocation(defaultCity));
   const [kundali, setKundali] = useState<KundaliData | null>(null);
-  const [innerTab, setInnerTab] = useState<KundaliTab>("chart");
   const [error, setError] = useState("");
 
   function calculate() {
@@ -517,19 +514,11 @@ export default function KundaliSection() {
 
       const result = computeKundali(utcDate, birthLoc.lat, birthLoc.lon);
       setKundali(result);
-      setInnerTab("chart");
     } catch (e: unknown) {
       setError("Calculation error. Please check your inputs.");
       console.error(e);
     }
   }
-
-  const innerTabs: Array<{ id: KundaliTab; label: string; icon: string }> = [
-    { id: "chart",   label: "Kundali",   icon: "◈" },
-    { id: "dasha",   label: "Dasha",     icon: "⏳" },
-    { id: "navamsa", label: "Navamsa D9",icon: "🔷" },
-    { id: "reading", label: "Reading",   icon: "📖" },
-  ];
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
@@ -575,21 +564,26 @@ export default function KundaliSection() {
         </div>
       </div>
 
-      {/* Results */}
+      {/* Results — single scrollable page */}
       {kundali && (
         <>
           {/* Summary bar */}
           <div className="grid grid-cols-3 gap-3">
+            {/* Lagna card */}
             <div className="bg-white border border-indigo-100 rounded-xl p-3 text-center shadow-sm">
               <p className="text-xs text-indigo-500 font-semibold uppercase tracking-wide">Lagna</p>
               <p className="text-base font-bold text-indigo-900 mt-0.5">{kundali.lagnaSign}</p>
               <p className="text-xs text-slate-400">{kundali.lagnaSignEn}</p>
             </div>
+            {/* Moon Rashi card — nakshatra highlighted */}
             <div className="bg-white border border-indigo-100 rounded-xl p-3 text-center shadow-sm">
               <p className="text-xs text-indigo-500 font-semibold uppercase tracking-wide">Moon Rashi</p>
               <p className="text-base font-bold text-indigo-900 mt-0.5">{kundali.moonSign}</p>
-              <p className="text-xs text-slate-400">{kundali.moonNakshatra}</p>
+              <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-300">
+                ⭐ {kundali.moonNakshatra}
+              </span>
             </div>
+            {/* Dasha card */}
             <div className="bg-white border border-indigo-100 rounded-xl p-3 text-center shadow-sm">
               <p className="text-xs text-indigo-500 font-semibold uppercase tracking-wide">Dasha</p>
               <p className="text-base font-bold text-indigo-900 mt-0.5">{kundali.currentDasha.symbol}</p>
@@ -597,42 +591,55 @@ export default function KundaliSection() {
             </div>
           </div>
 
-          {/* Inner tab nav */}
-          <div className="flex bg-white border border-indigo-100 rounded-2xl p-1 shadow-sm gap-1">
-            {innerTabs.map(t => (
-              <button key={t.id} onClick={() => setInnerTab(t.id)}
-                className={`flex-1 py-2 rounded-xl text-xs font-bold transition
-                  ${innerTab === t.id
-                    ? "bg-indigo-600 text-white shadow"
-                    : "text-indigo-500 hover:bg-indigo-50"}`}>
-                <span className="mr-1">{t.icon}</span>{t.label}
-              </button>
-            ))}
+          {/* ── Section 1: Birth Chart ── */}
+          <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-100 flex items-center gap-2">
+              <span className="text-indigo-600 font-bold text-sm">◈</span>
+              <p className="text-sm font-bold text-indigo-700 uppercase tracking-wide">Birth Chart · Rashi (D1)</p>
+            </div>
+            <div className="p-4 space-y-4">
+              <NorthIndianChart data={kundali} />
+              <PlanetTable data={kundali} />
+              <p className="text-xs text-slate-400 text-center">
+                Houses based on Lagna: {kundali.lagnaSign} ({formatDegree(kundali.lagna % 30)})
+              </p>
+            </div>
           </div>
 
-          {/* Inner tab content */}
-          <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm p-4">
-            {innerTab === "chart" && (
-              <div className="space-y-4">
-                <p className="text-xs font-bold text-indigo-600 uppercase tracking-wide">Birth Chart · Rashi (D1)</p>
-                <NorthIndianChart data={kundali} />
-                <PlanetTable data={kundali} />
-                <p className="text-xs text-slate-400 text-center">
-                  Houses based on Lagna: {kundali.lagnaSign} ({formatDegree(kundali.lagna % 30)})
-                </p>
-              </div>
-            )}
-            {innerTab === "dasha" && <DashaSection data={kundali} />}
-            {innerTab === "navamsa" && (
-              <div className="space-y-4">
-                <p className="text-xs font-bold text-orange-600 uppercase tracking-wide">Navamsa Chart (D9) — Marriage & Dharma</p>
-                <NavamsaChart data={kundali} />
-                <p className="text-xs text-slate-400 text-center">
-                  Navamsa Lagna: <strong>{kundali.navamsaLagna}</strong> · D9 chart shows dharma, spouse, and soul purpose.
-                </p>
-              </div>
-            )}
-            {innerTab === "reading" && <InterpretationCard data={kundali} />}
+          {/* ── Section 2: Vimshottari Dasha ── */}
+          <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-100 flex items-center gap-2">
+              <span className="text-indigo-600 font-bold text-sm">⏳</span>
+              <p className="text-sm font-bold text-indigo-700 uppercase tracking-wide">Vimshottari Dasha</p>
+            </div>
+            <div className="p-4">
+              <DashaSection data={kundali} />
+            </div>
+          </div>
+
+          {/* ── Section 3: Navamsa D9 ── */}
+          <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 bg-orange-50 border-b border-orange-100 flex items-center gap-2">
+              <span className="text-orange-500 font-bold text-sm">🔷</span>
+              <p className="text-sm font-bold text-orange-700 uppercase tracking-wide">Navamsa Chart (D9) · Marriage & Dharma</p>
+            </div>
+            <div className="p-4 space-y-3">
+              <NavamsaChart data={kundali} />
+              <p className="text-xs text-slate-400 text-center">
+                Navamsa Lagna: <strong>{kundali.navamsaLagna}</strong> · D9 reveals dharma, spouse qualities &amp; soul purpose.
+              </p>
+            </div>
+          </div>
+
+          {/* ── Section 4: Interpretation ── */}
+          <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-100 flex items-center gap-2">
+              <span className="text-indigo-600 font-bold text-sm">📖</span>
+              <p className="text-sm font-bold text-indigo-700 uppercase tracking-wide">Jyotish Reading</p>
+            </div>
+            <div className="p-4">
+              <InterpretationCard data={kundali} />
+            </div>
           </div>
         </>
       )}
