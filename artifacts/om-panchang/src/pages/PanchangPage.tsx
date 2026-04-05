@@ -153,6 +153,8 @@ function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: C
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [searching, setSearching] = useState(false);
+  const [geolocating, setGeolocating] = useState(false);
+  const [geoError, setGeoError] = useState("");
   const [extraCities, setExtraCities] = useState<City[]>([]);
   const ref = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -203,6 +205,47 @@ function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: C
     setSearching(false);
   }
 
+  async function useMyLocation() {
+    if (!navigator.geolocation) { setGeoError("Geolocation not supported by your browser"); return; }
+    setGeolocating(true);
+    setGeoError("");
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        let name = "My Location";
+        let country = "";
+        let timezone = "UTC";
+        try {
+          // Reverse geocode with Nominatim
+          const revData = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat.toFixed(5)}&lon=${lon.toFixed(5)}&format=json`,
+            { headers: { "Accept-Language": "en" } }
+          ).then(r => r.json());
+          const a = revData.address ?? {};
+          name = a.city ?? a.town ?? a.village ?? a.county ?? a.state ?? "My Location";
+          country = a.country ?? "";
+        } catch { /* use fallback name */ }
+        try {
+          const tzData = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat.toFixed(4)}&longitude=${lon.toFixed(4)}&timezone=auto&forecast_days=0&hourly=temperature_2m`
+          ).then(r => r.json());
+          timezone = tzData.timezone ?? "UTC";
+        } catch { /* use UTC fallback */ }
+        const city: City = { name, country, lat, lon, timezone };
+        setExtraCities(prev => [...prev.filter(c => c.name !== name), city]);
+        onChange(city);
+        setOpen(false);
+        setQuery("");
+        setGeolocating(false);
+      },
+      (err) => {
+        setGeoError(err.code === 1 ? "Location permission denied" : "Could not get location");
+        setGeolocating(false);
+      },
+      { timeout: 10000 }
+    );
+  }
+
   const groups: Record<string, City[]> = {};
   for (const c of filtered) {
     if (!groups[c.country]) groups[c.country] = [];
@@ -212,7 +255,7 @@ function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: C
   return (
     <div ref={ref} className="relative">
       <button
-        onClick={() => { setOpen(o => !o); setTimeout(() => inputRef.current?.focus(), 60); }}
+        onClick={() => { setOpen(o => !o); setGeoError(""); setTimeout(() => inputRef.current?.focus(), 60); }}
         className="flex items-center gap-1.5 pl-3 pr-3 py-2 rounded-xl bg-white/15 border border-white/30 text-white text-sm font-medium
                    focus:outline-none focus:ring-2 focus:ring-white/40 hover:bg-white/25 transition backdrop-blur-sm"
       >
@@ -223,6 +266,20 @@ function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: C
 
       {open && (
         <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-indigo-100 z-50 overflow-hidden">
+          {/* Use My Location button */}
+          <div className="p-2 border-b border-indigo-50">
+            <button
+              onMouseDown={useMyLocation}
+              disabled={geolocating}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 transition text-sm text-white font-medium"
+            >
+              {geolocating
+                ? <><span className="animate-spin inline-block">◌</span> Detecting location…</>
+                : <><span>📍</span> Use My Location</>}
+            </button>
+            {geoError && <p className="text-xs text-rose-500 text-center mt-1">{geoError}</p>}
+          </div>
+
           <div className="p-2 border-b border-indigo-50">
             <div className="relative">
               <input
