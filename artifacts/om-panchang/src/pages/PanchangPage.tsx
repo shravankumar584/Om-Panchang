@@ -148,36 +148,132 @@ function DetailRow({ icon, label, value, sub, highlight }: {
   );
 }
 
-// Grouped select for cities
-function CitySelect({ value, onChange }: { value: City; onChange: (city: City) => void }) {
-  const countryGroups = CITIES.reduce<Record<string, City[]>>((acc, city) => {
-    if (!acc[city.country]) acc[city.country] = [];
-    acc[city.country].push(city);
-    return acc;
-  }, {});
+// Searchable city selector with Nominatim geocoding fallback
+function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: City) => void }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searching, setSearching] = useState(false);
+  const [extraCities, setExtraCities] = useState<City[]>([]);
+  const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const allCities = [...CITIES, ...extraCities];
+  const q = query.toLowerCase();
+  const filtered = q.length > 0
+    ? allCities.filter(c => c.name.toLowerCase().includes(q) || c.country.toLowerCase().includes(q))
+    : allCities;
+
+  useEffect(() => {
+    function onOut(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) { setOpen(false); setQuery(""); }
+    }
+    document.addEventListener("mousedown", onOut);
+    return () => document.removeEventListener("mousedown", onOut);
+  }, []);
+
+  async function searchOnline() {
+    if (query.length < 2 || searching) return;
+    setSearching(true);
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=6`;
+      const data = await fetch(url, { headers: { "Accept-Language": "en" } }).then(r => r.json());
+      const newCities: City[] = [];
+      for (const r of data) {
+        const lat = parseFloat(r.lat), lon = parseFloat(r.lon);
+        const a = r.address ?? {};
+        const name = a.city ?? a.town ?? a.village ?? a.county ?? r.display_name.split(",")[0].trim();
+        const country = a.country ?? "";
+        let timezone = "UTC";
+        try {
+          const tzData = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat.toFixed(4)}&longitude=${lon.toFixed(4)}&timezone=auto&forecast_days=0&hourly=temperature_2m`).then(r => r.json());
+          timezone = tzData.timezone ?? "UTC";
+        } catch { timezone = "UTC"; }
+        newCities.push({ name, country, lat, lon, timezone });
+      }
+      if (newCities.length > 0) {
+        setExtraCities(prev => {
+          const names = new Set(prev.map(c => c.name));
+          return [...prev, ...newCities.filter(c => !names.has(c.name))];
+        });
+        onChange(newCities[0]);
+        setOpen(false);
+        setQuery("");
+      }
+    } catch { /* silently fail */ }
+    setSearching(false);
+  }
+
+  const groups: Record<string, City[]> = {};
+  for (const c of filtered) {
+    if (!groups[c.country]) groups[c.country] = [];
+    groups[c.country].push(c);
+  }
 
   return (
-    <select
-      value={value.name}
-      onChange={e => {
-        const city = CITIES.find(c => c.name === e.target.value);
-        if (city) onChange(city);
-      }}
-      className="pl-3 pr-8 py-2 rounded-xl bg-white/15 border border-white/30 text-white text-sm font-medium
-                 focus:outline-none focus:ring-2 focus:ring-white/40 appearance-none cursor-pointer
-                 hover:bg-white/25 transition backdrop-blur-sm"
-      style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "calc(100% - 10px) center" }}
-    >
-      {Object.entries(countryGroups).map(([country, cities]) => (
-        <optgroup key={country} label={`— ${country} —`} style={{ color: "#333", background: "white" }}>
-          {cities.map(city => (
-            <option key={city.name} value={city.name} style={{ color: "#1e1b4b", background: "white" }}>
-              {city.name}
-            </option>
-          ))}
-        </optgroup>
-      ))}
-    </select>
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => { setOpen(o => !o); setTimeout(() => inputRef.current?.focus(), 60); }}
+        className="flex items-center gap-1.5 pl-3 pr-3 py-2 rounded-xl bg-white/15 border border-white/30 text-white text-sm font-medium
+                   focus:outline-none focus:ring-2 focus:ring-white/40 hover:bg-white/25 transition backdrop-blur-sm"
+      >
+        <span>📍</span>
+        <span className="max-w-[120px] truncate">{value.name}</span>
+        <span className="text-white/60 text-xs">▾</span>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-indigo-100 z-50 overflow-hidden">
+          <div className="p-2 border-b border-indigo-50">
+            <div className="relative">
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Search any city…"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onKeyDown={e => { if (e.key === "Enter") searchOnline(); }}
+                className="w-full px-3 py-2 pr-8 rounded-xl bg-indigo-50 border border-indigo-100 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              />
+              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+            </div>
+          </div>
+
+          <div className="max-h-64 overflow-y-auto">
+            {filtered.length === 0 && q.length > 0 ? (
+              <p className="text-sm text-slate-400 text-center py-4">No local match — try "Search globally" below</p>
+            ) : (
+              Object.entries(groups).map(([country, cities]) => (
+                <div key={country}>
+                  <p className="px-3 py-1 text-xs font-bold text-indigo-400 uppercase tracking-wider bg-indigo-50/60 sticky top-0">{country}</p>
+                  {cities.map(city => (
+                    <button
+                      key={city.name}
+                      onMouseDown={() => { onChange(city); setOpen(false); setQuery(""); }}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-indigo-50 transition flex items-center justify-between ${city.name === value.name ? "bg-indigo-50 font-semibold text-indigo-700" : "text-slate-700"}`}
+                    >
+                      <span>{city.name}</span>
+                      {city.name === value.name && <span className="text-indigo-500 text-xs">✓</span>}
+                    </button>
+                  ))}
+                </div>
+              ))
+            )}
+          </div>
+
+          {query.length >= 2 && (
+            <div className="border-t border-indigo-50 p-2">
+              <button
+                onMouseDown={searchOnline}
+                disabled={searching}
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 transition text-sm text-white font-medium"
+              >
+                {searching ? <><span className="animate-spin inline-block">◌</span> Searching…</> : <><span>🌐</span> Search "{query}" globally</>}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -382,8 +478,7 @@ export default function PanchangPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-white/70 text-sm hidden sm:block">📍</span>
-              <CitySelect value={selectedCity} onChange={handleCityChange} />
+              <CitySearchSelect value={selectedCity} onChange={handleCityChange} />
             </div>
           </div>
         </div>
@@ -494,7 +589,7 @@ export default function PanchangPage() {
             {/* Planets + Festivals preview */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <PlanetaryPositions date={selectedDate} />
-              <UpcomingFestivals today={today} />
+              <UpcomingFestivals today={today} onViewAll={() => setActiveTab("festivals")} />
             </div>
           </div>
         </main>

@@ -32,9 +32,10 @@ function formatDate(dateStr: string): string {
 interface Props {
   today: Date;
   count?: number;
+  onViewAll?: () => void;
 }
 
-export default function UpcomingFestivals({ today, count = 10 }: Props) {
+export default function UpcomingFestivals({ today, count = 10, onViewAll }: Props) {
   const festivals = useMemo(() => getUpcomingFestivals(today, count), [today, count]);
 
   return (
@@ -47,7 +48,7 @@ export default function UpcomingFestivals({ today, count = 10 }: Props) {
         </div>
       </div>
 
-      <div className="divide-y divide-indigo-50">
+      <div className={`divide-y divide-indigo-50 ${onViewAll ? "max-h-80 overflow-y-auto" : ""}`}>
         {festivals.length === 0 ? (
           <p className="text-sm text-slate-400 text-center py-6">No upcoming festivals found</p>
         ) : (
@@ -85,8 +86,16 @@ export default function UpcomingFestivals({ today, count = 10 }: Props) {
         )}
       </div>
 
-      <div className="px-4 py-2 bg-slate-50 border-t border-indigo-50">
-        <p className="text-xs text-slate-400 text-center">Showing next {festivals.length} festivals & observances</p>
+      <div className="px-4 py-2 bg-slate-50 border-t border-indigo-50 flex items-center justify-between gap-2">
+        <p className="text-xs text-slate-400">Showing {festivals.length} upcoming festivals</p>
+        {onViewAll && (
+          <button
+            onClick={onViewAll}
+            className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition"
+          >
+            View All →
+          </button>
+        )}
       </div>
     </div>
   );
