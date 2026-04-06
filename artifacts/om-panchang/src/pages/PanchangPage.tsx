@@ -356,23 +356,87 @@ function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: C
   );
 }
 
-type CalendarVariant = "default" | "hindu" | "telugu";
+type CalendarVariant =
+  | "default" | "hindu" | "telugu"
+  | "vedic-astrology" | "hindu-astrology"
+  | "kundali" | "kundali-milan"
+  | "marriage-muhurat" | "panchang-today"
+  | "hindu-festivals" | "nakshatra-today" | "rahu-kalam-today";
 
-const VARIANT_CONFIG: Record<CalendarVariant, { title: string; heading: string; sub: string }> = {
+const VARIANT_CONFIG: Record<CalendarVariant, {
+  title: string; heading: string; sub: string; defaultTab: ActiveTab;
+}> = {
   default: {
-    title:   "Om Panchang – Hindu Calendar & Vedic Almanac",
-    heading: "Om Panchang",
-    sub:     "Hindu Calendar & Vedic Almanac",
+    title:      "Om Panchang – Hindu Calendar & Vedic Almanac",
+    heading:    "Om Panchang",
+    sub:        "Hindu Calendar & Vedic Almanac",
+    defaultTab: "home",
   },
   hindu: {
-    title:   "Hindu Calendar {year} – {city} | Om Panchang",
-    heading: "Hindu Calendar",
-    sub:     "Panchang, Tithi, Nakshatra & Festivals",
+    title:      "Hindu Calendar {year} – {city} | Om Panchang",
+    heading:    "Hindu Calendar",
+    sub:        "Panchang, Tithi, Nakshatra & Festivals",
+    defaultTab: "home",
   },
   telugu: {
-    title:   "Telugu Calendar {year} – {city} | Om Panchang",
-    heading: "Telugu Calendar",
-    sub:     "తెలుగు పంచాంగం · Panchang, Tithi & Festivals",
+    title:      "Telugu Calendar {year} – {city} | Om Panchang",
+    heading:    "Telugu Calendar",
+    sub:        "తెలుగు పంచాంగం · Panchang, Tithi & Festivals",
+    defaultTab: "home",
+  },
+  "vedic-astrology": {
+    title:      "Vedic Astrology {year} – {city} | Om Panchang",
+    heading:    "Vedic Astrology",
+    sub:        "Jyotish · Planets, Kundali & Panchang",
+    defaultTab: "home",
+  },
+  "hindu-astrology": {
+    title:      "Hindu Astrology {year} – {city} | Om Panchang",
+    heading:    "Hindu Astrology",
+    sub:        "Kundali, Nakshatra, Planets & Festivals",
+    defaultTab: "home",
+  },
+  kundali: {
+    title:      "Kundali Calculator – Free Vedic Birth Chart | Om Panchang",
+    heading:    "Kundali Calculator",
+    sub:        "Free Vedic Birth Chart & Jyotish Analysis",
+    defaultTab: "kundali",
+  },
+  "kundali-milan": {
+    title:      "Kundali Milan – Free Horoscope Matching | Om Panchang",
+    heading:    "Kundali Milan",
+    sub:        "Free Hindu Marriage Compatibility Matching",
+    defaultTab: "milan",
+  },
+  "marriage-muhurat": {
+    title:      "Marriage Muhurat {year} – Shubh Wedding Dates | Om Panchang",
+    heading:    "Marriage Muhurat",
+    sub:        "Auspicious Wedding Dates & Shubh Muhurat {year}",
+    defaultTab: "muhurtacalc",
+  },
+  "panchang-today": {
+    title:      "Panchang Today – {city} | Om Panchang",
+    heading:    "Panchang Today",
+    sub:        "Today's Tithi, Nakshatra, Yoga & Karana",
+    defaultTab: "panchang",
+  },
+  "hindu-festivals": {
+    title:      "Hindu Festivals {year} – Calendar & Dates | Om Panchang",
+    heading:    "Hindu Festivals {year}",
+    sub:        "Complete List of Hindu Festivals & Holidays",
+    defaultTab: "festivals",
+  },
+  "nakshatra-today": {
+    title:      "Nakshatra Today – {city} | Om Panchang",
+    heading:    "Nakshatra Today",
+    sub:        "Today's Lunar Mansion & Star Sign",
+    defaultTab: "panchang",
+  },
+  "rahu-kalam-today": {
+    title:      "Rahu Kalam Today – {city} | Om Panchang",
+    heading:    "Rahu Kalam Today",
+    sub:        "Today's Rahu Kalam, Yamagandam & Gulika",
+    defaultTab: "panchang",
   },
 };
 
@@ -380,7 +444,7 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>("home");
+  const [activeTab, setActiveTab] = useState<ActiveTab>(VARIANT_CONFIG[variant].defaultTab);
   const [selectedCity, setSelectedCity] = useState<City>(CITIES[0]);
   const [selectedRashi, setSelectedRashi] = useState<RashiInfo | null>(null);
   const [viewDate, setViewDate] = useState<Date>(new Date(today));
@@ -588,7 +652,11 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
               </div>
               <div>
                 <h1 className="text-xl font-bold text-white tracking-tight">{VARIANT_CONFIG[variant].heading}</h1>
-                <p className="text-indigo-200 text-xs">{VARIANT_CONFIG[variant].sub}</p>
+                <p className="text-indigo-200 text-xs">
+                  {VARIANT_CONFIG[variant].sub
+                    .replace("{city}", selectedCity.name)
+                    .replace("{year}", String(viewDate.getFullYear()))}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -900,7 +968,11 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
       <footer className="text-center py-6 text-slate-400 text-xs border-t border-indigo-100 bg-white/60 mt-4">
         <p className="flex items-center justify-center gap-2 font-medium text-slate-500">
           <span>🕉️</span>
-          <span>{VARIANT_CONFIG[variant].heading} · {VARIANT_CONFIG[variant].sub}</span>
+          <span>
+            {VARIANT_CONFIG[variant].heading} · {VARIANT_CONFIG[variant].sub
+              .replace("{city}", selectedCity.name)
+              .replace("{year}", String(viewDate.getFullYear()))}
+          </span>
           <span>🕉️</span>
         </p>
         <p className="mt-1">Astronomical calculations · Location-aware</p>
