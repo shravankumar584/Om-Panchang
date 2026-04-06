@@ -10,6 +10,26 @@ import MuhuratCalculator from "@/components/MuhuratCalculator";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+// Format a UTC Date as a short local time string (e.g. "8:22 AM")
+function fmtLocalTime(d: Date, tz: string): string {
+  try {
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "numeric", minute: "2-digit", hour12: true, timeZone: tz,
+    }).format(d);
+  } catch { return ""; }
+}
+
+// Build a compact "start → end" label for a calendar cell.
+// Adds "↑" when the end time falls on the following calendar day.
+function tithiWindowLabel(p: DayPanchang, calDate: Date, tz: string): string {
+  if (!p.tithiStartDate || !p.tithiEndDate) return "";
+  const calMidnightUTC = Date.UTC(calDate.getFullYear(), calDate.getMonth(), calDate.getDate());
+  const endIsNextDay   = p.tithiEndDate.getTime()   >= calMidnightUTC + 86_400_000;
+  const startLabel = fmtLocalTime(p.tithiStartDate, tz);
+  const endLabel   = fmtLocalTime(p.tithiEndDate,   tz) + (endIsNextDay ? "↑" : "");
+  return `${startLabel} – ${endLabel}`;
+}
+
 interface RashiInfo {
   index: number;
   name: string;
@@ -135,8 +155,8 @@ function SectionHeader({ icon, title, sub }: { icon: string; title: string; sub?
   );
 }
 
-function DetailRow({ icon, label, value, sub, highlight }: {
-  icon: string; label: string; value: string; sub?: string; highlight?: boolean;
+function DetailRow({ icon, label, value, sub, highlight, subPrefix = "until" }: {
+  icon: string; label: string; value: string; sub?: string; highlight?: boolean; subPrefix?: string;
 }) {
   return (
     <div className={`flex items-start gap-3 py-2.5 border-b border-slate-100 last:border-b-0 ${highlight ? "bg-amber-50/50" : ""}`}>
@@ -144,7 +164,7 @@ function DetailRow({ icon, label, value, sub, highlight }: {
       <div className="flex-1 min-w-0">
         <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wide">{label}</p>
         <p className="text-sm font-medium text-slate-800 mt-0.5">{value}</p>
-        {sub && <p className="text-xs text-slate-400 mt-0.5">until {sub}</p>}
+        {sub && <p className="text-xs text-slate-400 mt-0.5">{subPrefix ? `${subPrefix} ` : ""}{sub}</p>}
       </div>
     </div>
   );
@@ -497,7 +517,10 @@ export default function PanchangPage() {
             </div>
             <SectionHeader icon="📿" title="Pancha Anga" sub="Five Elements" />
             <div className="px-4 py-1">
-              <DetailRow icon="🌓" label="Tithi" value={sp.tithi} sub={sp.tithiEnd} />
+              <DetailRow icon="🌓" label="Tithi" value={sp.tithi}
+                sub={sp.tithiStart && sp.tithiEnd ? `${sp.tithiStart} – ${sp.tithiEnd}` : sp.tithiEnd}
+                subPrefix={sp.tithiStart && sp.tithiEnd ? "" : "until"}
+              />
               <DetailRow icon="⭐" label="Nakshatra" value={sp.nakshatra} sub={sp.nakshatraEnd} />
               <DetailRow icon="🔯" label="Yoga" value={sp.yoga} />
               <DetailRow icon="☯️" label="Karana" value={sp.karana} />
@@ -607,7 +630,7 @@ export default function PanchangPage() {
                   const isSat = day.date.getDay() === 6;
                   return (
                     <div key={idx} onClick={() => handleDayClick(day)}
-                      className={`relative border-b border-r border-indigo-50 cursor-pointer min-h-[78px] p-1.5 day-card-hover
+                      className={`relative border-b border-r border-indigo-50 cursor-pointer min-h-[90px] p-1.5 day-card-hover
                         ${!day.isCurrentMonth ? "opacity-40 bg-slate-50/30" : ""}
                         ${day.isSelected ? "bg-indigo-600 text-white ring-2 ring-indigo-400 ring-inset z-10" : "hover:bg-indigo-50/60"}
                         ${day.isToday && !day.isSelected ? "bg-amber-50 ring-2 ring-amber-400 ring-inset" : ""}
@@ -625,14 +648,20 @@ export default function PanchangPage() {
                         <div className="space-y-0.5">
                           {day.panchang ? (
                             <>
-                              <p className={`text-xs font-medium leading-tight truncate ${day.isSelected ? "text-indigo-100" : "text-indigo-700"}`}>{day.panchang.tithi}</p>
-                              <p className={`text-xs leading-tight truncate hidden sm:block ${day.isSelected ? "text-indigo-200" : "text-slate-400"}`}>{day.panchang.nakshatra}</p>
+                              <p className={`text-xs font-semibold leading-tight truncate ${day.isSelected ? "text-indigo-100" : "text-indigo-700"}`}>{day.panchang.tithi}</p>
+                              {(() => {
+                                const lbl = tithiWindowLabel(day.panchang, day.date, selectedCity.timezone);
+                                return lbl ? (
+                                  <p className={`text-[9px] leading-tight truncate ${day.isSelected ? "text-indigo-200" : "text-indigo-400"}`} title={lbl}>{lbl}</p>
+                                ) : null;
+                              })()}
+                              <p className={`text-[10px] leading-tight truncate hidden sm:block ${day.isSelected ? "text-indigo-200" : "text-slate-400"}`}>{day.panchang.nakshatra}</p>
                             </>
                           ) : (
                             <div className={`h-2.5 rounded animate-pulse ${day.isSelected ? "bg-indigo-400" : "bg-indigo-100"}`} />
                           )}
                           {festivals.length > 0 && (
-                            <p className={`text-xs font-semibold leading-tight truncate ${day.isSelected ? "text-amber-300" : "text-rose-600"}`}>🎉 {festivals[0]}</p>
+                            <p className={`text-[10px] font-semibold leading-tight truncate ${day.isSelected ? "text-amber-300" : "text-rose-600"}`}>🎉 {festivals[0]}</p>
                           )}
                         </div>
                       )}
@@ -644,6 +673,7 @@ export default function PanchangPage() {
                 <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-amber-400" /><span>Today</span></div>
                 <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-indigo-600" /><span>Selected</span></div>
                 <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-rose-500" /><span>Festival</span></div>
+                <div className="flex items-center gap-1"><span className="text-indigo-400 font-bold">↑</span><span>Tithi ends next day</span></div>
                 <div className="ml-auto text-indigo-500 font-medium">🕉️ Based on {selectedCity.name}</div>
               </div>
             </div>
@@ -674,7 +704,7 @@ export default function PanchangPage() {
                     { icon: "🌇", label: "Sunset", value: sp.sunset },
                     { icon: "🌙", label: "Moonrise", value: sp.moonrise },
                     { icon: "🌑", label: "Moonset", value: sp.moonset },
-                    { icon: "🌓", label: "Tithi", value: sp.tithi, sub: sp.tithiEnd ? `Ends: ${sp.tithiEnd}` : undefined },
+                    { icon: "🌓", label: "Tithi", value: sp.tithi, sub: sp.tithiStart && sp.tithiEnd ? `${sp.tithiStart} – ${sp.tithiEnd}` : (sp.tithiEnd ? `Ends: ${sp.tithiEnd}` : undefined) },
                     { icon: "⭐", label: "Nakshatra", value: sp.nakshatra, sub: sp.nakshatraEnd ? `Ends: ${sp.nakshatraEnd}` : undefined },
                     { icon: "🔯", label: "Yoga", value: sp.yoga },
                     { icon: "☯️", label: "Karana", value: sp.karana },

@@ -144,3 +144,48 @@ export function computeSiderealPositions(
 
   return { moonSid, sunSid, jd, T };
 }
+
+// ─── Internal helper: sidereal elongation for a given UTC timestamp ──────────
+function elongationAtMs(ms: number): number {
+  const jd = julianDay(new Date(ms));
+  const T  = (jd - 2451545.0) / 36525.0;
+  const ay = getLahiriAyanamsa(jd);
+  return mod360(mod360(computeMoonTropicalLon(T) - ay) - mod360(computeSunTropicalLon(T) - ay));
+}
+
+// Binary-search for the UTC timestamp where elongation crosses `target` degrees.
+// Search window is [loMs, hiMs]. Returns the crossing time as a Date.
+function findElongationCrossing(target: number, loMs: number, hiMs: number): Date {
+  for (let i = 0; i < 60; i++) {
+    const midMs = (loMs + hiMs) / 2;
+    let el = elongationAtMs(midMs);
+    // Handle the 0°/360° wrap-around at Amavasya
+    if (target < 24 && el > 336) el -= 360;
+    if (target > 336 && el < 24) el += 360;
+    if (el < target) loMs = midMs; else hiMs = midMs;
+  }
+  return new Date((loMs + hiMs) / 2);
+}
+
+// ─── Compute the exact start & end time of the tithi prevailing at `date` ───
+// Returns Date objects in UTC; format them in the city's local timezone outside.
+export function computeTithiWindow(
+  date: Date,
+  utcOffset: number,
+): { tithiStart: Date; tithiEnd: Date } {
+  // Reference point: local 6 AM
+  const baseUTC      = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  const localSixAMMs = baseUTC + (6 - utcOffset) * 3600_000;
+
+  const el       = elongationAtMs(localSixAMMs);
+  const tithiNum = Math.floor(el / 12);
+
+  const startDeg = tithiNum * 12;        // lower boundary (degrees)
+  const endDeg   = (tithiNum + 1) * 12;  // upper boundary (degrees)
+
+  // Tithi typically lasts ~23-26 hours; search ±2 days from reference
+  const tithiStart = findElongationCrossing(startDeg, localSixAMMs - 2 * 86_400_000, localSixAMMs);
+  const tithiEnd   = findElongationCrossing(endDeg,   localSixAMMs, localSixAMMs + 2 * 86_400_000);
+
+  return { tithiStart, tithiEnd };
+}

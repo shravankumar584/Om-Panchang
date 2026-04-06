@@ -1,4 +1,4 @@
-import { computeSiderealPositions, getLahiriAyanamsa, mod360 } from "./astronomyCore";
+import { computeSiderealPositions, getLahiriAyanamsa, mod360, computeTithiWindow } from "./astronomyCore";
 
 export interface City {
   name: string;
@@ -137,7 +137,10 @@ export const CITIES: City[] = [
 export interface DayPanchang {
   date: Date;
   tithi: string;
+  tithiStart?: string;
   tithiEnd?: string;
+  tithiStartDate?: Date;   // raw Date so callers can format with cross-day awareness
+  tithiEndDate?: Date;
   nakshatra: string;
   nakshatraEnd?: string;
   yoga: string;
@@ -667,12 +670,19 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
   const { sunriseDate, sunsetDate } = approximateSunriseSunsetDates(date, city.lat, city.lon, city.timezone);
   const extra = buildExtraFields(date, city, sunriseDate, sunsetDate, sunTrop, moonTrop);
 
+  // Compute exact tithi start/end times via binary search
+  const { tithiStart: tithiStartDate, tithiEnd: tithiEndDate } = computeTithiWindow(date, utcOffsetHours);
+
   return {
     date,
-    tithi:    TITHI_NAMES[tithiNum % 15]    || "Pratipada",
+    tithi:         TITHI_NAMES[tithiNum % 15]         || "Pratipada",
+    tithiStart:    formatTime(tithiStartDate, city.timezone),
+    tithiEnd:      formatTime(tithiEndDate,   city.timezone),
+    tithiStartDate,
+    tithiEndDate,
     nakshatra: NAKSHATRA_NAMES[nakshatraNum % 27] || "Ashwini",
-    yoga:     YOGA_NAMES[yogaNum % 27]      || "Vishkambha",
-    karana:   KARANA_NAMES[karanaNum % 11]  || "Bava",
+    yoga:     YOGA_NAMES[yogaNum % 27]            || "Vishkambha",
+    karana:   KARANA_NAMES[karanaNum % 11]        || "Bava",
     paksha,
     sunrise:  formatTime(sunriseDate, city.timezone),
     sunset:   formatTime(sunsetDate,  city.timezone),
