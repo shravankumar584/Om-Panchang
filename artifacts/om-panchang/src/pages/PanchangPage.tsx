@@ -6,6 +6,7 @@ import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 import KundaliSection from "@/components/KundaliSection";
 import KundaliMilanSection from "@/components/KundaliMilanSection";
+import MuhuratCalculator from "@/components/MuhuratCalculator";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -103,7 +104,7 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan";
+type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc";
 
 interface CalendarDay {
   date: Date;
@@ -461,6 +462,7 @@ export default function PanchangPage() {
     { id: "guide", label: "Guide", icon: "📖" },
     { id: "kundali", label: "Kundali", icon: "🔯" },
     { id: "milan", label: "Match", icon: "💑" },
+    { id: "muhurtacalc", label: "Muhurta", icon: "✨" },
   ];
 
   // Sidebar: common across tabs
@@ -824,6 +826,13 @@ export default function PanchangPage() {
       {activeTab === "milan" && (
         <main className="max-w-4xl mx-auto px-4 py-5">
           <KundaliMilanSection />
+        </main>
+      )}
+
+      {/* ===== MUHURTA CALCULATOR TAB ===== */}
+      {activeTab === "muhurtacalc" && (
+        <main className="max-w-4xl mx-auto px-4 py-5">
+          <MuhuratCalculator />
         </main>
       )}
 
