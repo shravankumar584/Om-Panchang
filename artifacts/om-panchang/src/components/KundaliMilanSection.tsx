@@ -15,6 +15,41 @@ interface PersonInput {
 }
 
 // ─── City Search combobox ─────────────────────────────────────────────────────
+// Common abbreviations → full city name (expand before sending to Nominatim)
+const CITY_ALIASES: Record<string, string> = {
+  // India
+  hyd:"Hyderabad", hb:"Hyderabad",
+  mum:"Mumbai", bom:"Mumbai",
+  del:"Delhi", ndl:"New Delhi", nd:"New Delhi",
+  blr:"Bangalore", ban:"Bengaluru",
+  che:"Chennai", mad:"Chennai",
+  kol:"Kolkata", cal:"Kolkata",
+  pun:"Pune", pune:"Pune",
+  ahm:"Ahmedabad", ahd:"Ahmedabad",
+  nag:"Nagpur",
+  sur:"Surat",
+  jp:"Jaipur",
+  lko:"Lucknow",
+  viz:"Visakhapatnam", vsk:"Visakhapatnam",
+  cbe:"Coimbatore",
+  // US
+  nyc:"New York City",
+  la:"Los Angeles",
+  sf:"San Francisco",
+  chi:"Chicago",
+  hou:"Houston",
+  dal:"Dallas",
+  det:"Detroit",
+  phi:"Philadelphia",
+  phx:"Phoenix",
+  sea:"Seattle",
+  atl:"Atlanta",
+};
+
+function expandQuery(q: string): string {
+  return CITY_ALIASES[q.toLowerCase().trim()] ?? q;
+}
+
 function friendlyName(r: NominatimResult): string {
   const a = r.address ?? {};
   return [a.city??a.town??a.village??"", a.state??"", a.country??""].filter(Boolean).join(", ");
@@ -46,8 +81,9 @@ function CitySearch({ value, onChange, label }: {
 
   async function fetchCities(q: string) {
     setLoading(true);
+    const expanded = expandQuery(q);
     try {
-      const r = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&addressdetails=1&limit=8`, { headers:{"Accept-Language":"en"} });
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(expanded)}&format=json&addressdetails=1&limit=8&featuretype=settlement`, { headers:{"Accept-Language":"en"} });
       const data: NominatimResult[] = await r.json();
       setResults(data);
       if (data.length === 0) setStatus("No results");
