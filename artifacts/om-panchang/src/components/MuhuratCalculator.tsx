@@ -1,15 +1,148 @@
-import { useState, useCallback } from "react";
-import { CITIES, NAKSHATRA_NAMES, YOGA_NAMES, TITHI_NAMES } from "@/lib/panchangData";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { NAKSHATRA_NAMES, YOGA_NAMES, TITHI_NAMES } from "@/lib/panchangData";
+
+// ─── Location types ──────────────────────────────────────────────────────────
+interface LocationValue {
+  name: string; lat: number; lon: number;
+}
+interface NominatimResult {
+  place_id: number; display_name: string; lat: string; lon: string;
+  address?: { city?: string; town?: string; village?: string; state?: string; country?: string };
+}
+
+function friendlyName(r: NominatimResult): string {
+  const a = r.address ?? {};
+  return [a.city ?? a.town ?? a.village ?? "", a.state ?? "", a.country ?? ""].filter(Boolean).join(", ");
+}
+
+// ─── City search combobox (light-bg variant) ─────────────────────────────────
+function CitySearch({ value, onChange }: { value: LocationValue; onChange: (v: LocationValue) => void }) {
+  const [query, setQuery]     = useState(value.name);
+  const [results, setResults] = useState<NominatimResult[]>([]);
+  const [open, setOpen]       = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [geoStatus, setGeoStatus] = useState("");
+  const ref   = useRef<HTMLDivElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // close on outside click
+  useEffect(() => {
+    const fn = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", fn);
+    return () => document.removeEventListener("mousedown", fn);
+  }, []);
+
+  function handleInput(q: string) {
+    setQuery(q); setOpen(true); setGeoStatus("");
+    if (timer.current) clearTimeout(timer.current);
+    if (q.trim().length < 2) { setResults([]); return; }
+    timer.current = setTimeout(() => fetchCities(q.trim()), 400);
+  }
+
+  async function fetchCities(q: string) {
+    setLoading(true);
+    try {
+      const r = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&addressdetails=1&limit=8`,
+        { headers: { "Accept-Language": "en" } }
+      );
+      const data: NominatimResult[] = await r.json();
+      setResults(data);
+      if (data.length === 0) setGeoStatus("No results found");
+    } catch { setGeoStatus("Search unavailable — check connection"); }
+    setLoading(false);
+  }
+
+  async function select(r: NominatimResult) {
+    const lat  = parseFloat(r.lat);
+    const lon  = parseFloat(r.lon);
+    const name = friendlyName(r) || r.display_name.split(",")[0];
+    setQuery(name); setOpen(false); setResults([]); setGeoStatus("");
+    onChange({ name, lat, lon });
+  }
+
+  async function useGeolocation() {
+    if (!navigator.geolocation) { setGeoStatus("Geolocation not supported"); return; }
+    setGeoStatus("📍 Getting your location…"); setLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        try {
+          const r = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`,
+            { headers: { "Accept-Language": "en" } }
+          );
+          const data: NominatimResult & { address: NonNullable<NominatimResult["address"]> } = await r.json();
+          const name = friendlyName(data) || "My Location";
+          setQuery(name); setGeoStatus(""); setLoading(false);
+          onChange({ name, lat, lon });
+        } catch {
+          setQuery(`${lat.toFixed(3)}°, ${lon.toFixed(3)}°`);
+          setGeoStatus(""); setLoading(false);
+          onChange({ name: "My Location", lat, lon });
+        }
+      },
+      () => { setGeoStatus("Location access denied"); setLoading(false); }
+    );
+  }
+
+  return (
+    <div ref={ref} className="relative">
+      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1.5">
+        ② City / Location
+      </label>
+      <div className="flex gap-2">
+        <div className="relative flex-1">
+          <input
+            type="text"
+            value={query}
+            onChange={e => handleInput(e.target.value)}
+            onFocus={() => { if (results.length > 0) setOpen(true); }}
+            placeholder="Type city name… e.g. Detroit, Houston"
+            className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 text-slate-700 pr-8"
+          />
+          {loading && (
+            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-indigo-400 text-xs animate-pulse">⏳</span>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={useGeolocation}
+          title="Use my current location"
+          className="flex-shrink-0 border border-slate-200 rounded-xl px-3 py-2 text-sm text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 transition font-semibold"
+        >
+          📍
+        </button>
+      </div>
+
+      {geoStatus && (
+        <p className="text-xs text-slate-400 mt-1 px-1">{geoStatus}</p>
+      )}
+
+      {/* Dropdown */}
+      {open && results.length > 0 && (
+        <ul className="absolute z-50 left-0 right-0 mt-1 bg-white rounded-xl shadow-xl border border-indigo-100 max-h-56 overflow-y-auto">
+          {results.map(r => (
+            <li key={r.place_id}>
+              <button
+                type="button"
+                onMouseDown={e => { e.preventDefault(); select(r); }}
+                className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 truncate border-b border-slate-50 last:border-0"
+              >
+                <span className="font-semibold">{friendlyName(r) || r.display_name.split(",")[0]}</span>
+                <span className="text-xs text-slate-400 ml-2 truncate">{r.display_name.split(",").slice(1, 3).join(",")}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 // ─── Event type definitions (Muhurta Chintamani + Brihat Samhita) ────────────
-// Nakshatra indices: 0=Ashwini, 1=Bharani, 2=Krittika, 3=Rohini, 4=Mrigashira,
-//   5=Ardra, 6=Punarvasu, 7=Pushya, 8=Ashlesha, 9=Magha, 10=Uttara Phalguni,
-//   11=Hasta, 12=Chitra, 13=Swati, 14=Anuradha, 15=Jyeshtha, 16=Mula,
-//   17=Purva Ashadha, 18=Uttara Ashadha, 19=Shravana, 20=Dhanishtha,
-//   21=Shatabhisha, 22=Purva Bhadrapada, 23=Uttara Bhadrapada, 24=Revati
-// Tithi indices 0-14 (Pratipada–Purnima, mod 15)
-// Vara: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-
 const EVENT_TYPES = [
   {
     id: "wedding",
@@ -59,26 +192,22 @@ const EVENT_TYPES = [
 
 type EventId = (typeof EVENT_TYPES)[number]["id"];
 
-// Inauspicious yogas (Vishkambha, Atiganda, Shula, Ganda, Vyaghata, Vajra, Vyatipata, Parigha, Vaidhriti)
+// ─── Vedic computation helpers ───────────────────────────────────────────────
 const INAUSPICIOUS_YOGAS = new Set([0, 5, 8, 9, 12, 14, 16, 18, 26]);
+const RAHU_SLOTS = [7, 1, 6, 4, 5, 3, 2]; // slot index (0-7) by weekday [Sun..Sat]
 
-// Rahu Kaal slot index (0-based, out of 8 day-segments) by weekday [Sun..Sat]
-const RAHU_SLOTS = [7, 1, 6, 4, 5, 3, 2];
+const VARA_SA    = ["Ravivara","Somavara","Mangalavara","Budhavara","Guruvara","Shukravara","Shanivara"];
+const VARA_SHORT = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-const VARA_SA   = ["Ravivara", "Somavara", "Mangalavara", "Budhavara", "Guruvara", "Shukravara", "Shanivara"];
-const VARA_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-// ─── Astronomy helpers ───────────────────────────────────────────────────────
 function dayOfYear(date: Date): number {
-  const start = new Date(date.getFullYear(), 0, 0);
-  return Math.floor((date.getTime() - start.getTime()) / 86400000);
+  return Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 86400000);
 }
 
 function approxSunriseSunset(date: Date, lat: number): { sunrise: number; sunset: number } {
   const doy = dayOfYear(date);
   const declRad = (23.45 * Math.sin(((360 / 365) * (doy - 81)) * Math.PI / 180)) * Math.PI / 180;
-  const latRad = lat * Math.PI / 180;
-  const cosHA = -Math.tan(latRad) * Math.tan(declRad);
+  const latRad  = lat * Math.PI / 180;
+  const cosHA   = -Math.tan(latRad) * Math.tan(declRad);
   if (cosHA < -1 || cosHA > 1) return { sunrise: 6, sunset: 18 };
   const ha = Math.acos(cosHA) * (180 / Math.PI);
   return { sunrise: 12 - ha / 15, sunset: 12 + ha / 15 };
@@ -92,73 +221,44 @@ function formatHour(h: number): string {
   return `${dh}:${String(min).padStart(2, "0")} ${ampm}`;
 }
 
-// ─── Day result type ─────────────────────────────────────────────────────────
 interface DayResult {
-  date: Date;
-  dateLabel: string;
-  score: number;
-  nakIdx: number;
-  nakshatra: string;
-  tithiIdx: number;
-  tithi: string;
-  paksha: string;
-  yogaIdx: number;
-  yoga: string;
-  vara: number;
-  inauspiciousYoga: boolean;
-  sunrise: number;
-  rahuStart: number;
-  rahuEnd: number;
-  bestWindow: string;
+  date: Date; dateLabel: string; score: number;
+  nakIdx: number; nakshatra: string;
+  tithiIdx: number; tithi: string; paksha: string;
+  yogaIdx: number; yoga: string;
+  vara: number; inauspiciousYoga: boolean;
+  sunrise: number; rahuStart: number; rahuEnd: number; bestWindow: string;
 }
 
 function computeDay(date: Date, lat: number): DayResult {
-  const MS_PER_DAY = 86400000;
-  const J2000 = new Date("2000-01-01T12:00:00Z").getTime();
-  const d = (date.getTime() - J2000) / MS_PER_DAY;
-
+  const d = (date.getTime() - new Date("2000-01-01T12:00:00Z").getTime()) / 86400000;
   const AYANAMSA = 23.85;
-  const sunTrop  = ((280.460 + 0.9856474   * d) % 360 + 360) % 360;
-  const moonTrop = ((218.316 + 13.176396   * d) % 360 + 360) % 360;
-  const sunSid   = ((sunTrop  - AYANAMSA)  % 360 + 360) % 360;
-  const moonSid  = ((moonTrop - AYANAMSA)  % 360 + 360) % 360;
+  const sunSid  = (((280.460 + 0.9856474  * d) % 360 + 360) % 360 - AYANAMSA + 360) % 360;
+  const moonSid = (((218.316 + 13.176396  * d) % 360 + 360) % 360 - AYANAMSA + 360) % 360;
 
-  const nakIdx   = Math.floor(moonSid / (360 / 27)) % 27;
-  const elongation = ((moonSid - sunSid) + 360) % 360;
-  const tithiRaw = Math.floor(elongation / 12); // 0-29
-  const yogaLon  = (moonSid + sunSid) % 360;
-  const yogaIdx  = Math.floor(yogaLon / (360 / 27)) % 27;
+  const nakIdx    = Math.floor(moonSid / (360 / 27)) % 27;
+  const tithiRaw  = Math.floor(((moonSid - sunSid + 360) % 360) / 12);
+  const yogaIdx   = Math.floor(((moonSid + sunSid) % 360) / (360 / 27)) % 27;
 
-  const nakshatra = NAKSHATRA_NAMES[nakIdx] ?? "?";
-  const tithi     = TITHI_NAMES[tithiRaw % 15] ?? "?";
-  const paksha    = tithiRaw < 15 ? "Shukla" : "Krishna";
-  const yoga      = YOGA_NAMES[yogaIdx] ?? "?";
   const vara      = date.getDay();
-  const inauspiciousYoga = INAUSPICIOUS_YOGAS.has(yogaIdx);
-
   const { sunrise, sunset } = approxSunriseSunset(date, lat);
-  const segLen   = (sunset - sunrise) / 8;
-  const rahuSlot = RAHU_SLOTS[vara];
-  const rahuStart = sunrise + rahuSlot * segLen;
+  const segLen    = (sunset - sunrise) / 8;
+  const rahuStart = sunrise + RAHU_SLOTS[vara] * segLen;
   const rahuEnd   = rahuStart + segLen;
 
-  // Best morning window: 30 min after sunrise, ending before noon (skip Rahu Kaal)
   let winStart = sunrise + 0.5;
   let winEnd   = Math.min(12.0, winStart + 3);
-  if (rahuStart < winEnd && rahuEnd > winStart) {
-    winStart = rahuEnd + 0.25;
-    winEnd   = Math.min(13.5, winStart + 2);
-  }
-
-  const dateLabel = date.toLocaleDateString("en-US", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  });
+  if (rahuStart < winEnd && rahuEnd > winStart) { winStart = rahuEnd + 0.25; winEnd = Math.min(13.5, winStart + 2); }
 
   return {
-    date, dateLabel, score: 0,
-    nakIdx, nakshatra,
-    tithiIdx: tithiRaw % 15, tithi, paksha,
-    yogaIdx, yoga, vara, inauspiciousYoga,
+    date,
+    dateLabel: date.toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" }),
+    score: 0,
+    nakIdx,  nakshatra: NAKSHATRA_NAMES[nakIdx] ?? "?",
+    tithiIdx: tithiRaw % 15, tithi: TITHI_NAMES[tithiRaw % 15] ?? "?",
+    paksha: tithiRaw < 15 ? "Shukla" : "Krishna",
+    yogaIdx, yoga: YOGA_NAMES[yogaIdx] ?? "?",
+    vara, inauspiciousYoga: INAUSPICIOUS_YOGAS.has(yogaIdx),
     sunrise, rahuStart, rahuEnd,
     bestWindow: `${formatHour(winStart)} – ${formatHour(winEnd)}`,
   };
@@ -166,43 +266,44 @@ function computeDay(date: Date, lat: number): DayResult {
 
 function scoreDay(day: DayResult, event: (typeof EVENT_TYPES)[number]): number {
   let s = 0;
-  if ((event.nakshatras as readonly number[]).includes(day.nakIdx)) s += 3;
-  if ((event.tithis    as readonly number[]).includes(day.tithiIdx)) s += 2;
-  if ((event.varas     as readonly number[]).includes(day.vara))     s += 1;
+  if ((event.nakshatras as readonly number[]).includes(day.nakIdx))   s += 3;
+  if ((event.tithis     as readonly number[]).includes(day.tithiIdx)) s += 2;
+  if ((event.varas      as readonly number[]).includes(day.vara))     s += 1;
   if (!day.inauspiciousYoga) s += 1;
   return s;
 }
 
 function getVerdict(score: number) {
-  if (score >= 6) return { label: "Excellent", bg: "bg-emerald-50", border: "border-emerald-300", text: "text-emerald-700", badge: "bg-emerald-100 text-emerald-800", stars: "⭐⭐⭐" };
-  if (score >= 4) return { label: "Good",      bg: "bg-blue-50",    border: "border-blue-300",    text: "text-blue-700",    badge: "bg-blue-100 text-blue-800",    stars: "⭐⭐"  };
-  return            { label: "Acceptable",     bg: "bg-amber-50",   border: "border-amber-300",   text: "text-amber-700",   badge: "bg-amber-100 text-amber-800",  stars: "⭐"   };
+  if (score >= 6) return { label:"Excellent", bg:"bg-emerald-50", border:"border-emerald-300", text:"text-emerald-700", badge:"bg-emerald-100 text-emerald-800", bar:"bg-emerald-400", stars:"⭐⭐⭐" };
+  if (score >= 4) return { label:"Good",      bg:"bg-blue-50",    border:"border-blue-300",    text:"text-blue-700",    badge:"bg-blue-100 text-blue-800",    bar:"bg-blue-400",    stars:"⭐⭐"  };
+  return            { label:"Acceptable",     bg:"bg-amber-50",   border:"border-amber-300",   text:"text-amber-700",   badge:"bg-amber-100 text-amber-800",  bar:"bg-amber-400",   stars:"⭐"   };
 }
 
-const EVENT_COLORS: Record<string, { bg: string; border: string; text: string; activeBg: string; activeBorder: string }> = {
-  rose:    { bg: "bg-rose-50",    border: "border-rose-200",    text: "text-rose-700",    activeBg: "bg-rose-50",    activeBorder: "border-rose-500"    },
-  emerald: { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-700", activeBg: "bg-emerald-50", activeBorder: "border-emerald-500" },
-  amber:   { bg: "bg-amber-50",   border: "border-amber-200",   text: "text-amber-700",   activeBg: "bg-amber-50",   activeBorder: "border-amber-500"   },
-  sky:     { bg: "bg-sky-50",     border: "border-sky-200",     text: "text-sky-700",     activeBg: "bg-sky-50",     activeBorder: "border-sky-500"     },
+const EC: Record<string, { bg:string; border:string; text:string; activeBg:string; activeBorder:string }> = {
+  rose:    { bg:"bg-rose-50",    border:"border-rose-200",    text:"text-rose-700",    activeBg:"bg-rose-50",    activeBorder:"border-rose-500"    },
+  emerald: { bg:"bg-emerald-50", border:"border-emerald-200", text:"text-emerald-700", activeBg:"bg-emerald-50", activeBorder:"border-emerald-500" },
+  amber:   { bg:"bg-amber-50",   border:"border-amber-200",   text:"text-amber-700",   activeBg:"bg-amber-50",   activeBorder:"border-amber-500"   },
+  sky:     { bg:"bg-sky-50",     border:"border-sky-200",     text:"text-sky-700",     activeBg:"bg-sky-50",     activeBorder:"border-sky-500"     },
 };
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// ─── Main component ──────────────────────────────────────────────────────────
+const DEFAULT_LOC: LocationValue = { name: "New Delhi, India", lat: 28.6139, lon: 77.209 };
+
 export default function MuhuratCalculator() {
-  const today  = new Date();
+  const today    = new Date();
   const todayStr = today.toISOString().slice(0, 10);
-  const in45   = new Date(today.getTime() + 45 * 86400000).toISOString().slice(0, 10);
+  const in45     = new Date(today.getTime() + 45 * 86400000).toISOString().slice(0, 10);
 
   const [eventId,   setEventId]   = useState<EventId>("wedding");
   const [startDate, setStartDate] = useState(todayStr);
   const [endDate,   setEndDate]   = useState(in45);
-  const [cityName,  setCityName]  = useState("New Delhi, India");
+  const [location,  setLocation]  = useState<LocationValue>(DEFAULT_LOC);
   const [results,   setResults]   = useState<DayResult[] | null>(null);
   const [computing, setComputing] = useState(false);
   const [error,     setError]     = useState("");
 
-  const city  = CITIES.find(c => c.name === cityName) ?? CITIES[0];
   const event = EVENT_TYPES.find(e => e.id === eventId)!;
-  const ec    = EVENT_COLORS[event.color];
+  const ec    = EC[event.color];
 
   const calculate = useCallback(() => {
     setError(""); setResults(null); setComputing(true);
@@ -210,32 +311,27 @@ export default function MuhuratCalculator() {
       try {
         const start = new Date(startDate + "T00:00:00");
         const end   = new Date(endDate   + "T00:00:00");
-        if (isNaN(start.getTime()) || isNaN(end.getTime())) { setError("Invalid dates."); return; }
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) { setError("Invalid dates."); setComputing(false); return; }
         const days = Math.round((end.getTime() - start.getTime()) / 86400000);
-        if (days < 0) { setError("End date must be after start date."); return; }
-        if (days > 120) { setError("Please limit the range to 120 days."); return; }
+        if (days < 0) { setError("End date must be after start date."); setComputing(false); return; }
+        if (days > 120) { setError("Please limit the range to 120 days."); setComputing(false); return; }
 
         const out: DayResult[] = [];
         for (let i = 0; i <= days; i++) {
           const d = new Date(start.getTime() + i * 86400000);
-          const day = computeDay(d, city.lat);
+          const day = computeDay(d, location.lat);
           day.score = scoreDay(day, event);
           if (day.score >= 3) out.push(day);
         }
         out.sort((a, b) => b.score - a.score);
         setResults(out);
-      } catch (e) {
-        setError("Calculation error. Please try again.");
-        console.error(e);
-      } finally {
-        setComputing(false);
-      }
+      } catch (e) { setError("Calculation error. Please try again."); console.error(e); }
+      finally { setComputing(false); }
     }, 20);
-  }, [startDate, endDate, city, event]);
+  }, [startDate, endDate, location, event]);
 
   const totalDays = (() => {
-    const s = new Date(startDate + "T00:00:00");
-    const e = new Date(endDate   + "T00:00:00");
+    const s = new Date(startDate + "T00:00:00"), e = new Date(endDate + "T00:00:00");
     if (isNaN(s.getTime()) || isNaN(e.getTime())) return 0;
     return Math.round((e.getTime() - s.getTime()) / 86400000) + 1;
   })();
@@ -256,15 +352,15 @@ export default function MuhuratCalculator() {
         </div>
       </div>
 
-      {/* Form card */}
+      {/* Form */}
       <div className="bg-white rounded-2xl shadow-sm card-glow border border-indigo-100 p-5 space-y-5">
 
-        {/* Event type selector */}
+        {/* Event type */}
         <div>
           <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">① Select Event Type</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {EVENT_TYPES.map(e => {
-              const c = EVENT_COLORS[e.color];
+              const c = EC[e.color];
               const active = e.id === eventId;
               return (
                 <button
@@ -284,19 +380,10 @@ export default function MuhuratCalculator() {
           </div>
         </div>
 
-        {/* City + date range */}
-        <div className="grid md:grid-cols-3 gap-4">
+        {/* City search + dates */}
+        <div className="grid md:grid-cols-3 gap-4 items-end">
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1.5">② City / Location</label>
-            <select
-              value={cityName}
-              onChange={e => { setCityName(e.target.value); setResults(null); }}
-              className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white text-slate-700"
-            >
-              {CITIES.map(c => (
-                <option key={c.name} value={c.name}>{c.name}</option>
-              ))}
-            </select>
+            <CitySearch value={location} onChange={loc => { setLocation(loc); setResults(null); }} />
           </div>
           <div>
             <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1.5">③ From Date</label>
@@ -307,7 +394,9 @@ export default function MuhuratCalculator() {
             />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1.5">To Date <span className="text-slate-400 font-normal normal-case">(max 120 days)</span></label>
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1.5">
+              To Date <span className="text-slate-400 font-normal normal-case">(max 120 days)</span>
+            </label>
             <input
               type="date" value={endDate}
               onChange={e => { setEndDate(e.target.value); setResults(null); }}
@@ -337,8 +426,6 @@ export default function MuhuratCalculator() {
       {/* Results */}
       {results !== null && (
         <div className="space-y-4">
-
-          {/* Summary bar */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-xl font-black text-slate-800">
@@ -346,18 +433,17 @@ export default function MuhuratCalculator() {
                   ? `${results.length} Auspicious ${results.length === 1 ? "Date" : "Dates"} Found`
                   : "No Strongly Auspicious Dates"}
               </h2>
-              <p className="text-sm text-slate-400 mt-0.5">{event.labelFull} · {city.name}</p>
+              <p className="text-sm text-slate-400 mt-0.5">{event.labelFull} · {location.name}</p>
             </div>
             {results.length > 0 && (
-              <div className="flex gap-2 text-xs">
-                <span className="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full">⭐⭐⭐ Excellent: {results.filter(r => r.score >= 6).length}</span>
-                <span className="bg-blue-100 text-blue-700 font-bold px-2.5 py-1 rounded-full">⭐⭐ Good: {results.filter(r => r.score >= 4 && r.score < 6).length}</span>
-                <span className="bg-amber-100 text-amber-700 font-bold px-2.5 py-1 rounded-full">⭐ Acceptable: {results.filter(r => r.score < 4).length}</span>
+              <div className="flex flex-wrap gap-2 text-xs">
+                <span className="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full">⭐⭐⭐ {results.filter(r => r.score >= 6).length}</span>
+                <span className="bg-blue-100 text-blue-700 font-bold px-2.5 py-1 rounded-full">⭐⭐ {results.filter(r => r.score >= 4 && r.score < 6).length}</span>
+                <span className="bg-amber-100 text-amber-700 font-bold px-2.5 py-1 rounded-full">⭐ {results.filter(r => r.score < 4).length}</span>
               </div>
             )}
           </div>
 
-          {/* Empty state */}
           {results.length === 0 && (
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center">
               <p className="text-4xl mb-3">🙏</p>
@@ -366,17 +452,14 @@ export default function MuhuratCalculator() {
             </div>
           )}
 
-          {/* Day cards */}
           {results.map((day, i) => {
             const v = getVerdict(day.score);
             return (
-              <div key={i} className={`bg-white rounded-2xl shadow-sm border ${v.border} overflow-hidden transition hover:shadow-md`}>
-                {/* Top accent strip */}
-                <div className={`h-1 w-full ${day.score >= 6 ? "bg-emerald-400" : day.score >= 4 ? "bg-blue-400" : "bg-amber-400"}`} />
-
+              <div key={i} className={`bg-white rounded-2xl shadow-sm border ${v.border} overflow-hidden hover:shadow-md transition`}>
+                <div className={`h-1 w-full ${v.bar}`} />
                 <div className="p-4 flex flex-col sm:flex-row gap-4">
 
-                  {/* Score circle */}
+                  {/* Score badge */}
                   <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center ${v.bg} border ${v.border} self-start`}>
                     <span className={`text-2xl font-black leading-none ${v.text}`}>{day.score}</span>
                     <span className={`text-xs ${v.text} opacity-70`}>/7</span>
@@ -388,8 +471,6 @@ export default function MuhuratCalculator() {
                       <span className="font-black text-slate-800 text-base leading-tight">{day.dateLabel}</span>
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${v.badge}`}>{v.stars} {v.label}</span>
                     </div>
-
-                    {/* Panchang details */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                       <div className="bg-indigo-50 rounded-lg px-2.5 py-2">
                         <p className="text-indigo-400 font-semibold uppercase tracking-wider text-[10px] mb-0.5">Nakshatra</p>
@@ -406,15 +487,14 @@ export default function MuhuratCalculator() {
                       </div>
                       <div className={`rounded-lg px-2.5 py-2 ${day.inauspiciousYoga ? "bg-red-50" : "bg-emerald-50"}`}>
                         <p className={`font-semibold uppercase tracking-wider text-[10px] mb-0.5 ${day.inauspiciousYoga ? "text-red-400" : "text-emerald-400"}`}>Yoga</p>
-                        <p className={`font-bold text-xs ${day.inauspiciousYoga ? "text-red-700" : "text-emerald-700"}`}>
-                          {day.yoga}
-                          <span className="ml-1">{day.inauspiciousYoga ? "⚠️" : "✓"}</span>
+                        <p className={`font-bold ${day.inauspiciousYoga ? "text-red-700" : "text-emerald-700"}`}>
+                          {day.yoga} {day.inauspiciousYoga ? "⚠️" : "✓"}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Timing panel */}
+                  {/* Timings */}
                   <div className="flex-shrink-0 flex flex-col gap-2 sm:min-w-[140px]">
                     <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
                       <p className="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">✅ Best Window</p>
@@ -425,27 +505,25 @@ export default function MuhuratCalculator() {
                       <p className="text-sm font-black text-red-700 mt-0.5">{formatHour(day.rahuStart)}–{formatHour(day.rahuEnd)}</p>
                     </div>
                     <div className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-center">
-                      <p className="text-[10px] text-slate-400 font-semibold">🌅 Sunrise</p>
+                      <p className="text-[10px] text-slate-400 font-semibold">🌅 Sunrise ~</p>
                       <p className="text-xs font-bold text-slate-600">{formatHour(day.sunrise)}</p>
                     </div>
                   </div>
-
                 </div>
               </div>
             );
           })}
 
-          {/* Scoring disclaimer */}
           {results.length > 0 && (
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-500 leading-relaxed">
-              <p className="font-bold text-slate-700 mb-1">📜 Scoring System (Muhurta Chintamani + Brihat Samhita)</p>
-              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-0.5">
+              <p className="font-bold text-slate-700 mb-1.5">📜 Scoring System (Muhurta Chintamani + Brihat Samhita)</p>
+              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-0.5 mb-2">
                 <p>🌙 Auspicious Nakshatra: <strong>+3 pts</strong></p>
                 <p>🌗 Auspicious Tithi: <strong>+2 pts</strong></p>
                 <p>📅 Favorable Weekday (Vara): <strong>+1 pt</strong></p>
                 <p>🔮 No Inauspicious Yoga: <strong>+1 pt</strong></p>
               </div>
-              <p className="mt-2 text-[11px] text-slate-400">Timings are approximate (local mean time). For exact Muhurta vidhi including Lagna, Navamsa, and planetary aspects, consult a learned Jyotishi.</p>
+              <p className="text-[11px] text-slate-400">Sunrise and Rahu Kaal times are approximate (based on latitude). For precise Muhurta vidhi including Lagna, Navamsa, and planetary aspects, consult a learned Jyotishi.</p>
             </div>
           )}
         </div>
