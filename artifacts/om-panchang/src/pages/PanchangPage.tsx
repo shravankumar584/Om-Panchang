@@ -356,7 +356,27 @@ function CitySearchSelect({ value, onChange }: { value: City; onChange: (city: C
   );
 }
 
-export default function PanchangPage() {
+type CalendarVariant = "default" | "hindu" | "telugu";
+
+const VARIANT_CONFIG: Record<CalendarVariant, { title: string; heading: string; sub: string }> = {
+  default: {
+    title:   "Om Panchang – Hindu Calendar & Vedic Almanac",
+    heading: "Om Panchang",
+    sub:     "Hindu Calendar & Vedic Almanac",
+  },
+  hindu: {
+    title:   "Hindu Calendar {year} – {city} | Om Panchang",
+    heading: "Hindu Calendar",
+    sub:     "Panchang, Tithi, Nakshatra & Festivals",
+  },
+  telugu: {
+    title:   "Telugu Calendar {year} – {city} | Om Panchang",
+    heading: "Telugu Calendar",
+    sub:     "తెలుగు పంచాంగం · Panchang, Tithi & Festivals",
+  },
+};
+
+export default function PanchangPage({ variant = "default" }: { variant?: CalendarVariant }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -382,6 +402,16 @@ export default function PanchangPage() {
     script.onerror = () => setLibraryLoaded(true);
     document.head.appendChild(script);
   }, []);
+
+  // Update browser tab title whenever city or year changes
+  useEffect(() => {
+    const cfg = VARIANT_CONFIG[variant];
+    const year = viewDate.getFullYear();
+    const title = cfg.title
+      .replace("{city}", selectedCity.name)
+      .replace("{year}", String(year));
+    document.title = title;
+  }, [variant, selectedCity.name, viewDate]);
 
   const getCacheKey = (date: Date, cityName: string) =>
     `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${cityName}`;
@@ -557,8 +587,8 @@ export default function PanchangPage() {
                 🕉️
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">Om Panchang</h1>
-                <p className="text-indigo-200 text-xs">Hindu Calendar & Vedic Almanac</p>
+                <h1 className="text-xl font-bold text-white tracking-tight">{VARIANT_CONFIG[variant].heading}</h1>
+                <p className="text-indigo-200 text-xs">{VARIANT_CONFIG[variant].sub}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -870,7 +900,7 @@ export default function PanchangPage() {
       <footer className="text-center py-6 text-slate-400 text-xs border-t border-indigo-100 bg-white/60 mt-4">
         <p className="flex items-center justify-center gap-2 font-medium text-slate-500">
           <span>🕉️</span>
-          <span>Om Panchang · Hindu Calendar & Vedic Almanac</span>
+          <span>{VARIANT_CONFIG[variant].heading} · {VARIANT_CONFIG[variant].sub}</span>
           <span>🕉️</span>
         </p>
         <p className="mt-1">Astronomical calculations · Location-aware</p>
