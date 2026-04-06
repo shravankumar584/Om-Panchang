@@ -1,3 +1,5 @@
+import { computeSiderealPositions, getLahiriAyanamsa, mod360 } from "./astronomyCore";
+
 export interface City {
   name: string;
   country: string;
@@ -640,32 +642,42 @@ export async function computeDayPanchang(date: Date, city: City): Promise<DayPan
 }
 
 function computeFallbackPanchang(date: Date, city: City, festivals: string[]): DayPanchang {
-  const d = (date.getTime() - new Date("2000-01-01T12:00:00Z").getTime()) / 86400000;
-  const moonLon = ((218.316 + 13.176396 * d) % 360 + 360) % 360;
-  const sunLon = ((280.460 + 0.9856474 * d) % 360 + 360) % 360;
+  // Resolve UTC offset so we evaluate positions at ~6 AM local time (near sunrise),
+  // matching the Vedic convention that the day's tithi is the one prevailing at sunrise.
+  const utcOffsetMin  = getTimezoneOffsetMinutes(date, city.timezone);
+  const utcOffsetHours = utcOffsetMin / 60;
 
-  const elongation = (moonLon - sunLon + 360) % 360;
-  const tithiNum = Math.floor(elongation / 12);
-  const nakshatraNum = Math.floor(moonLon / (360 / 27));
-  const yogaLon = (moonLon + sunLon) % 360;
-  const yogaNum = Math.floor(yogaLon / (360 / 27));
-  const karanaNum = Math.floor(elongation / 6) % 11;
-  const paksha = tithiNum < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
+  // Accurate sidereal positions using Meeus Ch. 47 (Moon) & Ch. 25 (Sun)
+  const { moonSid, sunSid, jd } = computeSiderealPositions(date, utcOffsetHours);
+  const ayanamsa = getLahiriAyanamsa(jd);
+
+  // Restore tropical longitudes for buildExtraFields (which calls getSiderealZodiac internally)
+  const moonTrop = mod360(moonSid + ayanamsa);
+  const sunTrop  = mod360(sunSid  + ayanamsa);
+
+  // ── Panchang elements (all computed from sidereal frame) ──
+  const elongation   = mod360(moonSid - sunSid);
+  const tithiNum     = Math.floor(elongation / 12);         // 0-29
+  const nakshatraNum = Math.floor(moonSid / (360 / 27));    // 0-26
+  const yogaLon      = mod360(moonSid + sunSid);
+  const yogaNum      = Math.floor(yogaLon / (360 / 27));    // 0-26
+  const karanaNum    = Math.floor(elongation / 6) % 11;     // 0-10
+  const paksha       = tithiNum < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
 
   const { sunriseDate, sunsetDate } = approximateSunriseSunsetDates(date, city.lat, city.lon, city.timezone);
-  const extra = buildExtraFields(date, city, sunriseDate, sunsetDate, sunLon, moonLon);
+  const extra = buildExtraFields(date, city, sunriseDate, sunsetDate, sunTrop, moonTrop);
 
   return {
     date,
-    tithi: TITHI_NAMES[tithiNum % 15] || "Pratipada",
+    tithi:    TITHI_NAMES[tithiNum % 15]    || "Pratipada",
     nakshatra: NAKSHATRA_NAMES[nakshatraNum % 27] || "Ashwini",
-    yoga: YOGA_NAMES[yogaNum % 27] || "Vishkambha",
-    karana: KARANA_NAMES[karanaNum % 11] || "Bava",
+    yoga:     YOGA_NAMES[yogaNum % 27]      || "Vishkambha",
+    karana:   KARANA_NAMES[karanaNum % 11]  || "Bava",
     paksha,
-    sunrise: formatTime(sunriseDate, city.timezone),
-    sunset: formatTime(sunsetDate, city.timezone),
+    sunrise:  formatTime(sunriseDate, city.timezone),
+    sunset:   formatTime(sunsetDate,  city.timezone),
     moonrise: "N/A",
-    moonset: "N/A",
+    moonset:  "N/A",
     rahuKalam: getRahuKalam(date, sunriseDate, sunsetDate, city.timezone),
     ...extra, festivals, loading: false,
   };
