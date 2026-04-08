@@ -1033,6 +1033,13 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
           <span>🕉️</span>
         </p>
         <p className="mt-1">Astronomical calculations · Location-aware</p>
+        <div className="flex justify-center gap-4 mt-3 text-indigo-400">
+          <a href="/disclaimer" className="hover:text-indigo-600 transition">Disclaimer</a>
+          <span>·</span>
+          <a href="/contact-us" className="hover:text-indigo-600 transition">Contact Us</a>
+          <span>·</span>
+          <a href="/privacy-policy" className="hover:text-indigo-600 transition">Privacy Policy</a>
+        </div>
       </footer>
 
       {/* Rashi Modal */}
