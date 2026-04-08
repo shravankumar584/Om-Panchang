@@ -664,7 +664,13 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
   const nakshatraNum = Math.floor(moonSid / (360 / 27));    // 0-26
   const yogaLon      = mod360(moonSid + sunSid);
   const yogaNum      = Math.floor(yogaLon / (360 / 27));    // 0-26
-  const karanaNum    = Math.floor(elongation / 6) % 11;     // 0-10
+  const _karanaIdx = Math.floor(elongation / 6);            // 0-59
+  const karanaName = (() => {
+    if (_karanaIdx === 0) return "Kimstughna";
+    if (_karanaIdx >= 57) return ["Shakuni", "Chatushpada", "Naga"][_karanaIdx - 57];
+    const rep = ["Bava", "Balava", "Kaulava", "Taitila", "Garija", "Vanija", "Vishti"];
+    return rep[(_karanaIdx - 1) % 7];
+  })();
   const paksha       = tithiNum < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
 
   const { sunriseDate, sunsetDate } = approximateSunriseSunsetDates(date, city.lat, city.lon, city.timezone);
@@ -682,7 +688,7 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
     tithiEndDate,
     nakshatra: NAKSHATRA_NAMES[nakshatraNum % 27] || "Ashwini",
     yoga:     YOGA_NAMES[yogaNum % 27]            || "Vishkambha",
-    karana:   KARANA_NAMES[karanaNum % 11]        || "Bava",
+    karana:   karanaName,
     paksha,
     sunrise:  formatTime(sunriseDate, city.timezone),
     sunset:   formatTime(sunsetDate,  city.timezone),
