@@ -16,7 +16,8 @@ function detectVariant() {
   if (path.includes("panchang-today"))     return "panchang-today";
   if (path.includes("hindu-festivals"))    return "hindu-festivals";
   if (path.includes("nakshatra-today"))    return "nakshatra-today";
-  if (path.includes("rahu-kalam-today"))   return "rahu-kalam-today";
+  if (path.includes("rahu-kalam-today"))    return "rahu-kalam-today";
+  if (path.includes("baby-names-by-nakshatra") || path.includes("baby-names-nakshatra")) return "baby-names-nakshatra";
   return "default";
 }
 

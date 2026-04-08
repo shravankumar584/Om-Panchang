@@ -7,6 +7,7 @@ import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 import KundaliSection from "@/components/KundaliSection";
 import KundaliMilanSection from "@/components/KundaliMilanSection";
+import BabyNamesSection from "@/components/BabyNamesSection";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -125,7 +126,7 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc";
+type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc" | "babynames";
 
 interface CalendarDay {
   date: Date;
@@ -362,7 +363,8 @@ type CalendarVariant =
   | "vedic-astrology" | "hindu-astrology"
   | "kundali" | "kundali-milan"
   | "marriage-muhurat" | "panchang-today"
-  | "hindu-festivals" | "nakshatra-today" | "rahu-kalam-today";
+  | "hindu-festivals" | "nakshatra-today" | "rahu-kalam-today"
+  | "baby-names-nakshatra";
 
 const VARIANT_CONFIG: Record<CalendarVariant, {
   title: string; heading: string; sub: string; defaultTab: ActiveTab;
@@ -438,6 +440,12 @@ const VARIANT_CONFIG: Record<CalendarVariant, {
     heading:    "Rahu Kalam Today",
     sub:        "Today's Rahu Kalam, Yamagandam & Gulika",
     defaultTab: "panchang",
+  },
+  "baby-names-nakshatra": {
+    title:      "Hindu Baby Names by Nakshatra – Find Auspicious Name | Om Panchang",
+    heading:    "Baby Name Finder",
+    sub:        "Hindu Names by Janma Nakshatra & Starting Syllable",
+    defaultTab: "babynames",
   },
 };
 
@@ -598,6 +606,7 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
     { id: "kundali", label: "Kundali", icon: "🔯" },
     { id: "milan", label: "Match", icon: "💑" },
     { id: "muhurtacalc", label: "Muhurta", icon: "✨" },
+    { id: "babynames", label: "Baby Names", icon: "👶" },
   ];
 
   // Sidebar: common across tabs
@@ -1002,6 +1011,13 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
       {activeTab === "muhurtacalc" && (
         <main className="max-w-4xl mx-auto px-4 py-5">
           <MuhuratCalculator />
+        </main>
+      )}
+
+      {/* ===== BABY NAMES TAB ===== */}
+      {activeTab === "babynames" && (
+        <main className="max-w-3xl mx-auto">
+          <BabyNamesSection />
         </main>
       )}
 
