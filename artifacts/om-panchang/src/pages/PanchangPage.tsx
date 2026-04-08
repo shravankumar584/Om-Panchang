@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { CITIES, City, DayPanchang, computeDayPanchang, getFestivalsForDate } from "@/lib/panchangData";
+import { CalendarLang, LANG_LABELS, LANG_CYCLE, translateTithi, translateNakshatra } from "@/lib/i18n";
 import ReferenceSection from "@/components/ReferenceSection";
 import VedicClock from "@/components/VedicClock";
 import PlanetaryPositions from "@/components/PlanetaryPositions";
@@ -454,7 +455,27 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
   const [isLoadingMonth, setIsLoadingMonth] = useState(false);
   const [isLoadingSidebar, setIsLoadingSidebar] = useState(false);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
+  const [lang, setLang] = useState<CalendarLang>(
+    () => (localStorage.getItem("panchang-lang") as CalendarLang) || "en"
+  );
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("panchang-dark") === "1"
+  );
   const panchangCacheRef = useRef<Map<string, DayPanchang>>(new Map());
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark-mode", darkMode);
+    localStorage.setItem("panchang-dark", darkMode ? "1" : "0");
+  }, [darkMode]);
+
+  const cycleLang = () => {
+    const next = LANG_CYCLE[(LANG_CYCLE.indexOf(lang) + 1) % LANG_CYCLE.length];
+    setLang(next);
+    localStorage.setItem("panchang-lang", next);
+  };
+
+  const tTithi     = (name: string) => translateTithi(name, lang);
+  const tNakshatra = (name: string) => translateNakshatra(name, lang);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -611,11 +632,11 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
             </div>
             <SectionHeader icon="📿" title="Pancha Anga" sub="Five Elements" />
             <div className="px-4 py-1">
-              <DetailRow icon="🌓" label="Tithi" value={sp.tithi}
+              <DetailRow icon="🌓" label="Tithi" value={tTithi(sp.tithi)}
                 sub={sp.tithiStart && sp.tithiEnd ? `${sp.tithiStart} – ${sp.tithiEnd}` : sp.tithiEnd}
                 subPrefix={sp.tithiStart && sp.tithiEnd ? "" : "until"}
               />
-              <DetailRow icon="⭐" label="Nakshatra" value={sp.nakshatra} sub={sp.nakshatraEnd} />
+              <DetailRow icon="⭐" label="Nakshatra" value={tNakshatra(sp.nakshatra)} sub={sp.nakshatraEnd} />
               <DetailRow icon="🔯" label="Yoga" value={sp.yoga} />
               <DetailRow icon="☯️" label="Karana" value={sp.karana} />
               <DetailRow icon="🌊" label="Paksha" value={sp.paksha} />
@@ -651,7 +672,11 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
                 🕉️
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">{VARIANT_CONFIG[variant].heading}</h1>
+                <h1 className="text-xl font-bold text-white tracking-tight">
+                  {VARIANT_CONFIG[variant].heading
+                    .replace("{city}", selectedCity.name)
+                    .replace("{year}", String(viewDate.getFullYear()))}
+                </h1>
                 <p className="text-indigo-200 text-xs">
                   {VARIANT_CONFIG[variant].sub
                     .replace("{city}", selectedCity.name)
@@ -660,6 +685,22 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
               </div>
             </div>
             <div className="flex items-center gap-2">
+              {/* Language cycle: EN → हि → తె */}
+              <button
+                onClick={cycleLang}
+                title="Switch language for Tithi & Nakshatra names"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-bold transition flex items-center justify-center"
+              >
+                {LANG_LABELS[lang]}
+              </button>
+              {/* Dark mode toggle */}
+              <button
+                onClick={() => setDarkMode(d => !d)}
+                title={darkMode ? "Switch to Light mode" : "Switch to Dark mode"}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-lg transition flex items-center justify-center"
+              >
+                {darkMode ? "☀️" : "🌙"}
+              </button>
               <CitySearchSelect value={selectedCity} onChange={handleCityChange} />
             </div>
           </div>
@@ -746,14 +787,14 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
                         <div className="space-y-0.5">
                           {day.panchang ? (
                             <>
-                              <p className={`text-xs font-semibold leading-tight truncate ${day.isSelected ? "text-indigo-100" : "text-indigo-700"}`}>{day.panchang.tithi}</p>
+                              <p className={`text-xs font-semibold leading-tight truncate ${day.isSelected ? "text-indigo-100" : "text-indigo-700"}`}>{tTithi(day.panchang.tithi)}</p>
                               {(() => {
                                 const lbl = tithiWindowLabel(day.panchang, day.date, selectedCity.timezone);
                                 return lbl ? (
                                   <p className={`text-[9px] leading-tight truncate ${day.isSelected ? "text-indigo-200" : "text-indigo-400"}`} title={lbl}>{lbl}</p>
                                 ) : null;
                               })()}
-                              <p className={`text-[10px] leading-tight truncate hidden sm:block ${day.isSelected ? "text-indigo-200" : "text-slate-400"}`}>{day.panchang.nakshatra}</p>
+                              <p className={`text-[10px] leading-tight truncate hidden sm:block ${day.isSelected ? "text-indigo-200" : "text-slate-400"}`}>{tNakshatra(day.panchang.nakshatra)}</p>
                             </>
                           ) : (
                             <div className={`h-2.5 rounded animate-pulse ${day.isSelected ? "bg-indigo-400" : "bg-indigo-100"}`} />
@@ -802,8 +843,8 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
                     { icon: "🌇", label: "Sunset", value: sp.sunset },
                     { icon: "🌙", label: "Moonrise", value: sp.moonrise },
                     { icon: "🌑", label: "Moonset", value: sp.moonset },
-                    { icon: "🌓", label: "Tithi", value: sp.tithi, sub: sp.tithiStart && sp.tithiEnd ? `${sp.tithiStart} – ${sp.tithiEnd}` : (sp.tithiEnd ? `Ends: ${sp.tithiEnd}` : undefined) },
-                    { icon: "⭐", label: "Nakshatra", value: sp.nakshatra, sub: sp.nakshatraEnd ? `Ends: ${sp.nakshatraEnd}` : undefined },
+                    { icon: "🌓", label: "Tithi", value: tTithi(sp.tithi), sub: sp.tithiStart && sp.tithiEnd ? `${sp.tithiStart} – ${sp.tithiEnd}` : (sp.tithiEnd ? `Ends: ${sp.tithiEnd}` : undefined) },
+                    { icon: "⭐", label: "Nakshatra", value: tNakshatra(sp.nakshatra), sub: sp.nakshatraEnd ? `Ends: ${sp.nakshatraEnd}` : undefined },
                     { icon: "🔯", label: "Yoga", value: sp.yoga },
                     { icon: "☯️", label: "Karana", value: sp.karana },
                     { icon: "🌊", label: "Paksha", value: sp.paksha },

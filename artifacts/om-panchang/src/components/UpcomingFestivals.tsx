@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { getUpcomingFestivals } from "@/lib/panchangData";
+import { gcalUrl } from "@/lib/i18n";
 
 const FESTIVAL_ICONS: Record<string, string> = {
   "Makar Sankranti": "🪁", "Pongal": "🍚", "Vasant Panchami": "🌸",
@@ -81,6 +82,20 @@ export default function UpcomingFestivals({ today, count = 10, onViewAll }: Prop
                 ))}
                 <p className="text-xs text-slate-400 mt-0.5">{formatDate(dateStr)}</p>
               </div>
+
+              {/* Add to Google Calendar button */}
+              <a
+                href={gcalUrl(names[0], dateStr)}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Add to Google Calendar"
+                className="flex-shrink-0 flex items-center gap-1 text-[10px] font-semibold text-indigo-500 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-lg px-2 py-1.5 transition whitespace-nowrap"
+              >
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+                </svg>
+                + GCal
+              </a>
             </div>
           ))
         )}
