@@ -28,6 +28,7 @@ function detectVariant() {
   if (path.includes("nakshatra-today"))    return "nakshatra-today";
   if (path.includes("rahu-kalam-today"))    return "rahu-kalam-today";
   if (path.includes("baby-names-by-nakshatra") || path.includes("baby-names-nakshatra")) return "baby-names-nakshatra";
+  if (path.includes("choghadiya"))              return "choghadiya-today";
   return "default";
 }
 

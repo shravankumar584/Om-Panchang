@@ -8,6 +8,9 @@ import UpcomingFestivals from "@/components/UpcomingFestivals";
 import KundaliSection from "@/components/KundaliSection";
 import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
+import ChoghadiyaWidget from "@/components/ChoghadiyaWidget";
+import ChoghadiyaSection from "@/components/ChoghadiyaSection";
+import { getUtcOffsetHours } from "@/lib/choghadiya";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -364,7 +367,7 @@ type CalendarVariant =
   | "kundali" | "kundali-milan"
   | "marriage-muhurat" | "panchang-today"
   | "hindu-festivals" | "nakshatra-today" | "rahu-kalam-today"
-  | "baby-names-nakshatra";
+  | "baby-names-nakshatra" | "choghadiya-today";
 
 const VARIANT_CONFIG: Record<CalendarVariant, {
   title: string; heading: string; sub: string; defaultTab: ActiveTab;
@@ -446,6 +449,12 @@ const VARIANT_CONFIG: Record<CalendarVariant, {
     heading:    "Baby Name Finder",
     sub:        "Hindu Names by Janma Nakshatra & Starting Syllable",
     defaultTab: "babynames",
+  },
+  "choghadiya-today": {
+    title:      "Choghadiya Today {year} – {city} | Auspicious Time | Om Panchang",
+    heading:    "Choghadiya Today",
+    sub:        "Auspicious & Inauspicious Time Slots for {city}",
+    defaultTab: "panchang",
   },
 };
 
@@ -825,6 +834,16 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
                 <div className="ml-auto text-indigo-500 font-medium">🕉️ Based on {selectedCity.name}</div>
               </div>
             </div>
+            {/* Choghadiya widget */}
+            {sp && (
+              <ChoghadiyaWidget
+                date={selectedDate}
+                sunrise={sp.sunrise}
+                sunset={sp.sunset}
+                utcOffsetHours={getUtcOffsetHours(selectedCity.timezone)}
+                onViewAll={() => setActiveTab("panchang")}
+              />
+            )}
             {/* Planets + Festivals preview */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <PlanetaryPositions date={selectedDate} />
@@ -877,6 +896,16 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
                 </div>
               ) : <p className="text-slate-400 text-sm text-center py-10">Loading panchang data…</p>}
             </div>
+            {/* Choghadiya full table */}
+            {sp && (
+              <ChoghadiyaSection
+                date={selectedDate}
+                sunrise={sp.sunrise}
+                sunset={sp.sunset}
+                city={selectedCity.name}
+                utcOffsetHours={getUtcOffsetHours(selectedCity.timezone)}
+              />
+            )}
           </div>
         </main>
       )}
