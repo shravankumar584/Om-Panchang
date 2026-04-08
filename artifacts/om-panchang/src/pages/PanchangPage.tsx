@@ -590,6 +590,7 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
     setSelectedDate(day.date);
     setCalendarDays(prev => prev.map(d => ({ ...d, isSelected: d.date.getTime() === day.date.getTime() })));
     if (!day.isCurrentMonth) setViewDate(new Date(day.date.getFullYear(), day.date.getMonth(), 1));
+    if (activeTab === "home") setActiveTab("panchang");
   };
 
   const goToToday = () => {
