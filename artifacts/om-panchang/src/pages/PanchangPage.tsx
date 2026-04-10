@@ -1141,6 +1141,8 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
         </p>
         <p className="mt-1">Astronomical calculations · Location-aware</p>
         <div className="flex justify-center gap-4 mt-3 text-indigo-400">
+          <a href="/about-us" className="hover:text-indigo-600 transition">About Us</a>
+          <span>·</span>
           <a href="/disclaimer" className="hover:text-indigo-600 transition">Disclaimer</a>
           <span>·</span>
           <a href="/contact-us" className="hover:text-indigo-600 transition">Contact Us</a>

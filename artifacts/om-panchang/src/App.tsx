@@ -1,12 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PanchangPage from "@/pages/PanchangPage";
 import LegalPage from "@/pages/LegalPage";
+import AboutPage from "@/pages/AboutPage";
 
 const queryClient = new QueryClient();
 
 // Detect legal pages first (standalone pages, not a variant of PanchangPage)
-function detectLegalPage(): "disclaimer" | "contact" | "privacy" | null {
+function detectLegalPage(): "disclaimer" | "contact" | "privacy" | "about" | null {
   const path = window.location.pathname;
+  if (path.includes("about"))         return "about";
   if (path.includes("disclaimer"))    return "disclaimer";
   if (path.includes("contact-us") || path.includes("contact_us")) return "contact";
   if (path.includes("privacy-policy") || path.includes("privacy_policy")) return "privacy";
@@ -42,9 +44,11 @@ const variant   = detectVariant();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {legalPage
-        ? <LegalPage page={legalPage} />
-        : <PanchangPage variant={variant as any} />
+      {legalPage === "about"
+        ? <AboutPage />
+        : legalPage
+          ? <LegalPage page={legalPage} />
+          : <PanchangPage variant={variant as any} />
       }
     </QueryClientProvider>
   );
