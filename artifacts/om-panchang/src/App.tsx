@@ -29,6 +29,10 @@ function detectVariant() {
   if (path.includes("rahu-kalam-today"))    return "rahu-kalam-today";
   if (path.includes("baby-names-by-nakshatra") || path.includes("baby-names-nakshatra")) return "baby-names-nakshatra";
   if (path.includes("choghadiya"))              return "choghadiya-today";
+  if (path.includes("ekadashi"))                return "ekadashi-dates";
+  if (path.includes("amavasya"))                return "amavasya-dates";
+  if (path.includes("purnima") || path.includes("pournami")) return "purnima-dates";
+  if (path.includes("pradosh"))                 return "pradosh-vrat";
   return "default";
 }
 

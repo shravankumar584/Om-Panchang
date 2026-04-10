@@ -12,6 +12,7 @@ import ChoghadiyaWidget from "@/components/ChoghadiyaWidget";
 import ChoghadiyaSection from "@/components/ChoghadiyaSection";
 import { getUtcOffsetHours } from "@/lib/choghadiya";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
+import VratCalendarSection from "@/components/VratCalendarSection";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -367,7 +368,8 @@ type CalendarVariant =
   | "kundali" | "kundali-milan"
   | "marriage-muhurat" | "panchang-today"
   | "hindu-festivals" | "nakshatra-today" | "rahu-kalam-today"
-  | "baby-names-nakshatra" | "choghadiya-today";
+  | "baby-names-nakshatra" | "choghadiya-today"
+  | "ekadashi-dates" | "amavasya-dates" | "purnima-dates" | "pradosh-vrat";
 
 const VARIANT_CONFIG: Record<CalendarVariant, {
   title: string; heading: string; sub: string; defaultTab: ActiveTab;
@@ -456,7 +458,81 @@ const VARIANT_CONFIG: Record<CalendarVariant, {
     sub:        "Auspicious & Inauspicious Time Slots for {city}",
     defaultTab: "panchang",
   },
+  "ekadashi-dates": {
+    title:      "Ekadashi {year} – All 24 Fasting Dates | Om Panchang",
+    heading:    "Ekadashi Dates {year}",
+    sub:        "Complete list of all Ekadashi fasting days",
+    defaultTab: "festivals",
+  },
+  "amavasya-dates": {
+    title:      "Amavasya Dates {year} – New Moon Calendar | Om Panchang",
+    heading:    "Amavasya Dates {year}",
+    sub:        "All new moon days for ancestor rituals & Pitru Tarpan",
+    defaultTab: "festivals",
+  },
+  "purnima-dates": {
+    title:      "Purnima Dates {year} – Full Moon Calendar | Om Panchang",
+    heading:    "Purnima Dates {year}",
+    sub:        "All full moon days and their Hindu significance",
+    defaultTab: "festivals",
+  },
+  "pradosh-vrat": {
+    title:      "Pradosh Vrat {year} – Dates & Timings | Om Panchang",
+    heading:    "Pradosh Vrat {year}",
+    sub:        "All Pradosh Vrat dates for Shiva worship",
+    defaultTab: "festivals",
+  },
 };
+
+function FestivalsSubTabs({ variant }: { variant: CalendarVariant }) {
+  const defaultView = (
+    variant === "ekadashi-dates" ? "vrat" :
+    variant === "amavasya-dates" ? "vrat" :
+    variant === "purnima-dates" ? "vrat" :
+    variant === "pradosh-vrat" ? "vrat" :
+    variant === "hindu-festivals" ? "festivals" : "festivals"
+  ) as "festivals" | "vrat";
+
+  const defaultFilter = (
+    variant === "ekadashi-dates" ? "ekadashi" :
+    variant === "amavasya-dates" ? "amavasya" :
+    variant === "purnima-dates" ? "purnima" :
+    variant === "pradosh-vrat" ? "pradosh" : "all"
+  ) as "all" | "ekadashi" | "amavasya" | "purnima" | "pradosh" | "sankashti";
+
+  const [view, setView] = useState<"festivals" | "vrat">(defaultView);
+
+  return (
+    <>
+      <div className="flex gap-2">
+        <button
+          onClick={() => setView("festivals")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
+            view === "festivals"
+              ? "bg-indigo-600 text-white shadow"
+              : "bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+          }`}
+        >
+          🎉 Festivals
+        </button>
+        <button
+          onClick={() => setView("vrat")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
+            view === "vrat"
+              ? "bg-indigo-600 text-white shadow"
+              : "bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+          }`}
+        >
+          🌙 Vrat / Fasting Dates
+        </button>
+      </div>
+      {view === "festivals"
+        ? <UpcomingFestivals today={new Date()} count={50} />
+        : <VratCalendarSection defaultFilter={defaultFilter} />
+      }
+    </>
+  );
+}
 
 export default function PanchangPage({ variant = "default" }: { variant?: CalendarVariant }) {
   const today = new Date();
@@ -978,8 +1054,9 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
       {activeTab === "festivals" && (
         <main className="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
           {Sidebar}
-          <div className="flex-1">
-            <UpcomingFestivals today={today} count={50} />
+          <div className="flex-1 space-y-4">
+            {/* Sub-tab toggle */}
+            <FestivalsSubTabs variant={variant} />
           </div>
         </main>
       )}
