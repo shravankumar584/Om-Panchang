@@ -1013,7 +1013,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                     <div className="rounded-xl overflow-hidden border border-emerald-100">
                       {[
                         { icon: "✨", label: "Abhijit Muhurta", value: sp.abhijitMuhurta, desc: "The most auspicious time of the day — excellent for all new beginnings" },
-                        { icon: "🌅", label: "Brahma Muhurta", value: "~96 min before sunrise", desc: "The creator's time — ideal for prayer, meditation and study" },
+                        { icon: "🌅", label: "Brahma Muhurta", value: sp.brahmaMuhurta, desc: "The creator's time — ideal for prayer, meditation and study" },
                       ].map((item, i) => (
                         <div key={item.label} className={`flex items-start gap-4 p-4 ${i > 0 ? "border-t border-emerald-50" : ""} bg-emerald-50/40`}>
                           <span className="text-2xl">{item.icon}</span>

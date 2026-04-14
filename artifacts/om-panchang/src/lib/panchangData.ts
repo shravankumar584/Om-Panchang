@@ -167,6 +167,7 @@ export interface DayPanchang {
   yamagandaKalam: string;
   gulikaKalam: string;
   abhijitMuhurta: string;
+  brahmaMuhurta: string;
   vikramSamvat: number;
   shakaSamvat: number;
   ayana: string;
@@ -366,6 +367,18 @@ function getAbhijitMuhurta(sunrise: Date | null, sunset: Date | null, timezone: 
   const noonMs = (sunrise.getTime() + sunset.getTime()) / 2;
   const start = new Date(noonMs - 24 * 60 * 1000);
   const end = new Date(noonMs + 24 * 60 * 1000);
+  const offsetMin = getTimezoneOffsetMinutes(sunrise, timezone);
+  return `${formatTimeWithOffset(start, offsetMin)} – ${formatTimeWithOffset(end, offsetMin)}`;
+}
+
+/**
+ * Brahma Muhurta = the 48-minute window from 96 → 48 minutes before sunrise.
+ * Ideal for prayer, meditation, and study. Highly auspicious in all traditions.
+ */
+function getBrahmaMuhurta(sunrise: Date | null, timezone: string): string {
+  if (!sunrise) return "N/A";
+  const start = new Date(sunrise.getTime() - 96 * 60 * 1000);
+  const end   = new Date(sunrise.getTime() - 48 * 60 * 1000);
   const offsetMin = getTimezoneOffsetMinutes(sunrise, timezone);
   return `${formatTimeWithOffset(start, offsetMin)} – ${formatTimeWithOffset(end, offsetMin)}`;
 }
@@ -576,6 +589,7 @@ function buildExtraFields(
   const sunsignData = getSiderealZodiac(sunLon, ayanamsa);
   const moonsignData = getSiderealZodiac(moonLon, ayanamsa);
   const abhijitMuhurta = getAbhijitMuhurta(sunriseDate, sunsetDate, city.timezone);
+  const brahmaMuhurta  = getBrahmaMuhurta(sunriseDate, city.timezone);
   const yamagandaKalam = getYamaganda(date, sunriseDate, sunsetDate, city.timezone);
   const gulikaKalam = getGulika(date, sunriseDate, sunsetDate, city.timezone);
 
@@ -588,6 +602,7 @@ function buildExtraFields(
     sunsign: `${sunsignData.sign} (${sunsignData.signEn})`,
     moonsign: `${moonsignData.sign} (${moonsignData.signEn})`,
     abhijitMuhurta,
+    brahmaMuhurta,
     yamagandaKalam,
     gulikaKalam,
   };
