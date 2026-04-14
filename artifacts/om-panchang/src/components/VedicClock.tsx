@@ -7,7 +7,14 @@ interface VedicClockProps {
   sunsetStr: string;
 }
 
-function parseTime12(timeStr: string, referenceDate: Date): Date | null {
+/**
+ * Parse a formatted time string ("06:55 AM") into a UTC-based Date object
+ * anchored to today's date IN THE CITY'S timezone — not the browser's timezone.
+ *
+ * This is critical for users who have selected a city in a different timezone
+ * than their browser (e.g., browser in PST, city set to EDT).
+ */
+function parseCityTime(timeStr: string, cityTz: string): Date | null {
   if (!timeStr || timeStr === "N/A") return null;
   try {
     const clean = timeStr.replace(/\u202f/g, " ").trim();
@@ -18,9 +25,24 @@ function parseTime12(timeStr: string, referenceDate: Date): Date | null {
     const meridiem = match[3].toUpperCase();
     if (meridiem === "PM" && h !== 12) h += 12;
     if (meridiem === "AM" && h === 12) h = 0;
-    const d = new Date(referenceDate);
-    d.setHours(h, m, 0, 0);
-    return d;
+
+    const now = new Date();
+
+    // Get today's date in the CITY's timezone (YYYY-MM-DD)
+    const cityDateStr = new Intl.DateTimeFormat("en-CA", {
+      timeZone: cityTz,
+      year: "numeric", month: "2-digit", day: "2-digit",
+    }).format(now);
+    const [yr, mo, da] = cityDateStr.split("-").map(Number);
+
+    // Get the city's current UTC offset in minutes (handles DST automatically)
+    const utcDate = new Date(now.toLocaleString("en-US", { timeZone: "UTC" }));
+    const tzDate  = new Date(now.toLocaleString("en-US", { timeZone: cityTz }));
+    const offsetMin = (tzDate.getTime() - utcDate.getTime()) / 60000;
+
+    // Build UTC timestamp: city midnight + hm offset - city UTC offset
+    const utcMidnight = Date.UTC(yr, mo - 1, da);
+    return new Date(utcMidnight + h * 3600000 + m * 60000 - offsetMin * 60000);
   } catch {
     return null;
   }
@@ -34,32 +56,40 @@ export default function VedicClock({ city, sunriseStr, sunsetStr }: VedicClockPr
     return () => clearInterval(id);
   }, []);
 
-  // Format current time in city's timezone
+  // Current time displayed in city's timezone
   const cityTimeStr = new Intl.DateTimeFormat("en-IN", {
     hour: "2-digit", minute: "2-digit", second: "2-digit",
     hour12: true, timeZone: city.timezone,
   }).format(now);
 
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const sunrise = parseTime12(sunriseStr, today);
-  const sunset = parseTime12(sunsetStr, today);
+  const sunrise = parseCityTime(sunriseStr, city.timezone);
+  const sunset  = parseCityTime(sunsetStr,  city.timezone);
 
   let ghati = "—", pal = "—", vipal = "—";
   let percentDay = 0;
 
   if (sunrise && sunset) {
-    const dayMs = sunset.getTime() - sunrise.getTime();
+    const dayMs     = sunset.getTime() - sunrise.getTime();
     const elapsedMs = now.getTime() - sunrise.getTime();
+
+    // Progress bar: fraction of daytime elapsed (clamped 0–1)
     const elapsedMsClamped = Math.max(0, Math.min(dayMs, elapsedMs));
     percentDay = elapsedMsClamped / dayMs;
 
-    // 1 day = 60 ghati, 1 ghati = 60 pal, 1 pal = 60 vipal
-    const totalVipal = Math.round((elapsedMsClamped / dayMs) * 60 * 60 * 60);
+    /**
+     * Vedic time (Ishtakal): 1 day = 60 Ghati, counted from SUNRISE.
+     *  1 sidereal day = 24h = 60 Ghati → 1 Ghati = 24 min
+     *  Elapsed Ghati = elapsed_from_sunrise / (24h) × 60
+     *  In vipal: totalVipal = elapsedMs / (24h_ms) × (60 × 60 × 60)
+     *  Simplifies to:  elapsedMs / 400  (because 86400000 / 216000 = 400)
+     */
+    const DAY_MS = 24 * 60 * 60 * 1000;
+    const totalVipal = Math.max(0, Math.round((elapsedMs / DAY_MS) * 60 * 60 * 60));
     const g = Math.floor(totalVipal / 3600);
     const p = Math.floor((totalVipal % 3600) / 60);
     const v = totalVipal % 60;
     ghati = String(g).padStart(2, "0");
-    pal = String(p).padStart(2, "0");
+    pal   = String(p).padStart(2, "0");
     vipal = String(v).padStart(2, "0");
   }
 

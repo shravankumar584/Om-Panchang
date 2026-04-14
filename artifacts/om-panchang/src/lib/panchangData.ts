@@ -75,6 +75,7 @@ export const CITIES: City[] = [
   { name: "Philadelphia", country: "United States", lat: 39.9526, lon: -75.1652, timezone: "America/New_York" },
   { name: "Detroit", country: "United States", lat: 42.3314, lon: -83.0458, timezone: "America/Detroit" },
   { name: "Troy", country: "United States", lat: 42.6064, lon: -83.1498, timezone: "America/Detroit" },
+  { name: "South Lyon", country: "United States", lat: 42.4606, lon: -83.6519, timezone: "America/Detroit" },
   { name: "Phoenix", country: "United States", lat: 33.4484, lon: -112.074, timezone: "America/Phoenix" },
   { name: "Denver", country: "United States", lat: 39.7392, lon: -104.9903, timezone: "America/Denver" },
   { name: "Las Vegas", country: "United States", lat: 36.1699, lon: -115.1398, timezone: "America/Los_Angeles" },
@@ -709,7 +710,11 @@ function approximateSunriseSunsetDates(date: Date, lat: number, lon: number, tim
     const ET = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
     const declination = 23.45 * Math.sin(B) * (Math.PI / 180);
     const latRad = lat * (Math.PI / 180);
-    const cosHA = -Math.tan(latRad) * Math.tan(declination);
+    // Zenith = 90°50' (standard astronomical sunrise: accounts for refraction + solar disc)
+    // This gives sunrise ~5-8 min earlier than the naive 90° zenith formula.
+    const ZENITH_RAD = 90.8333 * (Math.PI / 180);
+    const cosHA = (Math.cos(ZENITH_RAD) - Math.sin(latRad) * Math.sin(declination))
+                / (Math.cos(latRad) * Math.cos(declination));
     if (cosHA < -1 || cosHA > 1) return { sunriseDate: null, sunsetDate: null };
     const hourAngle = Math.acos(cosHA) * (180 / Math.PI);
     const solarNoon = 12 + utcOffsetHours - lon / 15 - ET / 60;
