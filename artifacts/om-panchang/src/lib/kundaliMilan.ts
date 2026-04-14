@@ -125,13 +125,13 @@ const YONI: { animal: string; gender: "M" | "F" }[] = [
   { animal:"snake",    gender:"M" }, // 3  Rohini
   { animal:"snake",    gender:"F" }, // 4  Mrigashira
   { animal:"dog",      gender:"F" }, // 5  Ardra
-  { animal:"cat",      gender:"M" }, // 6  Punarvasu
+  { animal:"cat",      gender:"F" }, // 6  Punarvasu   — Female cat (BPHS)
   { animal:"sheep",    gender:"M" }, // 7  Pushya
-  { animal:"cat",      gender:"F" }, // 8  Ashlesha
+  { animal:"cat",      gender:"M" }, // 8  Ashlesha    — Male cat (BPHS)
   { animal:"rat",      gender:"M" }, // 9  Magha
   { animal:"rat",      gender:"F" }, // 10 Purva Phalguni
   { animal:"cow",      gender:"F" }, // 11 Uttara Phalguni
-  { animal:"buffalo",  gender:"M" }, // 12 Hasta
+  { animal:"buffalo",  gender:"F" }, // 12 Hasta       — Female buffalo (BPHS)
   { animal:"tiger",    gender:"F" }, // 13 Chitra
   { animal:"buffalo",  gender:"M" }, // 14 Swati
   { animal:"tiger",    gender:"M" }, // 15 Vishakha
