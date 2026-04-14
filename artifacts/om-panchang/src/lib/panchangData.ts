@@ -771,6 +771,7 @@ function getTimezoneOffsetMinutes(date: Date, timezone: string): number {
     const tzDate = new Date(date.toLocaleString("en-US", { timeZone: timezone }));
     return (tzDate.getTime() - utcDate.getTime()) / 60000;
   } catch {
+    console.warn(`[Om Panchang] Invalid timezone string: "${timezone}" — falling back to UTC. Check CITIES list for typos.`);
     return 0;
   }
 }
