@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { CITIES, City, DayPanchang, computeDayPanchang, getFestivalsForDate } from "@/lib/panchangData";
+import { CITIES, City, DayPanchang, computeDayPanchang, getFestivalsForDate, cityToSlug } from "@/lib/panchangData";
 import { CalendarLang, LANG_LABELS, LANG_CYCLE, translateTithi, translateNakshatra } from "@/lib/i18n";
 import ReferenceSection from "@/components/ReferenceSection";
 import VedicClock from "@/components/VedicClock";
@@ -534,12 +534,12 @@ function FestivalsSubTabs({ variant }: { variant: CalendarVariant }) {
   );
 }
 
-export default function PanchangPage({ variant = "default" }: { variant?: CalendarVariant }) {
+export default function PanchangPage({ variant = "default", initialCity }: { variant?: CalendarVariant; initialCity?: City }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const [activeTab, setActiveTab] = useState<ActiveTab>(VARIANT_CONFIG[variant].defaultTab);
-  const [selectedCity, setSelectedCity] = useState<City>(CITIES[0]);
+  const [selectedCity, setSelectedCity] = useState<City>(initialCity ?? CITIES[0]);
   const [selectedRashi, setSelectedRashi] = useState<RashiInfo | null>(null);
   const [viewDate, setViewDate] = useState<Date>(new Date(today));
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(today));
@@ -660,6 +660,13 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
   const handleCityChange = (city: City) => {
     panchangCacheRef.current.clear();
     setSelectedCity(city);
+    // Update the URL to reflect the new city — keeps the current variant segment
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    const variantSegment = segments.length >= 1 ? segments[0] : "panchang";
+    const slug = cityToSlug(city.name);
+    window.history.pushState({ city: city.name }, "", `/${variantSegment}/${slug}`);
+    // Keep document title in sync for SEO / browser history
+    document.title = `Panchang ${city.name} Today | Om Panchang`;
   };
 
   const handleDayClick = (day: CalendarDay) => {

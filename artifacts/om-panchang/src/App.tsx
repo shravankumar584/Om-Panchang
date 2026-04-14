@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PanchangPage from "@/pages/PanchangPage";
 import LegalPage from "@/pages/LegalPage";
 import AboutPage from "@/pages/AboutPage";
+import { CITIES, slugToCity, type City } from "@/lib/panchangData";
 
 const queryClient = new QueryClient();
 
@@ -28,18 +29,38 @@ function detectVariant() {
   if (path.includes("panchang-today"))     return "panchang-today";
   if (path.includes("hindu-festivals"))    return "hindu-festivals";
   if (path.includes("nakshatra-today"))    return "nakshatra-today";
-  if (path.includes("rahu-kalam-today"))    return "rahu-kalam-today";
+  if (path.includes("rahu-kalam-today"))   return "rahu-kalam-today";
   if (path.includes("baby-names-by-nakshatra") || path.includes("baby-names-nakshatra")) return "baby-names-nakshatra";
-  if (path.includes("choghadiya"))              return "choghadiya-today";
-  if (path.includes("ekadashi"))                return "ekadashi-dates";
-  if (path.includes("amavasya"))                return "amavasya-dates";
+  if (path.includes("choghadiya"))         return "choghadiya-today";
+  if (path.includes("ekadashi"))           return "ekadashi-dates";
+  if (path.includes("amavasya"))           return "amavasya-dates";
   if (path.includes("purnima") || path.includes("pournami")) return "purnima-dates";
-  if (path.includes("pradosh"))                 return "pradosh-vrat";
+  if (path.includes("pradosh"))            return "pradosh-vrat";
   return "default";
 }
 
-const legalPage = detectLegalPage();
-const variant   = detectVariant();
+/**
+ * Extract a city slug from the URL.
+ * Handles: /panchang/new-york  → "new-york"
+ *          /choghadiya/chicago → "chicago"
+ *          /rahu-kalam/houston → "houston"
+ *          /                   → null (use default city)
+ */
+function detectInitialCity(): City {
+  const segments = window.location.pathname.split("/").filter(Boolean);
+  // City slug is always the last segment when there are 2+ segments
+  // e.g. /panchang/new-york → segments = ["panchang", "new-york"]
+  if (segments.length >= 2) {
+    const slug = segments[segments.length - 1];
+    const city = slugToCity(slug);
+    if (city) return city;
+  }
+  return CITIES[0];
+}
+
+const legalPage   = detectLegalPage();
+const variant     = detectVariant();
+const initialCity = detectInitialCity();
 
 function App() {
   return (
@@ -48,7 +69,7 @@ function App() {
         ? <AboutPage />
         : legalPage
           ? <LegalPage page={legalPage} />
-          : <PanchangPage variant={variant as any} />
+          : <PanchangPage variant={variant as any} initialCity={initialCity} />
       }
     </QueryClientProvider>
   );

@@ -10,6 +10,16 @@ export interface City {
   timezone: string;
 }
 
+/** Convert a City name to a URL slug: "New York" → "new-york" */
+export function cityToSlug(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+}
+
+/** Find a City by its URL slug — returns null if not found */
+export function slugToCity(slug: string): City | null {
+  return CITIES.find(c => cityToSlug(c.name) === slug) ?? null;
+}
+
 export const CITIES: City[] = [
   // India
   { name: "Delhi", country: "India", lat: 28.6139, lon: 77.209, timezone: "Asia/Kolkata" },
