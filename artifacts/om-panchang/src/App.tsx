@@ -36,6 +36,8 @@ function detectVariant() {
   if (path.includes("amavasya"))           return "amavasya-dates";
   if (path.includes("purnima") || path.includes("pournami")) return "purnima-dates";
   if (path.includes("pradosh"))            return "pradosh-vrat";
+  if (path.includes("hora-today") || path.includes("hora-timings") || path.includes("hora")) return "hora-today";
+  if (path.includes("brahma-muhurta") || path.includes("brahma_muhurta")) return "brahma-muhurta";
   return "default";
 }
 

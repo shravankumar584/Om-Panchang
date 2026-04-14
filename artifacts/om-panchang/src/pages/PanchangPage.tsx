@@ -10,6 +10,7 @@ import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
 import ChoghadiyaWidget from "@/components/ChoghadiyaWidget";
 import ChoghadiyaSection from "@/components/ChoghadiyaSection";
+import HoraSection from "@/components/HoraSection";
 import { getUtcOffsetHours } from "@/lib/choghadiya";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
 import VratCalendarSection from "@/components/VratCalendarSection";
@@ -130,7 +131,7 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc" | "babynames";
+type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc" | "babynames" | "hora";
 
 interface CalendarDay {
   date: Date;
@@ -369,7 +370,8 @@ type CalendarVariant =
   | "marriage-muhurat" | "panchang-today"
   | "hindu-festivals" | "nakshatra-today" | "rahu-kalam-today"
   | "baby-names-nakshatra" | "choghadiya-today"
-  | "ekadashi-dates" | "amavasya-dates" | "purnima-dates" | "pradosh-vrat";
+  | "ekadashi-dates" | "amavasya-dates" | "purnima-dates" | "pradosh-vrat"
+  | "hora-today" | "brahma-muhurta";
 
 const VARIANT_CONFIG: Record<CalendarVariant, {
   title: string; heading: string; sub: string; defaultTab: ActiveTab;
@@ -481,6 +483,18 @@ const VARIANT_CONFIG: Record<CalendarVariant, {
     heading:    "Pradosh Vrat {year}",
     sub:        "All Pradosh Vrat dates for Shiva worship",
     defaultTab: "festivals",
+  },
+  "hora-today": {
+    title:      "Hora Today – Planetary Hours for {city} | Om Panchang",
+    heading:    "Hora Today",
+    sub:        "Vedic Planetary Hours for {city}",
+    defaultTab: "hora",
+  },
+  "brahma-muhurta": {
+    title:      "Brahma Muhurta Today – {city} | Om Panchang",
+    heading:    "Brahma Muhurta",
+    sub:        "Today's Brahma Muhurta timing for {city}",
+    defaultTab: "panchang",
   },
 };
 
@@ -698,6 +712,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
     { id: "milan", label: "Match", icon: "💑" },
     { id: "muhurtacalc", label: "Muhurta", icon: "✨" },
     { id: "babynames", label: "Baby Names", icon: "👶" },
+    { id: "hora",      label: "Hora",       icon: "⏳" },
   ];
 
   // Sidebar: common across tabs
@@ -1133,6 +1148,28 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       {activeTab === "babynames" && (
         <main className="max-w-3xl mx-auto">
           <BabyNamesSection />
+        </main>
+      )}
+
+      {/* ===== HORA TAB ===== */}
+      {activeTab === "hora" && (
+        <main className="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto w-full">
+          {Sidebar}
+          <div className="flex-1 min-w-0">
+            {sp ? (
+              <HoraSection
+                date={selectedDate}
+                sunrise={sp.sunrise}
+                sunset={sp.sunset}
+                city={`${selectedCity.name}, ${selectedCity.country}`}
+                utcOffsetHours={getUtcOffsetHours(selectedCity.timezone)}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-48 text-slate-400">
+                Loading hora timings…
+              </div>
+            )}
+          </div>
         </main>
       )}
 
