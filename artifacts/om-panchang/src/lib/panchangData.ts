@@ -399,8 +399,7 @@ function getRitu(date: Date): string {
   return "Shishira (Winter)";
 }
 
-function getSiderealZodiac(tropicalLon: number): { sign: string; signEn: string } {
-  const ayanamsa = 23.85;
+function getSiderealZodiac(tropicalLon: number, ayanamsa: number): { sign: string; signEn: string } {
   const sidereal = ((tropicalLon - ayanamsa) % 360 + 360) % 360;
   const idx = Math.floor(sidereal / 30);
   return { sign: ZODIAC_NAMES[idx] ?? "N/A", signEn: ZODIAC_ENGLISH[idx] ?? "N/A" };
@@ -556,15 +555,16 @@ function extractDate(obj: any, ...keys: string[]): Date | null {
 function buildExtraFields(
   date: Date, city: City,
   sunriseDate: Date | null, sunsetDate: Date | null,
-  sunLon: number, moonLon: number
+  sunLon: number, moonLon: number,
+  ayanamsa: number
 ) {
   const vikramSamvat = getVikramSamvat(date);
   const shakaSamvat = getShakaSamvat(date);
   const ayana = getAyana(date);
   const ritu = getRitu(date);
   const weekdayName = SANSKRIT_WEEKDAYS[date.getDay()];
-  const sunsignData = getSiderealZodiac(sunLon);
-  const moonsignData = getSiderealZodiac(moonLon);
+  const sunsignData = getSiderealZodiac(sunLon, ayanamsa);
+  const moonsignData = getSiderealZodiac(moonLon, ayanamsa);
   const abhijitMuhurta = getAbhijitMuhurta(sunriseDate, sunsetDate, city.timezone);
   const yamagandaKalam = getYamaganda(date, sunriseDate, sunsetDate, city.timezone);
   const gulikaKalam = getGulika(date, sunriseDate, sunsetDate, city.timezone);
@@ -625,8 +625,9 @@ export async function computeDayPanchang(date: Date, city: City): Promise<DayPan
     const d = (date.getTime() - new Date("2000-01-01T12:00:00Z").getTime()) / 86400000;
     const sunLon = ((280.460 + 0.9856474 * d) % 360 + 360) % 360;
     const moonLon = ((218.316 + 13.176396 * d) % 360 + 360) % 360;
+    const primaryAyanamsa = getLahiriAyanamsa(2451545.0 + d);
 
-    const extra = buildExtraFields(date, city, usedSunrise, usedSunset, sunLon, moonLon);
+    const extra = buildExtraFields(date, city, usedSunrise, usedSunset, sunLon, moonLon, primaryAyanamsa);
 
     let tithiEnd: string | undefined;
     const tithiEndDate = extractDate(result?.tithi, "end", "endTime") ?? extractDate(result, "tithiEnd");
@@ -680,7 +681,7 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
   const paksha       = tithiNum < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
 
   const { sunriseDate, sunsetDate, moonriseDate, moonsetDate } = getSuncalcTimes(date, city.lat, city.lon, city.timezone);
-  const extra = buildExtraFields(date, city, sunriseDate, sunsetDate, sunTrop, moonTrop);
+  const extra = buildExtraFields(date, city, sunriseDate, sunsetDate, sunTrop, moonTrop, ayanamsa);
 
   // Compute exact tithi start/end times via binary search
   const { tithiStart: tithiStartDate, tithiEnd: tithiEndDate } = computeTithiWindow(date, utcOffsetHours);
