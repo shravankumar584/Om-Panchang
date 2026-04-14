@@ -665,8 +665,6 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
     const variantSegment = segments.length >= 1 ? segments[0] : "panchang";
     const slug = cityToSlug(city.name);
     window.history.pushState({ city: city.name }, "", `/${variantSegment}/${slug}`);
-    // Keep document title in sync for SEO / browser history
-    document.title = `Panchang ${city.name} Today | Om Panchang`;
   };
 
   const handleDayClick = (day: CalendarDay) => {
