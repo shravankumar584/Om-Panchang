@@ -724,6 +724,9 @@ export default function PanchangPage({ variant = "default" }: { variant?: Calend
               <DetailRow icon="🌇" label="Sunset" value={sp.sunset} />
               <DetailRow icon="🌙" label="Moonrise" value={sp.moonrise} />
               <DetailRow icon="🌑" label="Moonset" value={sp.moonset} />
+              <p className="text-[10px] text-indigo-400/60 mt-1 mb-0.5 leading-snug">
+                Astronomical timings use standard refraction correction (±3–5 min variation possible)
+              </p>
             </div>
             <SectionHeader icon="📿" title="Pancha Anga" sub="Five Elements" />
             <div className="px-4 py-1">

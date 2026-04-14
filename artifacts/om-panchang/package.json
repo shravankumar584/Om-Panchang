@@ -75,6 +75,7 @@
     "zod": "catalog:"
   },
   "dependencies": {
-    "@ishubhamx/panchangam-js": "^2.2.6"
+    "@ishubhamx/panchangam-js": "^2.2.6",
+    "suncalc": "^1.9.0"
   }
 }

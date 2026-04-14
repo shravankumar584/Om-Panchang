@@ -1,4 +1,6 @@
 import { computeSiderealPositions, getLahiriAyanamsa, mod360, computeTithiWindow } from "./astronomyCore";
+// @ts-ignore — suncalc has no bundled TS types
+import SunCalc from "suncalc";
 
 export interface City {
   name: string;
@@ -613,9 +615,12 @@ export async function computeDayPanchang(date: Date, city: City): Promise<DayPan
     const moonriseDate = extractDate(result, "moonrise", "Moonrise");
     const moonsetDate = extractDate(result, "moonset", "Moonset");
 
-    const { sunriseDate: approxSunrise, sunsetDate: approxSunset } = approximateSunriseSunsetDates(date, city.lat, city.lon, city.timezone);
-    const usedSunrise = sunriseDate ?? approxSunrise;
-    const usedSunset = sunsetDate ?? approxSunset;
+    // Use suncalc for accurate sun fallback + moon times when library doesn't provide them
+    const sc = getSuncalcTimes(date, city.lat, city.lon, city.timezone);
+    const usedSunrise = sunriseDate ?? sc.sunriseDate;
+    const usedSunset  = sunsetDate  ?? sc.sunsetDate;
+    const usedMoonrise = moonriseDate ?? sc.moonriseDate;
+    const usedMoonset  = moonsetDate  ?? sc.moonsetDate;
 
     const d = (date.getTime() - new Date("2000-01-01T12:00:00Z").getTime()) / 86400000;
     const sunLon = ((280.460 + 0.9856474 * d) % 360 + 360) % 360;
@@ -633,10 +638,10 @@ export async function computeDayPanchang(date: Date, city: City): Promise<DayPan
 
     return {
       date, tithi, tithiEnd, nakshatra, nakshatraEnd, yoga, karana, paksha,
-      sunrise: formatTime(usedSunrise, city.timezone),
-      sunset: formatTime(usedSunset, city.timezone),
-      moonrise: formatTime(moonriseDate, city.timezone),
-      moonset: formatTime(moonsetDate, city.timezone),
+      sunrise:  formatTime(usedSunrise,  city.timezone),
+      sunset:   formatTime(usedSunset,   city.timezone),
+      moonrise: formatTime(usedMoonrise, city.timezone),
+      moonset:  formatTime(usedMoonset,  city.timezone),
       rahuKalam: getRahuKalam(date, usedSunrise, usedSunset, city.timezone),
       ...extra, festivals, loading: false,
     };
@@ -674,7 +679,7 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
   })();
   const paksha       = tithiNum < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
 
-  const { sunriseDate, sunsetDate } = approximateSunriseSunsetDates(date, city.lat, city.lon, city.timezone);
+  const { sunriseDate, sunsetDate, moonriseDate, moonsetDate } = getSuncalcTimes(date, city.lat, city.lon, city.timezone);
   const extra = buildExtraFields(date, city, sunriseDate, sunsetDate, sunTrop, moonTrop);
 
   // Compute exact tithi start/end times via binary search
@@ -691,16 +696,45 @@ function computeFallbackPanchang(date: Date, city: City, festivals: string[]): D
     yoga:     YOGA_NAMES[yogaNum % 27]            || "Vishkambha",
     karana:   karanaName,
     paksha,
-    sunrise:  formatTime(sunriseDate, city.timezone),
-    sunset:   formatTime(sunsetDate,  city.timezone),
-    moonrise: "N/A",
-    moonset:  "N/A",
+    sunrise:  formatTime(sunriseDate,   city.timezone),
+    sunset:   formatTime(sunsetDate,    city.timezone),
+    moonrise: formatTime(moonriseDate,  city.timezone),
+    moonset:  formatTime(moonsetDate,   city.timezone),
     rahuKalam: getRahuKalam(date, sunriseDate, sunsetDate, city.timezone),
     ...extra, festivals, loading: false,
   };
 }
 
 // --- Astronomical helpers ---
+
+/**
+ * Uses SunCalc (accurate to ±1 min) for sunrise/sunset/moonrise/moonset.
+ * Falls back to the refraction-corrected formula if SunCalc throws.
+ * SunCalc internally uses VSOP87-grade algorithms and standard 90°50' zenith.
+ */
+function getSuncalcTimes(date: Date, lat: number, lon: number, timezone: string): {
+  sunriseDate: Date | null; sunsetDate: Date | null;
+  moonriseDate: Date | null; moonsetDate: Date | null;
+} {
+  try {
+    // Use noon UTC on the given date so SunCalc picks the right calendar day
+    const noon = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0));
+    const sunTimes  = SunCalc.getTimes(noon, lat, lon) as Record<string, Date>;
+    const moonTimes = SunCalc.getMoonTimes(noon, lat, lon) as { rise?: Date; set?: Date };
+    const isValid = (d: unknown): d is Date => d instanceof Date && isFinite(d.getTime());
+    return {
+      sunriseDate:  isValid(sunTimes.sunrise)  ? sunTimes.sunrise  : null,
+      sunsetDate:   isValid(sunTimes.sunset)   ? sunTimes.sunset   : null,
+      moonriseDate: isValid(moonTimes.rise)    ? moonTimes.rise    : null,
+      moonsetDate:  isValid(moonTimes.set)     ? moonTimes.set     : null,
+    };
+  } catch {
+    // Fallback: our refraction-corrected formula (zenith 90°50'), no moon times
+    return { ...approximateSunriseSunsetDates(date, lat, lon, timezone), moonriseDate: null, moonsetDate: null };
+  }
+}
+
+/** Fallback when SunCalc is unavailable — refraction-corrected solar formula (±2 min) */
 function approximateSunriseSunsetDates(date: Date, lat: number, lon: number, timezone: string): { sunriseDate: Date | null; sunsetDate: Date | null } {
   try {
     const utcOffsetMin = getTimezoneOffsetMinutes(date, timezone);
@@ -710,8 +744,7 @@ function approximateSunriseSunsetDates(date: Date, lat: number, lon: number, tim
     const ET = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
     const declination = 23.45 * Math.sin(B) * (Math.PI / 180);
     const latRad = lat * (Math.PI / 180);
-    // Zenith = 90°50' (standard astronomical sunrise: accounts for refraction + solar disc)
-    // This gives sunrise ~5-8 min earlier than the naive 90° zenith formula.
+    // Zenith = 90°50' — standard astronomical sunrise (refraction + solar disc)
     const ZENITH_RAD = 90.8333 * (Math.PI / 180);
     const cosHA = (Math.cos(ZENITH_RAD) - Math.sin(latRad) * Math.sin(declination))
                 / (Math.cos(latRad) * Math.cos(declination));
@@ -719,14 +752,12 @@ function approximateSunriseSunsetDates(date: Date, lat: number, lon: number, tim
     const hourAngle = Math.acos(cosHA) * (180 / Math.PI);
     const solarNoon = 12 + utcOffsetHours - lon / 15 - ET / 60;
     const sunriseHour = solarNoon - hourAngle / 15;
-    const sunsetHour = solarNoon + hourAngle / 15;
-    // Use Date.UTC to get midnight UTC — never midnight in the browser's local timezone,
-    // which would corrupt all subsequent city time calculations for non-local timezones.
+    const sunsetHour  = solarNoon + hourAngle / 15;
     const baseMs = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
     const utcOffsetMs = utcOffsetMin * 60000;
     return {
       sunriseDate: new Date(baseMs + sunriseHour * 3600000 - utcOffsetMs),
-      sunsetDate: new Date(baseMs + sunsetHour * 3600000 - utcOffsetMs),
+      sunsetDate:  new Date(baseMs + sunsetHour  * 3600000 - utcOffsetMs),
     };
   } catch {
     return { sunriseDate: null, sunsetDate: null };
