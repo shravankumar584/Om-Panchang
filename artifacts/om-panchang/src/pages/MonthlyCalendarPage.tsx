@@ -105,12 +105,13 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
   const [city, setCity] = useState<City>(initialCity);
   const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([]);
   const [loading, setLoading] = useState(false);
-  // Initialize as true immediately if library already on window (navigated from main page)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [libraryLoaded, setLibraryLoaded] = useState(() => !!(window as any).Panchangam);
   const cacheRef = useRef<Map<string, DayPanchang>>(new Map());
+  // Used to abort stale data-fill loops when month/city changes mid-flight
+  const fillGenRef = useRef(0);
 
-  // Load panchangam CDN library (only needed on fresh direct page load)
+  // Load panchangam CDN library
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ((window as any).Panchangam) { setLibraryLoaded(true); return; }
@@ -133,49 +134,63 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     document.title = `Hindu Panchang Calendar ${MONTHS[month]} ${year} – ${city.name} | Om Panchang`;
   }, [month, year, city.name]);
 
-  const cacheKey = (d: Date) =>
-    `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${city.name}`;
-
-  const computeAndCache = useCallback(async (date: Date): Promise<DayPanchang> => {
-    const k = cacheKey(date);
-    if (cacheRef.current.has(k)) return cacheRef.current.get(k)!;
-    const r = await computeDayPanchang(date, city);
-    cacheRef.current.set(k, r);
-    return r;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [city.name]);
-
-  const buildCalendar = useCallback(async (m: number, y: number) => {
-    setLoading(true);
+  // ── EFFECT 1: Build grid skeleton immediately (no library needed) ──────────
+  // This runs on every month/year/city change and renders the day cells right away.
+  useEffect(() => {
+    fillGenRef.current += 1; // cancel any running panchang fill for old month
+    cacheRef.current.clear();
+    const m = month; const y = year;
     const firstDay = new Date(y, m, 1);
     const lastDay  = new Date(y, m + 1, 0);
     const start    = new Date(firstDay); start.setDate(start.getDate() - start.getDay());
     const end      = new Date(lastDay);  end.setDate(end.getDate() + (6 - end.getDay()));
-
     const days: CalendarDay[] = [];
     const cur = new Date(start);
     while (cur <= end) {
       const d = new Date(cur); d.setHours(0,0,0,0);
-      days.push({ date: d, panchang: null, isCurrentMonth: d.getMonth() === m, isToday: d.getTime() === today.getTime() });
+      days.push({ date: d, panchang: null,
+        isCurrentMonth: d.getMonth() === m,
+        isToday: d.getTime() === today.getTime() });
       cur.setDate(cur.getDate() + 1);
     }
-    setCalendarDays([...days]);
-
-    const currentMonthDays = days.filter(d => d.isCurrentMonth);
-    for (let i = 0; i < currentMonthDays.length; i += 5) {
-      await Promise.all(currentMonthDays.slice(i, i + 5).map(async day => {
-        try { day.panchang = await computeAndCache(day.date); } catch { /* skip */ }
-      }));
-      setCalendarDays(prev => [...prev]);
-    }
-    setLoading(false);
+    setCalendarDays(days);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [computeAndCache]);
+  }, [month, year, city.name]);
 
+  // ── EFFECT 2: Fill panchang data once library is ready ────────────────────
+  // Runs whenever libraryLoaded becomes true OR month/year/city changes.
   useEffect(() => {
     if (!libraryLoaded) return;
-    cacheRef.current.clear();
-    buildCalendar(month, year).catch(() => setLoading(false));
+    const gen = fillGenRef.current; // snapshot generation for this fill
+    const m = month; const y = year;
+
+    const fill = async () => {
+      setLoading(true);
+      const dates: Date[] = [];
+      const cur = new Date(y, m, 1);
+      const last = new Date(y, m + 1, 0);
+      while (cur <= last) { dates.push(new Date(cur)); cur.setDate(cur.getDate() + 1); }
+
+      for (let i = 0; i < dates.length; i += 5) {
+        if (fillGenRef.current !== gen) return; // stale — newer month navigated
+        const batch = dates.slice(i, i + 5);
+        await Promise.all(batch.map(async date => {
+          if (fillGenRef.current !== gen) return;
+          const k = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${city.name}`;
+          try {
+            let p = cacheRef.current.get(k);
+            if (!p) { p = await computeDayPanchang(date, city); cacheRef.current.set(k, p); }
+            if (fillGenRef.current !== gen) return;
+            setCalendarDays(prev =>
+              prev.map(d => d.date.getTime() === date.getTime() ? { ...d, panchang: p! } : d)
+            );
+          } catch { /* skip day */ }
+        }));
+      }
+      if (fillGenRef.current === gen) setLoading(false);
+    };
+
+    fill().catch(() => { if (fillGenRef.current === gen) setLoading(false); });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [libraryLoaded, month, year, city.name]);
 
