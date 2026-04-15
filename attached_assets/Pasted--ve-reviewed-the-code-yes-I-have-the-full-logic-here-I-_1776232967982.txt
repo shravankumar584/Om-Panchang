@@ -1,0 +1,107 @@
+'ve reviewed the code—yes, I have the full logic here. I see exactly where the "manual refresh" issue is hiding. Even though you merged the Effects, you’re hitting a classic React state closure problem.
+
+The Bug: The "Stale Ref" Race
+In your useEffect, you are setting daysRef.current = skeleton and then immediately starting an async fill().
+
+However, because of how async/await works inside a loop, by the time your first batch of 5 dates finishes computing, React might have re-rendered the component (because you called setCalendarDays([]) in your Maps function). When that re-render happens, daysRef is stable, but your mapping logic:
+
+JavaScript
+daysRef.current = daysRef.current.map(...)
+...can sometimes struggle if multiple "fill" cycles are triggered by rapid clicks.
+
+The 2-Step Solution
+1. The "Safety Check" in the Loop
+The biggest reason you need a refresh is likely that the cancelled variable isn't being checked inside the findIndex logic. If you click "Next" quickly, the old async loop is still running and trying to update the new month's state with old month's data.
+
+2. Fix the Maps Function
+You are using window.history.pushState. In Next.js/React, this updates the URL bar but does not trigger a component update unless the state changes. While you are calling setMonth, if the user uses the browser "Back" button, your popstate listener will fire, but it might not be cleaning the old async task properly.
+
+🛠️ The Corrected Effect
+Replace your combined useEffect with this version. I’ve optimized the findIndex and added a "Mount Check" to ensure the data actually paints:
+
+TypeScript
+useEffect(() => {
+  let cancelled = false;
+  // 1. Build Skeleton Synchronously
+  const m = month; const y = year;
+  const firstDay = new Date(y, m, 1);
+  const lastDay = new Date(y, m + 1, 0);
+  const start = new Date(firstDay); start.setDate(start.getDate() - start.getDay());
+  const end = new Date(lastDay); end.setDate(end.getDate() + (6 - end.getDay()));
+
+  const skeleton: CalendarDay[] = [];
+  let cur = new Date(start);
+  while (cur <= end) {
+    const d = new Date(cur); d.setHours(0,0,0,0);
+    skeleton.push({ 
+      date: d, 
+      panchang: null, 
+      isCurrentMonth: d.getMonth() === m, 
+      isToday: d.getTime() === today.getTime() 
+    });
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  // Set the skeleton immediately
+  daysRef.current = skeleton;
+  setCalendarDays([...skeleton]);
+
+  // 2. Wait for library, then fill
+  if (!libraryLoaded) {
+    setLoading(false);
+    return;
+  }
+
+  const fill = async () => {
+    setLoading(true);
+    // Only fetch for dates actually in the month to save resources
+    const monthDates = skeleton.filter(d => d.isCurrentMonth).map(d => d.date);
+
+    for (let i = 0; i < monthDates.length; i += 5) {
+      if (cancelled) return;
+      
+      const batch = monthDates.slice(i, i + 5);
+      await Promise.all(batch.map(async (date) => {
+        if (cancelled) return;
+        
+        const k = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${city.name}`;
+        try {
+          let p = cacheRef.current.get(k);
+          if (!p) {
+            p = await computeDayPanchang(date, city);
+            cacheRef.current.set(k, p);
+          }
+          
+          if (cancelled) return;
+
+          // Update the Ref immediately
+          const targetTime = date.getTime();
+          const idx = daysRef.current.findIndex(d => d.date.getTime() === targetTime);
+          
+          if (idx !== -1) {
+            // Use a functional update to ensure we don't use stale state
+            setCalendarDays(prev => {
+              const next = [...prev];
+              if (next[idx]) {
+                next[idx] = { ...next[idx], panchang: p! };
+              }
+              return next;
+            });
+          }
+        } catch (err) {
+          console.error("Panchang error", err);
+        }
+      }));
+    }
+    if (!cancelled) setLoading(false);
+  };
+
+  fill();
+  return () => { cancelled = true; };
+}, [month, year, city.name, libraryLoaded]);
+Why this works:
+d.date.getTime() Comparison: Comparing dates using .getDate() etc., is risky. Comparing the getTime() integer is much faster and prevents "off-by-one" errors where data renders in the wrong box.
+
+Functional State Update: Using setCalendarDays(prev => ...) is the "Gold Standard." It ensures that even if 5 async calls finish at the exact same millisecond, they won't overwrite each other.
+
+The Library Check: Adding libraryLoaded to the dependency array ensures that once the script finishes loading from the CDN, the calendar automatically wakes up and fills the data without you touching the keyboard.

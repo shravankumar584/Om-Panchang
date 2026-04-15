@@ -181,35 +181,40 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     // 2. If library not loaded yet, wait for it (libraryLoaded dep will re-trigger)
     if (!libraryLoaded) { setLoading(false); return; }
 
-    // 3. Fill panchang data asynchronously, always reading from daysRef (never stale prev)
+    // 3. Fill panchang data asynchronously.
+    //    - Only process current-month dates (not gray padding cells).
+    //    - daysRef gives us the stable index (not affected by concurrent state updates).
+    //    - Functional setCalendarDays(prev=>) is serialized by React, so concurrent
+    //      Promise.all resolutions can't overwrite each other.
+    //    - computeDayPanchang starts with a setTimeout yield, so React will have
+    //      committed setCalendarDays([...skeleton]) before any result comes back,
+    //      meaning prev is always the skeleton (never the initial empty []).
     setLoading(true);
     const fill = async () => {
-      const dates: Date[] = [];
-      const c2 = new Date(y, m, 1);
-      const last = new Date(y, m + 1, 0);
-      while (c2 <= last) { dates.push(new Date(c2)); c2.setDate(c2.getDate() + 1); }
+      // Only fill current-month cells — padding cells stay blank
+      const monthDates = skeleton.filter(d => d.isCurrentMonth).map(d => d.date);
 
-      for (let i = 0; i < dates.length; i += 5) {
+      for (let i = 0; i < monthDates.length; i += 5) {
         if (cancelled) return;
-        await Promise.all(dates.slice(i, i + 5).map(async date => {
+        await Promise.all(monthDates.slice(i, i + 5).map(async date => {
           if (cancelled) return;
           const k = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${city.name}`;
           try {
             let p = cacheRef.current.get(k);
             if (!p) { p = await computeDayPanchang(date, city); cacheRef.current.set(k, p); }
             if (cancelled) return;
-            // Write to ref first — guaranteed to be the current skeleton regardless
-            // of whether React has committed the setCalendarDays([...skeleton]) above.
-            const idx = daysRef.current.findIndex(d =>
-              d.date.getDate()     === date.getDate()  &&
-              d.date.getMonth()    === date.getMonth() &&
-              d.date.getFullYear() === date.getFullYear()
-            );
+            // Use daysRef for a stable index (avoids date comparison across
+            // different Date instances) then apply via functional update so
+            // concurrent resolutions within the same batch don't overwrite each other.
+            const targetTime = date.getTime();
+            const idx = daysRef.current.findIndex(d => d.date.getTime() === targetTime);
             if (idx !== -1) {
-              daysRef.current = daysRef.current.map((d, i) =>
-                i === idx ? { ...d, panchang: p! } : d
-              );
-              setCalendarDays([...daysRef.current]);
+              setCalendarDays(prev => {
+                if (!prev[idx]) return prev;     // skeleton not yet committed — skip
+                const next = [...prev];
+                next[idx] = { ...next[idx], panchang: p! };
+                return next;
+              });
             }
           } catch (err) {
             console.error("panchang compute failed", date, err);
