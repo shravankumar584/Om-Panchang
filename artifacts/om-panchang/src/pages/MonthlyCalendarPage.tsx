@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   CITIES, City, DayPanchang, computeDayPanchang,
-  getFestivalsForDate, cityToSlug,
+  getFestivalsForDate, cityToSlug, slugToCity,
 } from "@/lib/panchangData";
-import { monthToSlug } from "@/lib/calendarUtils";
+import { monthToSlug, slugToMonthYear } from "@/lib/calendarUtils";
 
 const MONTHS = [
   "January","February","March","April","May","June",
@@ -128,6 +128,24 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     s.onload = () => setLibraryLoaded(true);
     s.onerror = () => setLibraryLoaded(true);
     document.head.appendChild(s);
+  }, []);
+
+  // Handle browser Back / Forward buttons within the calendar
+  useEffect(() => {
+    const onPopState = () => {
+      const segments = window.location.pathname.split("/").filter(Boolean);
+      // Only act if the URL is still a panchang-calendar route
+      if (segments[0] !== "panchang-calendar") return;
+      const monthYear = slugToMonthYear(segments[1] ?? "");
+      if (!monthYear) return;
+      const newCity = slugToCity(segments[2] ?? "") ?? CITIES[0];
+      // Update component state in-place (avoids a full remount)
+      setMonth(monthYear.month);
+      setYear(monthYear.year);
+      setCity(newCity);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
   // Update meta title for SEO
