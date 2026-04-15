@@ -121,11 +121,11 @@ export default function AboutPage() {
             you. Write to us anytime:
           </p>
           <a
-            href="mailto:ompanchang-daily@gmail.com"
+            href="mailto:ompanchang.org@gmail.com"
             className="inline-flex items-center gap-2 mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition shadow"
           >
             <span>📧</span>
-            ompanchang-daily@gmail.com
+            ompanchang.org@gmail.com
           </a>
           <p className="text-xs text-slate-500 mt-3">
             We typically respond within 1–2 business days. For urgent panchang questions, include

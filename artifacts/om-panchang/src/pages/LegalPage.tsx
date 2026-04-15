@@ -140,7 +140,7 @@ function ContactPage() {
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\n${message}`
     );
-    const mailtoLink = `mailto:contact@ompanchang.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    const mailtoLink = `mailto:ompanchang.org@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     window.location.href = mailtoLink;
     setSent(true);
   };
@@ -160,8 +160,8 @@ function ContactPage() {
             <p className="text-sm text-green-700">
               Your email client should have opened with a pre-filled message.
               If it did not open,  please email us directly at{" "}
-              <a href="mailto:contact@ompanchang.com" className="underline font-medium">
-                contact@ompanchang.com
+              <a href="mailto:ompanchang.org@gmail.com" className="underline font-medium">
+                ompanchang.org@gmail.com
               </a>.
             </p>
             <button
@@ -176,8 +176,8 @@ function ContactPage() {
             <p className="text-sm text-slate-500 mb-6">
               Have a question, found an error in our calculations, or want to suggest a feature?
               We're a small team and read every message. Use the form below or email us at{" "}
-              <a href="mailto:contact@ompanchang.com" className="text-indigo-600 underline">
-                contact@ompanchang.com
+              <a href="mailto:ompanchang.org@gmail.com" className="text-indigo-600 underline">
+                ompanchang.org@gmail.com
               </a>.
             </p>
 
@@ -247,7 +247,7 @@ function ContactPage() {
 
             <div className="mt-6 bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-xs text-slate-500 space-y-1">
               <p><strong className="text-indigo-700">📍 Om Panchang</strong></p>
-              <p>Email: <a href="mailto:contact@ompanchang.com" className="text-indigo-600 underline">contact@ompanchang.com</a></p>
+              <p>Email: <a href="mailto:ompanchang.org@gmail.com" className="text-indigo-600 underline">ompanchang.org@gmail.com</a></p>
               <p>We typically respond within 2–3 business days.</p>
             </div>
           </>
