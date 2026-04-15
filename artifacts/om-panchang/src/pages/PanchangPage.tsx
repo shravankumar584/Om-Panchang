@@ -841,11 +841,13 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
         {/* Tab navigation */}
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-2 sm:px-4">
-            <div className="flex overflow-x-auto scrollbar-hide">
+            <div className="flex overflow-x-auto scrollbar-hide" style={{ touchAction: "pan-x" }}>
               {TABS.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => handleTabClick(tab.id)}
+                  onTouchEnd={(e) => { e.preventDefault(); handleTabClick(tab.id); }}
+                  style={{ touchAction: "manipulation" }}
                   className={`flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border-b-2 transition min-w-[52px] sm:min-w-0
                     ${activeTab === tab.id
                       ? "border-amber-400 text-amber-300 bg-white/10"
