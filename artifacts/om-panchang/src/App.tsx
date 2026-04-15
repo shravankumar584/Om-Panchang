@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PanchangPage from "@/pages/PanchangPage";
 import LegalPage from "@/pages/LegalPage";
 import AboutPage from "@/pages/AboutPage";
+import MonthlyCalendarPage, { slugToMonthYear } from "@/pages/MonthlyCalendarPage";
 import { CITIES, slugToCity, type City } from "@/lib/panchangData";
 
 const queryClient = new QueryClient();
@@ -48,11 +49,29 @@ function detectInitialCity(path: string): City {
   return CITIES[0];
 }
 
+interface MonthlyRoute {
+  type: "monthly";
+  month: number;
+  year: number;
+  city: City;
+}
+
+function detectMonthlyCalendar(path: string): MonthlyRoute | null {
+  const segments = path.split("/").filter(Boolean);
+  if (segments[0] !== "panchang-calendar") return null;
+  const monthYear = slugToMonthYear(segments[1] ?? "");
+  if (!monthYear) return null;
+  const citySlug = segments[2] ?? "";
+  const city = slugToCity(citySlug) ?? CITIES[0];
+  return { type: "monthly", month: monthYear.month, year: monthYear.year, city };
+}
+
 function parseRoute(path: string) {
   return {
-    legalPage:   detectLegalPage(path),
-    variant:     detectVariant(path),
-    initialCity: detectInitialCity(path),
+    legalPage:     detectLegalPage(path),
+    monthly:       detectMonthlyCalendar(path),
+    variant:       detectVariant(path),
+    initialCity:   detectInitialCity(path),
   };
 }
 
@@ -67,20 +86,28 @@ function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  const { legalPage, variant, initialCity } = route;
+  const { legalPage, monthly, variant, initialCity } = route;
+
+  if (legalPage === "about") return <QueryClientProvider client={queryClient}><AboutPage /></QueryClientProvider>;
+  if (legalPage)             return <QueryClientProvider client={queryClient}><LegalPage page={legalPage} /></QueryClientProvider>;
+  if (monthly)               return (
+    <QueryClientProvider client={queryClient}>
+      <MonthlyCalendarPage
+        key={`${monthly.month}-${monthly.year}-${monthly.city.name}`}
+        initialMonth={monthly.month}
+        initialYear={monthly.year}
+        initialCity={monthly.city}
+      />
+    </QueryClientProvider>
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
-      {legalPage === "about"
-        ? <AboutPage />
-        : legalPage
-          ? <LegalPage page={legalPage} />
-          : <PanchangPage
-              key={`${variant}-${initialCity.name}`}
-              variant={variant as any}
-              initialCity={initialCity}
-            />
-      }
+      <PanchangPage
+        key={`${variant}-${initialCity.name}`}
+        variant={variant as any}
+        initialCity={initialCity}
+      />
     </QueryClientProvider>
   );
 }

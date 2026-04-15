@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { CITIES, City, DayPanchang, computeDayPanchang, getFestivalsForDate, cityToSlug } from "@/lib/panchangData";
+import { monthToSlug } from "@/pages/MonthlyCalendarPage";
 import { CalendarLang, LANG_LABELS, LANG_CYCLE, translateTithi, translateNakshatra } from "@/lib/i18n";
 import ReferenceSection from "@/components/ReferenceSection";
 import VedicClock from "@/components/VedicClock";
@@ -701,9 +702,10 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
   const selectedFestivals = getFestivalsForDate(selectedDate);
   const sp = selectedPanchang;
 
-  const TABS: { id: ActiveTab; label: string; icon: string }[] = [
+  const TABS: { id: ActiveTab | "calendar-nav"; label: string; icon: string }[] = [
     { id: "home", label: "Home", icon: "🏠" },
     { id: "panchang", label: "Panchang", icon: "📿" },
+    { id: "calendar-nav", label: "Calendar", icon: "📅" },
     { id: "muhurat", label: "Muhurat", icon: "⏰" },
     { id: "festivals", label: "Festivals", icon: "🎉" },
     { id: "planets", label: "Planets", icon: "🪐" },
@@ -714,6 +716,18 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
     { id: "babynames", label: "Baby Names", icon: "👶" },
     { id: "hora",      label: "Hora",       icon: "⏳" },
   ];
+
+  function handleTabClick(id: ActiveTab | "calendar-nav") {
+    if (id === "calendar-nav") {
+      const slug = monthToSlug(viewDate.getMonth(), viewDate.getFullYear());
+      const citySlug = cityToSlug(selectedCity.name);
+      const url = `/panchang-calendar/${slug}/${citySlug}`;
+      window.history.pushState({}, "", url);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    } else {
+      setActiveTab(id);
+    }
+  }
 
   // Sidebar: common across tabs
   const Sidebar = (
@@ -831,11 +845,13 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
               {TABS.map(tab => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => handleTabClick(tab.id)}
                   className={`flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border-b-2 transition min-w-[52px] sm:min-w-0
                     ${activeTab === tab.id
                       ? "border-amber-400 text-amber-300 bg-white/10"
-                      : "border-transparent text-indigo-200 hover:text-white hover:bg-white/5"
+                      : tab.id === "calendar-nav"
+                        ? "border-transparent text-amber-200/70 hover:text-amber-200 hover:bg-white/5"
+                        : "border-transparent text-indigo-200 hover:text-white hover:bg-white/5"
                     }`}
                 >
                   <span className="text-base sm:text-sm">{tab.icon}</span>
@@ -931,6 +947,12 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                 <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-indigo-600" /><span>Selected</span></div>
                 <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-rose-500" /><span>Festival</span></div>
                 <div className="flex items-center gap-1"><span className="text-indigo-400 font-bold">↑</span><span>Tithi ends next day</span></div>
+                <button
+                  onClick={() => handleTabClick("calendar-nav")}
+                  className="text-indigo-600 font-semibold hover:text-indigo-800 transition flex items-center gap-1"
+                >
+                  📅 Full Calendar →
+                </button>
                 <div className="ml-auto text-indigo-500 font-medium">🕉️ Based on {selectedCity.name}</div>
               </div>
             </div>
