@@ -3,316 +3,316 @@
 
   <!-- ===== STATIC PAGES ===== -->
   <url>
-    <loc>https://ompanchang.com/</loc>
+    <loc>https://ompanchang.org/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/about-us</loc>
+    <loc>https://ompanchang.org/about-us</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/disclaimer</loc>
+    <loc>https://ompanchang.org/disclaimer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/contact-us</loc>
+    <loc>https://ompanchang.org/contact-us</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/privacy-policy</loc>
+    <loc>https://ompanchang.org/privacy-policy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <!-- ===== SECTION LANDING PAGES (no city) ===== -->
   <url>
-    <loc>https://ompanchang.com/hindu-calendar</loc>
+    <loc>https://ompanchang.org/hindu-calendar</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/telugu-calendar</loc>
+    <loc>https://ompanchang.org/telugu-calendar</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/vedic-astrology</loc>
+    <loc>https://ompanchang.org/vedic-astrology</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/hindu-astrology</loc>
+    <loc>https://ompanchang.org/hindu-astrology</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/kundali</loc>
+    <loc>https://ompanchang.org/kundali</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/kundali-milan</loc>
+    <loc>https://ompanchang.org/kundali-milan</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/marriage-muhurat</loc>
+    <loc>https://ompanchang.org/marriage-muhurat</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/hindu-festivals</loc>
+    <loc>https://ompanchang.org/hindu-festivals</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/ekadashi-dates</loc>
+    <loc>https://ompanchang.org/ekadashi-dates</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/amavasya-dates</loc>
+    <loc>https://ompanchang.org/amavasya-dates</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/purnima-dates</loc>
+    <loc>https://ompanchang.org/purnima-dates</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/pradosh-vrat</loc>
+    <loc>https://ompanchang.org/pradosh-vrat</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ompanchang.com/baby-names-by-nakshatra</loc>
+    <loc>https://ompanchang.org/baby-names-by-nakshatra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- ===== PANCHANG TODAY — ALL CITIES ===== -->
-  <url><loc>https://ompanchang.com/panchang/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/pune</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/ahmedabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/jaipur</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/lucknow</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/varanasi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/surat</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/kochi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/chandigarh</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/indore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/nagpur</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/bhopal</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/patna</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/amritsar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/haridwar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/rishikesh</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/mathura</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/vrindavan</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/ayodhya</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/agra</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/prayagraj</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/tirupati</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/shirdi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/nashik</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/warangal</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/visakhapatnam</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/coimbatore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/madurai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/thiruvananthapuram</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/mysuru</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/ranchi</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/bhubaneswar</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/guwahati</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/dehradun</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/jodhpur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/udaipur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/vadodara</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/rajkot</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/raipur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/mangaluru</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/new-york</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/chicago</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/los-angeles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/houston</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/san-francisco</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/panchang/san-jose</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/dallas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/austin</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/plano</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/sugar-land</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/seattle</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/atlanta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/boston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/washington-dc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/edison</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/jersey-city</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/philadelphia</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/detroit</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/troy</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/south-lyon</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/phoenix</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/denver</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/las-vegas</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/portland</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/minneapolis</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/columbus</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/charlotte</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/naperville</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/indianapolis</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/tampa</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/miami</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/raleigh</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/fremont</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/sunnyvale</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/cupertino</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/san-diego</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/sacramento</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/irvine</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/chandler</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/scottsdale</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/herndon</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/baltimore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/virginia-beach</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/richmond</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/pittsburgh</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/orlando</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/jacksonville</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/nashville</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/kansas-city</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/st-louis</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/oklahoma-city</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/milwaukee</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/schaumburg</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/cincinnati</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/cleveland</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/hartford</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/new-orleans</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/salt-lake-city</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/tucson</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ompanchang.com/panchang/toronto</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/vancouver</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/calgary</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/london</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/birmingham</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/sydney</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/melbourne</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/dubai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/panchang/abu-dhabi</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/kathmandu</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/colombo</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/panchang/kuala-lumpur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/pune</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/ahmedabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/jaipur</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/lucknow</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/varanasi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/surat</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/kochi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/chandigarh</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/indore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/nagpur</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/bhopal</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/patna</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/amritsar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/haridwar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/rishikesh</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/mathura</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/vrindavan</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/ayodhya</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/agra</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/prayagraj</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/tirupati</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/shirdi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/nashik</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/warangal</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/visakhapatnam</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/coimbatore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/madurai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/thiruvananthapuram</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/mysuru</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/ranchi</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/bhubaneswar</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/guwahati</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/dehradun</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/jodhpur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/udaipur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/vadodara</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/rajkot</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/raipur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/mangaluru</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/new-york</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/chicago</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/los-angeles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/houston</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/san-francisco</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/panchang/san-jose</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/dallas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/austin</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/plano</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/sugar-land</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/seattle</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/atlanta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/boston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/washington-dc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/edison</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/jersey-city</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/philadelphia</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/detroit</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/troy</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/south-lyon</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/phoenix</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/denver</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/las-vegas</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/portland</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/minneapolis</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/columbus</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/charlotte</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/naperville</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/indianapolis</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/tampa</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/miami</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/raleigh</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/fremont</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/sunnyvale</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/cupertino</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/san-diego</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/sacramento</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/irvine</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/chandler</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/scottsdale</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/herndon</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/baltimore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/virginia-beach</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/richmond</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/pittsburgh</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/orlando</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/jacksonville</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/nashville</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/kansas-city</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/st-louis</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/oklahoma-city</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/milwaukee</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/schaumburg</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/cincinnati</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/cleveland</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/hartford</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/new-orleans</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/salt-lake-city</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/tucson</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ompanchang.org/panchang/toronto</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/vancouver</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/calgary</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/london</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/birmingham</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/sydney</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/melbourne</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/dubai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/panchang/abu-dhabi</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/kathmandu</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/colombo</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/panchang/kuala-lumpur</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 
   <!-- ===== CHOGHADIYA — TOP CITIES ===== -->
-  <url><loc>https://ompanchang.com/choghadiya/new-york</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/chicago</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/los-angeles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/houston</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/san-francisco</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/dallas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/atlanta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/seattle</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/boston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/washington-dc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/pune</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/ahmedabad</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/jaipur</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/toronto</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/london</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/dubai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/sydney</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/choghadiya/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/new-york</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/chicago</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/los-angeles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/houston</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/san-francisco</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/dallas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/atlanta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/seattle</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/boston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/washington-dc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/pune</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/ahmedabad</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/jaipur</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/toronto</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/london</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/dubai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/sydney</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/choghadiya/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 
   <!-- ===== RAHU KALAM TODAY — TOP CITIES ===== -->
-  <url><loc>https://ompanchang.com/rahu-kalam-today/new-york</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/chicago</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/los-angeles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/houston</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/san-francisco</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/dallas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/atlanta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/seattle</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/washington-dc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/rahu-kalam-today/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/new-york</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/chicago</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/los-angeles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/houston</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/san-francisco</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/dallas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/atlanta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/seattle</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/washington-dc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/rahu-kalam-today/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 
   <!-- ===== NAKSHATRA TODAY — TOP CITIES ===== -->
-  <url><loc>https://ompanchang.com/nakshatra-today/new-york</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/chicago</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/los-angeles</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/houston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/delhi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/mumbai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/bangalore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/chennai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/hyderabad</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/nakshatra-today/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/new-york</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/chicago</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/los-angeles</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/houston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/delhi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/mumbai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/bangalore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/chennai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/hyderabad</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/nakshatra-today/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 
   <!-- ===== HORA TODAY — TOP CITIES ===== -->
-  <url><loc>https://ompanchang.com/hora-today/new-york</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/chicago</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/los-angeles</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/houston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/san-francisco</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/dallas</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/atlanta</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/seattle</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/washington-dc</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/delhi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/mumbai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/bangalore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/chennai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/hyderabad</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/kolkata</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/hora-today/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/new-york</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/chicago</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/los-angeles</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/houston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/san-francisco</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/dallas</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/atlanta</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/seattle</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/washington-dc</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/delhi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/mumbai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/bangalore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/chennai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/hyderabad</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/kolkata</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/hora-today/singapore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 
   <!-- ===== BRAHMA MUHURTA — TOP CITIES ===== -->
-  <url><loc>https://ompanchang.com/brahma-muhurta/new-york</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/chicago</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/los-angeles</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/houston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/san-francisco</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/dallas</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/seattle</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/washington-dc</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/delhi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/mumbai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/bangalore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/chennai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/hyderabad</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/kolkata</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.com/brahma-muhurta/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/new-york</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/chicago</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/los-angeles</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/houston</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/san-francisco</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/dallas</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/seattle</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/washington-dc</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/delhi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/mumbai</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/bangalore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/chennai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/hyderabad</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/kolkata</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/toronto</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/london</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ompanchang.org/brahma-muhurta/dubai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 
 </urlset>
