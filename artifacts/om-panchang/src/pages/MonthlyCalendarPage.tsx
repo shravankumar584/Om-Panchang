@@ -118,8 +118,11 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     if ((window as any).Panchangam) { setLibraryLoaded(true); return; }
     const existing = document.querySelector('script[src*="panchangam-js"]') as HTMLScriptElement | null;
     if (existing) {
-      existing.addEventListener("load", () => setLibraryLoaded(true));
-      existing.addEventListener("error", () => setLibraryLoaded(true));
+      // Script tag already in the DOM means PanchangPage already fetched & ran it.
+      // The CDN library is a CommonJS bundle that throws "exports is not defined"
+      // in the browser, so window.Panchangam is never set — but onload already fired
+      // and new listeners will never fire. Enable immediately so the fallback fill runs.
+      setLibraryLoaded(true);
       return;
     }
     const s = document.createElement("script");
