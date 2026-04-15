@@ -1,0 +1,54 @@
+The reason you are having to refresh the browser to see the data is exactly what we suspected: Client-side navigation via window.history.pushState does not trigger a re-render in React.
+
+When you click your Maps or handleCityChange buttons, you update the URL in the browser bar, but React doesn't know the component needs to re-fetch the data because you aren't using the URL parameters as the "source of truth."
+
+The 2-Step Fix
+1. Add URL Parameters to the Dependency Array
+In your EFFECT 2 (the one that calls fill()), you are currently watching [libraryLoaded, month, year, city.name]. This is good, but since you are manually calling setMonth and setYear, React should theoretically catch it. However, because you are using window.history.pushState and potentially bypassing the router's lifecycle, the state might get out of sync.
+
+2. The Main Culprit: Maps and handleCityChange
+In these functions, you are changing the URL, but if the user clicks the "Back" button or if the component re-mounts, it might lose track.
+
+But the real problem in your code is likely the Skeleton Effect (Effect 1) and the Data Effect (Effect 2) racing each other. You are clearing the cache and resetting the daysRef in Effect 1, but Effect 2 might still be trying to "fill" the previous month's data.
+
+🛠️ The Optimized Code Fix
+Replace your Maps and handleCityChange functions with this logic to ensure a clean state transition:
+
+TypeScript
+  function navigate(delta: number) {
+    let m = month + delta;
+    let y = year;
+    if (m < 0)  { m = 11; y--; }
+    if (m > 11) { m = 0;  y++; }
+
+    // 1. Reset states to trigger the "Loading" skeleton UI
+    setCalendarDays([]); 
+    setLoading(true);
+    
+    // 2. Update state (Effect 1 and 2 will now trigger automatically)
+    setMonth(m); 
+    setYear(y);
+
+    // 3. Update URL
+    const slug = cityToSlug(city.name);
+    window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(m, y)}/${slug}`);
+  }
+
+  function handleCityChange(c: City) {
+    // 1. Clear everything for the new city
+    cacheRef.current.clear();
+    setCalendarDays([]);
+    setLoading(true);
+    
+    // 2. Update city state
+    setCity(c);
+
+    // 3. Update URL
+    window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(month, year)}/${cityToSlug(c.name)}`);
+  }
+Why this fixes the "Refresh" issue:
+Forcing a Reset: By calling setCalendarDays([]) and setLoading(true) immediately when the user clicks, you tell React: "The old data is dead."
+
+Triggering Effects: Since month, year, and city are dependencies in your Effects, React will automatically run the logic to build the new skeleton and then fill it with data.
+
+Synchronous Ref Update: You are already using daysRef.current = days in Effect 1, which is great. By resetting the state first, you ensure that Effect 2 doesn't try to map over an old array while the new one is being built.

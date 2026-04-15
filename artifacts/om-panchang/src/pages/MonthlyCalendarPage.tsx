@@ -135,43 +135,41 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     document.title = `Hindu Panchang Calendar ${MONTHS[month]} ${year} – ${city.name} | Om Panchang`;
   }, [month, year, city.name]);
 
-  // ── EFFECT 1: Build grid skeleton immediately (no library needed) ──────────
+  // ── Single combined effect: build skeleton then fill panchang data ──────────
+  // Merged into ONE effect so the skeleton is always constructed synchronously
+  // before any async fill starts — eliminating any race between two separate effects.
   useEffect(() => {
     cacheRef.current.clear();
+    let cancelled = false;
     const m = month; const y = year;
+
+    // 1. Build skeleton synchronously and commit to ref + state
     const firstDay = new Date(y, m, 1);
     const lastDay  = new Date(y, m + 1, 0);
     const start    = new Date(firstDay); start.setDate(start.getDate() - start.getDay());
     const end      = new Date(lastDay);  end.setDate(end.getDate() + (6 - end.getDay()));
-    const days: CalendarDay[] = [];
+    const skeleton: CalendarDay[] = [];
     const cur = new Date(start);
     while (cur <= end) {
       const d = new Date(cur); d.setHours(0,0,0,0);
-      days.push({ date: d, panchang: null,
+      skeleton.push({ date: d, panchang: null,
         isCurrentMonth: d.getMonth() === m,
         isToday: d.getTime() === today.getTime() });
       cur.setDate(cur.getDate() + 1);
     }
-    daysRef.current = days;        // ← write to ref immediately (synchronous)
-    setCalendarDays([...days]);    // ← schedule React state update
-    setLoading(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month, year, city.name]);
+    daysRef.current = skeleton;          // synchronous — always ready before fill runs
+    setCalendarDays([...skeleton]);
 
-  // ── EFFECT 2: Fill panchang data once library is ready ────────────────────
-  // Uses daysRef (not prev state) so it always has the current skeleton even if
-  // React hasn't committed Effect 1's setCalendarDays call yet (fast-library case).
-  useEffect(() => {
-    if (!libraryLoaded) return;
-    let cancelled = false;
-    const m = month; const y = year;
+    // 2. If library not loaded yet, wait for it (libraryLoaded dep will re-trigger)
+    if (!libraryLoaded) { setLoading(false); return; }
 
+    // 3. Fill panchang data asynchronously, always reading from daysRef (never stale prev)
+    setLoading(true);
     const fill = async () => {
-      setLoading(true);
       const dates: Date[] = [];
-      const cur = new Date(y, m, 1);
+      const c2 = new Date(y, m, 1);
       const last = new Date(y, m + 1, 0);
-      while (cur <= last) { dates.push(new Date(cur)); cur.setDate(cur.getDate() + 1); }
+      while (c2 <= last) { dates.push(new Date(c2)); c2.setDate(c2.getDate() + 1); }
 
       for (let i = 0; i < dates.length; i += 5) {
         if (cancelled) return;
@@ -182,7 +180,8 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
             let p = cacheRef.current.get(k);
             if (!p) { p = await computeDayPanchang(date, city); cacheRef.current.set(k, p); }
             if (cancelled) return;
-            // Update daysRef directly, then push to React state
+            // Write to ref first — guaranteed to be the current skeleton regardless
+            // of whether React has committed the setCalendarDays([...skeleton]) above.
             const idx = daysRef.current.findIndex(d =>
               d.date.getDate()     === date.getDate()  &&
               d.date.getMonth()    === date.getMonth() &&
@@ -213,13 +212,15 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     let y = year;
     if (m < 0)  { m = 11; y--; }
     if (m > 11) { m = 0;  y++; }
+    // Reset immediately so React knows old data is dead
+    setCalendarDays([]); setLoading(true);
     setMonth(m); setYear(y);
-    const slug = cityToSlug(city.name);
-    window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(m, y)}/${slug}`);
+    window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(m, y)}/${cityToSlug(city.name)}`);
   }
 
   function handleCityChange(c: City) {
     cacheRef.current.clear();
+    setCalendarDays([]); setLoading(true);
     setCity(c);
     window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(month, year)}/${cityToSlug(c.name)}`);
   }
