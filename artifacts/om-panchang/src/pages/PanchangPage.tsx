@@ -783,31 +783,31 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
     <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #f0f0ff 0%, #e8e8f8 50%, #f5f0ff 100%)" }}>
       {/* Header */}
       <header className="panchang-gradient shadow-xl sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center text-xl border border-white/20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 bg-white/15 rounded-full flex items-center justify-center text-base sm:text-xl border border-white/20">
                 🕉️
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-xl font-bold text-white tracking-tight leading-tight truncate">
                   {VARIANT_CONFIG[variant].heading
                     .replace("{city}", selectedCity.name)
                     .replace("{year}", String(viewDate.getFullYear()))}
                 </h1>
-                <p className="text-indigo-200 text-xs">
+                <p className="text-indigo-200 text-xs hidden sm:block">
                   {VARIANT_CONFIG[variant].sub
                     .replace("{city}", selectedCity.name)
                     .replace("{year}", String(viewDate.getFullYear()))}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
               {/* Language cycle: EN → हि → తె */}
               <button
                 onClick={cycleLang}
                 title="Switch language for Tithi & Nakshatra names"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-bold transition flex items-center justify-center"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold transition flex items-center justify-center"
               >
                 {LANG_LABELS[lang]}
               </button>
@@ -815,7 +815,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
               <button
                 onClick={() => setDarkMode(d => !d)}
                 title={darkMode ? "Switch to Light mode" : "Switch to Dark mode"}
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-lg transition flex items-center justify-center"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-base sm:text-lg transition flex items-center justify-center"
               >
                 {darkMode ? "☀️" : "🌙"}
               </button>
@@ -826,20 +826,20 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
 
         {/* Tab navigation */}
         <div className="border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-2 sm:px-4">
             <div className="flex overflow-x-auto scrollbar-hide">
               {TABS.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 transition
+                  className={`flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border-b-2 transition min-w-[52px] sm:min-w-0
                     ${activeTab === tab.id
                       ? "border-amber-400 text-amber-300 bg-white/10"
                       : "border-transparent text-indigo-200 hover:text-white hover:bg-white/5"
                     }`}
                 >
-                  <span className="text-sm">{tab.icon}</span>
-                  {tab.label}
+                  <span className="text-base sm:text-sm">{tab.icon}</span>
+                  <span className="text-[10px] sm:text-sm leading-tight">{tab.label}</span>
                 </button>
               ))}
             </div>
