@@ -3,7 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PanchangPage from "@/pages/PanchangPage";
 import LegalPage from "@/pages/LegalPage";
 import AboutPage from "@/pages/AboutPage";
-import MonthlyCalendarPage, { slugToMonthYear } from "@/pages/MonthlyCalendarPage";
+import MonthlyCalendarPage from "@/pages/MonthlyCalendarPage";
+import { slugToMonthYear } from "@/lib/calendarUtils";
 import { CITIES, slugToCity, type City } from "@/lib/panchangData";
 
 const queryClient = new QueryClient();

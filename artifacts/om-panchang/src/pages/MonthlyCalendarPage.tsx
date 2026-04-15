@@ -1,28 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   CITIES, City, DayPanchang, computeDayPanchang,
-  getFestivalsForDate, cityToSlug, slugToCity,
+  getFestivalsForDate, cityToSlug,
 } from "@/lib/panchangData";
+import { monthToSlug } from "@/lib/calendarUtils";
 
 const MONTHS = [
   "January","February","March","April","May","June",
   "July","August","September","October","November","December",
 ];
 const WEEKDAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-
-export function monthToSlug(month: number, year: number): string {
-  return `${MONTHS[month].toLowerCase()}-${year}`;
-}
-export function slugToMonthYear(slug: string): { month: number; year: number } | null {
-  const parts = slug.split("-");
-  if (parts.length < 2) return null;
-  const year = parseInt(parts[parts.length - 1]);
-  if (isNaN(year) || year < 2000 || year > 2100) return null;
-  const monthName = parts.slice(0, -1).join("-");
-  const month = MONTHS.findIndex(m => m.toLowerCase() === monthName);
-  if (month === -1) return null;
-  return { month, year };
-}
 
 interface CalendarDay {
   date: Date;
@@ -118,15 +105,21 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
   const [city, setCity] = useState<City>(initialCity);
   const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([]);
   const [loading, setLoading] = useState(false);
-  const [libraryLoaded, setLibraryLoaded] = useState(false);
+  // Initialize as true immediately if library already on window (navigated from main page)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [libraryLoaded, setLibraryLoaded] = useState(() => !!(window as any).Panchangam);
   const cacheRef = useRef<Map<string, DayPanchang>>(new Map());
 
-  // Load panchangam CDN library
+  // Load panchangam CDN library (only needed on fresh direct page load)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ((window as any).Panchangam) { setLibraryLoaded(true); return; }
-    const existing = document.querySelector('script[src*="panchangam-js"]');
-    if (existing) { existing.addEventListener("load", () => setLibraryLoaded(true)); return; }
+    const existing = document.querySelector('script[src*="panchangam-js"]') as HTMLScriptElement | null;
+    if (existing) {
+      existing.addEventListener("load", () => setLibraryLoaded(true));
+      existing.addEventListener("error", () => setLibraryLoaded(true));
+      return;
+    }
     const s = document.createElement("script");
     s.src = "https://cdn.jsdelivr.net/npm/@ishubhamx/panchangam-js@2.2.6/dist/index.min.js";
     s.async = true;

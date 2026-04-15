@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { CITIES, City, DayPanchang, computeDayPanchang, getFestivalsForDate, cityToSlug } from "@/lib/panchangData";
-import { monthToSlug } from "@/pages/MonthlyCalendarPage";
+import { monthToSlug } from "@/lib/calendarUtils";
 import { CalendarLang, LANG_LABELS, LANG_CYCLE, translateTithi, translateNakshatra } from "@/lib/i18n";
 import ReferenceSection from "@/components/ReferenceSection";
 import VedicClock from "@/components/VedicClock";
