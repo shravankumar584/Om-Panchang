@@ -109,7 +109,9 @@ interface Props {
 }
 
 export default function MonthlyCalendarPage({ initialMonth, initialYear, initialCity }: Props) {
-  const today = (() => { const d = new Date(); d.setHours(0,0,0,0); return d; })();
+  // Stable reference — must not be recreated on re-render or buildCalendar deps loop
+  const todayRef = useRef<Date>((() => { const d = new Date(); d.setHours(0,0,0,0); return d; })());
+  const today = todayRef.current;
 
   const [month, setMonth] = useState(initialMonth);
   const [year, setYear] = useState(initialYear);
@@ -174,13 +176,15 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
       setCalendarDays(prev => [...prev]);
     }
     setLoading(false);
-  }, [computeAndCache, today]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [computeAndCache]);
 
   useEffect(() => {
     if (!libraryLoaded) return;
     cacheRef.current.clear();
     buildCalendar(month, year).catch(() => setLoading(false));
-  }, [libraryLoaded, month, year, city.name, buildCalendar]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [libraryLoaded, month, year, city.name]);
 
   function navigate(delta: number) {
     let m = month + delta;
@@ -367,7 +371,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
             <p className="text-indigo-200 text-xs mt-0.5">Jump to any month's Hindu Panchang calendar</p>
           </div>
           <div className="p-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-            {[year - 1, year, year + 1].flatMap(y =>
+            {[year, year + 1].flatMap(y =>
               MONTHS.map((mn, mi) => {
                 const isActive = mi === month && y === year;
                 const slug = cityToSlug(city.name);
