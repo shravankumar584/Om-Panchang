@@ -210,9 +210,12 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
             const idx = daysRef.current.findIndex(d => d.date.getTime() === targetTime);
             if (idx !== -1) {
               setCalendarDays(prev => {
-                if (!prev[idx]) return prev;     // skeleton not yet committed — skip
+                if (prev.length === 0) return prev;  // state cleared mid-transition, skip
                 const next = [...prev];
-                next[idx] = { ...next[idx], panchang: p! };
+                // Extra guard: confirm the slot still matches the date we computed
+                if (next[idx] && next[idx].date.getTime() === targetTime) {
+                  next[idx] = { ...next[idx], panchang: p! };
+                }
                 return next;
               });
             }
@@ -235,15 +238,15 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     let y = year;
     if (m < 0)  { m = 11; y--; }
     if (m > 11) { m = 0;  y++; }
-    // Reset immediately so React knows old data is dead
-    setCalendarDays([]); setLoading(true);
+    // Let the effect build the new skeleton — don't blank the grid ourselves
+    setLoading(true);
     setMonth(m); setYear(y);
     window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(m, y)}/${cityToSlug(city.name)}`);
   }
 
   function handleCityChange(c: City) {
     cacheRef.current.clear();
-    setCalendarDays([]); setLoading(true);
+    setLoading(true);
     setCity(c);
     window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(month, year)}/${cityToSlug(c.name)}`);
   }

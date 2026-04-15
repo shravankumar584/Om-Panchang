@@ -1,0 +1,54 @@
+I spotted one critical logic error remaining in the loop that will cause the "manual refresh" behavior (or empty data) when navigating:
+
+The "Skeleton Check" Bug
+In your current fill function, you have this line:
+
+JavaScript
+if (!prev[idx]) return prev; // skeleton not yet committed — skip
+Why this is a problem: When you click "Next Month," you call setCalendarDays([]) inside the Maps function. If the async fill starts and its first batch finishes before React has finished rendering the new skeleton, prev will be an empty array []. prev[idx] will be undefined, the code will return prev, and that specific day's data is permanently lost for that render cycle. You'd have to refresh to see it.
+
+The Final Polish
+Here is the corrected fill function logic and a small fix for your Maps function to ensure everything syncs perfectly:
+
+1. Update the fill logic inside the useEffect:
+Replace the if (idx !== -1) block with this. It ensures we only update if the skeleton is actually present:
+
+TypeScript
+if (idx !== -1) {
+  setCalendarDays(prev => {
+    // If navigate() cleared the state, wait for the skeleton to arrive
+    if (prev.length === 0) return prev; 
+    
+    const next = [...prev];
+    // Check if the date at this index actually matches what we just computed
+    // (Extra safety for rapid month switching)
+    if (next[idx] && next[idx].date.getTime() === targetTime) {
+      next[idx] = { ...next[idx], panchang: p! };
+    }
+    return next;
+  });
+}
+2. Optimize the Maps and handleCityChange functions:
+Instead of setting setCalendarDays([]), which causes a "flash of emptiness" and triggers the bug above, let the useEffect handle the transition. The useEffect already builds a skeleton immediately.
+
+TypeScript
+function navigate(delta: number) {
+  let m = month + delta;
+  let y = year;
+  if (m < 0)  { m = 11; y--; }
+  if (m > 11) { m = 0;  y++; }
+  
+  // Don't set to [], let the Effect build the NEW skeleton
+  setLoading(true); 
+  setMonth(m); 
+  setYear(y);
+  window.history.pushState({}, "", `/panchang-calendar/${monthToSlug(m, y)}/${cityToSlug(city.name)}`);
+}
+💡 Summary of what this fixes:
+Eliminates Data Loss: By removing the return prev skip logic, we ensure that as soon as the skeleton is committed to the screen, the data batches have a place to land.
+
+Smooth Transitions: By removing setCalendarDays([]) from the navigation functions, the user stays on the current month for a split second longer until the new month's skeleton is ready, making the app feel much "sturdier."
+
+Ref vs State Sync: Your use of daysRef.current = skeleton followed by setCalendarDays([...skeleton]) is now perfectly safe because both happen in the same synchronous block of the effect.
+
+Try these two small tweaks—the "manual refresh" should completely disappear!
