@@ -379,7 +379,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
             <p className="text-indigo-200 text-xs mt-0.5">Jump to any month's Hindu Panchang calendar</p>
           </div>
           <div className="p-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-            {[year, year + 1].flatMap(y =>
+            {[2026, 2027].flatMap(y =>
               MONTHS.map((mn, mi) => {
                 const isActive = mi === month && y === year;
                 const slug = cityToSlug(city.name);
