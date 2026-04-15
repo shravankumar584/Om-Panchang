@@ -405,7 +405,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
             Hindu Panchang Calendar – {MONTHS[month]} {year}, {city.name}
           </h2>
           <p className="text-slate-600 text-sm leading-relaxed mb-3">
-            This page shows the complete Hindu Panchang (Panchangam) for every day of {MONTHS[month]} {year}
+            This page shows the complete Hindu Panchang (Panchangam) for every day of {MONTHS[month]} {year}{" "}
             calculated for <strong>{city.name}, {city.country}</strong>. Each day includes the
             <strong> Tithi</strong> (lunar day), <strong>Nakshatra</strong> (lunar mansion),
             <strong> Yoga</strong>, Karana, sunrise/sunset times, Rahu Kalam, and
