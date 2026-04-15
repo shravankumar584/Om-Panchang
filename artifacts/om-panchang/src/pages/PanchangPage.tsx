@@ -929,6 +929,11 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                                 ) : null;
                               })()}
                               <p className={`text-[10px] leading-tight truncate hidden sm:block ${day.isSelected ? "text-indigo-200" : "text-slate-400"}`}>{tNakshatra(day.panchang.nakshatra)}</p>
+                              {day.panchang.sunrise && day.panchang.sunset && (
+                                <p className={`text-[8px] leading-tight truncate hidden lg:block ${day.isSelected ? "text-amber-300" : "text-amber-500"}`}>
+                                  🌅{day.panchang.sunrise} 🌇{day.panchang.sunset}
+                                </p>
+                              )}
                             </>
                           ) : (
                             <div className={`h-2.5 rounded animate-pulse ${day.isSelected ? "bg-indigo-400" : "bg-indigo-100"}`} />
