@@ -108,6 +108,9 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [libraryLoaded, setLibraryLoaded] = useState(() => !!(window as any).Panchangam);
   const cacheRef = useRef<Map<string, DayPanchang>>(new Map());
+  // Ref mirror of calendarDays — always current even before React commits the state update.
+  // Needed because fill() may resolve before React commits Effect 1's setCalendarDays call.
+  const daysRef = useRef<CalendarDay[]>([]);
 
   // Load panchangam CDN library
   useEffect(() => {
@@ -149,13 +152,15 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
         isToday: d.getTime() === today.getTime() });
       cur.setDate(cur.getDate() + 1);
     }
-    setCalendarDays(days);
+    daysRef.current = days;        // ← write to ref immediately (synchronous)
+    setCalendarDays([...days]);    // ← schedule React state update
     setLoading(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [month, year, city.name]);
 
   // ── EFFECT 2: Fill panchang data once library is ready ────────────────────
-  // Returns a cleanup function that cancels in-flight fills when deps change.
+  // Uses daysRef (not prev state) so it always has the current skeleton even if
+  // React hasn't committed Effect 1's setCalendarDays call yet (fast-library case).
   useEffect(() => {
     if (!libraryLoaded) return;
     let cancelled = false;
@@ -177,9 +182,18 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
             let p = cacheRef.current.get(k);
             if (!p) { p = await computeDayPanchang(date, city); cacheRef.current.set(k, p); }
             if (cancelled) return;
-            setCalendarDays(prev =>
-              prev.map(d => d.date.getTime() === date.getTime() ? { ...d, panchang: p! } : d)
+            // Update daysRef directly, then push to React state
+            const idx = daysRef.current.findIndex(d =>
+              d.date.getDate()     === date.getDate()  &&
+              d.date.getMonth()    === date.getMonth() &&
+              d.date.getFullYear() === date.getFullYear()
             );
+            if (idx !== -1) {
+              daysRef.current = daysRef.current.map((d, i) =>
+                i === idx ? { ...d, panchang: p! } : d
+              );
+              setCalendarDays([...daysRef.current]);
+            }
           } catch (err) {
             console.error("panchang compute failed", date, err);
           }
