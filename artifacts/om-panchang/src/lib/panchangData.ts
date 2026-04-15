@@ -610,6 +610,9 @@ function buildExtraFields(
 
 // --- Main computation ---
 export async function computeDayPanchang(date: Date, city: City): Promise<DayPanchang> {
+  // Yield to the event loop before any synchronous computation so the browser
+  // can process frames/input between each day's calculation (30 days × heavy math).
+  await new Promise<void>(r => setTimeout(r, 0));
   const festivals = getFestivalsForDate(date);
 
   try {
