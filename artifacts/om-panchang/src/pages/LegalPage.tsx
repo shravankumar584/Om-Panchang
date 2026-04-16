@@ -288,15 +288,30 @@ function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="Analytics & Cookies">
+        <Section title="Advertising & Cookies">
           <p>
-            We may use privacy-respecting analytics (such as Google Analytics) to understand
-            aggregate usage patterns — e.g. which cities are most popular, which features are
-            used. This data is anonymized and does not identify individual users.
+            We use <strong>Google AdSense</strong> to display advertisements on this website.
+            Google AdSense uses cookies to serve ads based on your prior visits to this website
+            and other sites on the internet. These cookies allow Google and its partners to serve
+            ads based on your visit to our site and/or other sites on the Internet.
           </p>
           <p>
-            If Google Analytics is active, it may set cookies. You can opt out via your browser
-            settings or the{" "}
+            You may opt out of personalized advertising by visiting{" "}
+            <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">
+              Google Ads Settings
+            </a>{" "}or{" "}
+            <a href="https://www.aboutads.info/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">
+              aboutads.info
+            </a>.
+            Google's use of advertising cookies is governed by{" "}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">
+              Google's Privacy Policy
+            </a>.
+          </p>
+          <p>
+            We may also use privacy-respecting analytics (such as Google Analytics) to understand
+            aggregate usage patterns. This data is anonymized and does not identify individual users.
+            You can opt out via the{" "}
             <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">
               Google Analytics Opt-out Browser Add-on
             </a>.
@@ -304,6 +319,14 @@ function PrivacyPage() {
         </Section>
 
         <Section title="Third-Party Services">
+          <p>
+            <strong>Google AdSense:</strong> We partner with Google AdSense to serve ads. Google
+            may use information about your visits to this and other websites to provide relevant
+            advertisements. See{" "}
+            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">
+              How Google uses data when you use our partners' sites or apps
+            </a>.
+          </p>
           <p>
             <strong>Google Calendar:</strong> If you click "+ GCal" on a festival, you are
             redirected to Google Calendar. We pass only the event name and date as URL parameters.
