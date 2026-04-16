@@ -5,7 +5,7 @@ import LegalPage from "@/pages/LegalPage";
 import AboutPage from "@/pages/AboutPage";
 import MonthlyCalendarPage from "@/pages/MonthlyCalendarPage";
 import { slugToMonthYear } from "@/lib/calendarUtils";
-import { CITIES, slugToCity, type City } from "@/lib/panchangData";
+import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/panchangData";
 
 const queryClient = new QueryClient();
 
@@ -47,7 +47,9 @@ function detectInitialCity(path: string): City {
     const city = slugToCity(slug);
     if (city) return city;
   }
-  return CITIES[0];
+  // No city in the URL — auto-pick based on the browser's timezone
+  // (e.g. Asia/Kolkata → Delhi, America/New_York → New York).
+  return getDefaultCityByTimezone();
 }
 
 interface MonthlyRoute {
@@ -63,7 +65,7 @@ function detectMonthlyCalendar(path: string): MonthlyRoute | null {
   const monthYear = slugToMonthYear(segments[1] ?? "");
   if (!monthYear) return null;
   const citySlug = segments[2] ?? "";
-  const city = slugToCity(citySlug) ?? CITIES[0];
+  const city = slugToCity(citySlug) ?? getDefaultCityByTimezone();
   return { type: "monthly", month: monthYear.month, year: monthYear.year, city };
 }
 

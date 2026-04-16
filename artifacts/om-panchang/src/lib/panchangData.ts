@@ -20,6 +20,44 @@ export function slugToCity(slug: string): City | null {
   return CITIES.find(c => cityToSlug(c.name) === slug) ?? null;
 }
 
+/**
+ * Detect the user's most likely city from the browser's timezone.
+ * No permission prompt — uses Intl.DateTimeFormat which is always available.
+ * Falls back to Delhi (CITIES[0]) if no match is found or called outside a browser.
+ */
+export function getDefaultCityByTimezone(): City {
+  try {
+    if (typeof Intl === "undefined") return CITIES[0];
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!tz) return CITIES[0];
+
+    // 1. Exact timezone match — pick the first city with that IANA timezone.
+    const exact = CITIES.find(c => c.timezone === tz);
+    if (exact) return exact;
+
+    // 2. Region/continent fallback — e.g. "America/Toronto" has no exact
+    //    match, but "America/New_York" is a reasonable default for the US.
+    const region = tz.split("/")[0];
+    const regionFallback: Record<string, string> = {
+      America: "New York",
+      Europe:  "London",
+      Asia:    "Delhi",
+      Africa:  "London",       // closest we support
+      Oceania: "Sydney",
+      Australia: "Sydney",
+      Pacific: "Sydney",
+    };
+    const fallbackName = regionFallback[region];
+    if (fallbackName) {
+      const match = CITIES.find(c => c.name === fallbackName);
+      if (match) return match;
+    }
+  } catch {
+    // ignore and fall through
+  }
+  return CITIES[0];
+}
+
 export const CITIES: City[] = [
   // India
   { name: "Delhi", country: "India", lat: 28.6139, lon: 77.209, timezone: "Asia/Kolkata" },
