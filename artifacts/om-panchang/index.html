@@ -23,7 +23,90 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static content for crawlers and no-JS environments -->
+      <noscript>
+        <div style="font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 24px; color: #1e1b4b;">
+          <header style="background: linear-gradient(135deg, #312e81, #4338ca); color: white; padding: 24px; border-radius: 8px; margin-bottom: 24px;">
+            <h1 style="font-size: 2rem; margin: 0 0 8px 0;">🕉️ Om Panchang – Hindu Calendar &amp; Panchangam</h1>
+            <p style="margin: 0; opacity: 0.85;">Accurate daily Vedic Panchang for 70+ cities worldwide</p>
+          </header>
+
+          <main>
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">What is Panchang?</h2>
+              <p>Panchang (also spelled Panchangam or Panchaanga) is the Hindu almanac that provides five essential elements of each day according to the Hindu calendar: <strong>Tithi</strong> (lunar day), <strong>Nakshatra</strong> (lunar mansion), <strong>Yoga</strong> (auspicious combination), <strong>Karana</strong> (half-day), and <strong>Vara</strong> (weekday). These five elements are used by Hindus worldwide to determine auspicious timings for ceremonies, rituals, and important life events.</p>
+            </section>
+
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">Daily Panchang Features</h2>
+              <ul style="line-height: 2;">
+                <li><strong>Tithi</strong> – Today's lunar day (Pratipada through Amavasya/Purnima)</li>
+                <li><strong>Nakshatra</strong> – Moon's position among the 27 lunar mansions (Ashwini through Revati)</li>
+                <li><strong>Yoga</strong> – One of 27 yogas determined by the sum of Sun and Moon longitudes</li>
+                <li><strong>Karana</strong> – Half-tithi period (Bava, Balava, Kaulava, Taitila, Gara, Vanija, Vishti)</li>
+                <li><strong>Paksha</strong> – Shukla Paksha (waxing moon) or Krishna Paksha (waning moon)</li>
+                <li><strong>Sunrise &amp; Sunset</strong> – Accurate astronomical times for your city</li>
+                <li><strong>Moonrise &amp; Moonset</strong> – Daily moon timings</li>
+                <li><strong>Rahu Kalam</strong> – Inauspicious period to avoid important activities</li>
+                <li><strong>Yamagandam</strong> – Period ruled by Yama, avoided for auspicious work</li>
+                <li><strong>Gulika Kalam</strong> – Time period of Gulika/Mandi</li>
+                <li><strong>Abhijit Muhurta</strong> – The most auspicious time period of the day</li>
+                <li><strong>Brahma Muhurta</strong> – Auspicious pre-dawn period for prayer and meditation</li>
+              </ul>
+            </section>
+
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">Muhurta – Auspicious Timings</h2>
+              <p>Muhurta is the Vedic science of selecting the most auspicious time for important activities. Om Panchang provides muhurta calculations for:</p>
+              <ul style="line-height: 2;">
+                <li><strong>Vivaha Muhurta</strong> – Auspicious wedding dates and times</li>
+                <li><strong>Griha Pravesh</strong> – Best time for housewarming ceremony</li>
+                <li><strong>Namakaran</strong> – Baby naming ceremony timings</li>
+                <li><strong>Upanayana</strong> – Sacred thread ceremony timings</li>
+                <li><strong>Business Muhurta</strong> – Auspicious times to start a new venture</li>
+                <li><strong>Travel Muhurta</strong> – Best directions and times for important journeys</li>
+              </ul>
+            </section>
+
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">Choghadiya &amp; Hora Timings</h2>
+              <p><strong>Choghadiya</strong> divides the day into 8 equal parts from sunrise to sunset (and night into 8 parts from sunset to sunrise). Each Choghadiya period is classified as auspicious (Amrit, Shubh, Labh, Char) or inauspicious (Rog, Kaal, Udveg). Om Panchang shows both day and night Choghadiya for any city.</p>
+              <p><strong>Hora</strong> (planetary hour) is a Vedic system where each hour of the day is ruled by one of the seven classical planets. The ruling planet of the hora influences the nature of activities best suited for that time.</p>
+            </section>
+
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">Hindu Festivals &amp; Vrat Calendar</h2>
+              <p>Om Panchang lists all major Hindu festivals and vrat (fasting) days for the entire year, including:</p>
+              <ul style="line-height: 2;">
+                <li><strong>Ekadashi</strong> – Twice-monthly fasting day dedicated to Lord Vishnu (Margashirsha, Paush, Magh, Phalguna, Chaitra, Vaishakh Ekadashi and more)</li>
+                <li><strong>Amavasya</strong> – New moon day for ancestor worship (Pitru Tarpan)</li>
+                <li><strong>Purnima</strong> – Full moon day (Guru Purnima, Sharad Purnima, Kartik Purnima)</li>
+                <li><strong>Pradosh Vrat</strong> – Bi-monthly fast dedicated to Lord Shiva</li>
+                <li><strong>Diwali</strong>, <strong>Holi</strong>, <strong>Navratri</strong>, <strong>Dussehra</strong>, <strong>Janmashtami</strong>, <strong>Ram Navami</strong>, <strong>Ganesh Chaturthi</strong>, <strong>Shivaratri</strong></li>
+                <li>Telugu festivals: <strong>Ugadi</strong>, <strong>Sankranti</strong>, <strong>Karthika Masam</strong></li>
+              </ul>
+            </section>
+
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">Planetary Positions &amp; Vedic Astrology</h2>
+              <p>Om Panchang displays current positions of all nine Vedic planets (Navagraha): <strong>Surya</strong> (Sun), <strong>Chandra</strong> (Moon), <strong>Mangal</strong> (Mars), <strong>Budha</strong> (Mercury), <strong>Guru</strong> (Jupiter), <strong>Shukra</strong> (Venus), <strong>Shani</strong> (Saturn), <strong>Rahu</strong> (North Node), and <strong>Ketu</strong> (South Node) — all in their Vedic rashi (zodiac sign).</p>
+              <p>The Kundali (birth chart) calculator generates a Vedic horoscope based on birth date, time, and place. Kundali Milan (compatibility matching) calculates Ashtakoot compatibility score (out of 36 points) for marriage compatibility.</p>
+            </section>
+
+            <section style="margin-bottom: 32px;">
+              <h2 style="color: #4338ca; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px;">Cities Supported</h2>
+              <p>Om Panchang provides accurate panchang for 70+ cities in the United States and worldwide, including: New York, Los Angeles, Chicago, Houston, Phoenix, Philadelphia, San Antonio, San Diego, Dallas, San Jose, Austin, Jacksonville, Fort Worth, Columbus, Charlotte, Indianapolis, San Francisco, Seattle, Denver, Nashville, Oklahoma City, El Paso, Washington DC, Las Vegas, Louisville, Portland, Memphis, Boston, Atlanta, Miami, Minneapolis, Raleigh, Tampa, Sacramento, New Orleans, and many more.</p>
+              <p>International cities include Mumbai, Delhi, Bangalore, Chennai, Hyderabad, Kolkata, Ahmedabad, Pune, Jaipur, London, Toronto, Sydney, Dubai, Singapore, and others.</p>
+            </section>
+          </main>
+
+          <footer style="border-top: 1px solid #e0e7ff; padding-top: 16px; color: #6b7280; font-size: 0.875rem;">
+            <p>© 2026 Om Panchang | <a href="/privacy-policy" style="color: #4338ca;">Privacy Policy</a> | <a href="/disclaimer" style="color: #4338ca;">Disclaimer</a> | <a href="/contact-us" style="color: #4338ca;">Contact</a></p>
+          </footer>
+        </div>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
