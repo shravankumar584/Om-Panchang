@@ -24,6 +24,9 @@ function RootLayoutNav() {
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="hora" options={{ headerShown: true, title: "Hora" }} />
+      <Stack.Screen name="kundali" options={{ headerShown: true, title: "Kundali" }} />
+      <Stack.Screen name="kundali-milan" options={{ headerShown: true, title: "Kundali Milan" }} />
     </Stack>
   );
 }

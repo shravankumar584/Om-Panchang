@@ -11,6 +11,7 @@ import { useCity } from "@/contexts/CityContext";
 import { computeDayPanchang, type DayPanchang } from "@/lib/panchangData";
 import { useColors } from "@/hooks/useColors";
 import { MonthCardList } from "@/components/MonthCardList";
+import { router } from "expo-router";
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -128,6 +129,36 @@ export default function TodayScreen() {
             <DetailRow label="Sun Sign (Rashi)" value={panchang.sunsign} colors={colors} />
             <DetailRow label="Moon Sign (Rashi)" value={panchang.moonsign} colors={colors} />
           </SectionCard>
+
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.sectionTitle, { color: colors.primary }]}>Vedic Tools</Text>
+            <View style={styles.toolsGrid}>
+              <Pressable
+                style={[styles.toolCard, { backgroundColor: "#EDE9FE", borderColor: "#C4B5FD" }]}
+                onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/hora"); }}
+              >
+                <Text style={styles.toolEmoji}>⏳</Text>
+                <Text style={[styles.toolName, { color: "#5B21B6" }]}>Hora</Text>
+                <Text style={[styles.toolDesc, { color: "#7C3AED" }]}>Planetary Hours</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.toolCard, { backgroundColor: "#E0E7FF", borderColor: "#A5B4FC" }]}
+                onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/kundali"); }}
+              >
+                <Text style={styles.toolEmoji}>🪷</Text>
+                <Text style={[styles.toolName, { color: "#3730A3" }]}>Kundali</Text>
+                <Text style={[styles.toolDesc, { color: "#4F46E5" }]}>Birth Chart</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.toolCard, { backgroundColor: "#FCE7F3", borderColor: "#F9A8D4" }]}
+                onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/kundali-milan"); }}
+              >
+                <Text style={styles.toolEmoji}>💞</Text>
+                <Text style={[styles.toolName, { color: "#9D174D" }]}>Milan</Text>
+                <Text style={[styles.toolDesc, { color: "#BE185D" }]}>Compatibility</Text>
+              </Pressable>
+            </View>
+          </View>
 
           <View style={styles.monthHeader}>
             <Text style={[styles.monthTitle, { color: colors.primary }]}>30-DAY PANCHANG</Text>
@@ -271,6 +302,11 @@ const styles = StyleSheet.create({
   cityCountry: { fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 1 },
   locateBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, marginHorizontal: 16, marginTop: 12, paddingVertical: 12, borderRadius: 10 },
   locateBtnText: { fontSize: 14, color: "#FFFFFF", fontFamily: "Inter_600SemiBold" },
+  toolsGrid: { flexDirection: "row", gap: 8, marginTop: 4 },
+  toolCard: { flex: 1, borderRadius: 12, borderWidth: 1, padding: 12, alignItems: "center" },
+  toolEmoji: { fontSize: 28, marginBottom: 4 },
+  toolName: { fontSize: 13, fontFamily: "Inter_700Bold" },
+  toolDesc: { fontSize: 10, fontFamily: "Inter_500Medium", marginTop: 1 },
   monthHeader: { marginTop: 12, marginBottom: 6, paddingHorizontal: 4 },
   monthTitle: { fontSize: 11, fontWeight: "700", letterSpacing: 1, fontFamily: "Inter_700Bold" },
   monthSub: { fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },
