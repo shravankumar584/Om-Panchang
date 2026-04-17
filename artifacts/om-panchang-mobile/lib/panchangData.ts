@@ -344,7 +344,7 @@ function getSuncalcTimes(date: Date, lat: number, lon: number): {
 } {
   try {
     const noon = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0));
-    const sunTimes  = SunCalc.getTimes(noon, lat, lon) as Record<string, Date>;
+    const sunTimes  = SunCalc.getTimes(noon, lat, lon) as unknown as { sunrise?: Date; sunset?: Date };
     const moonTimes = SunCalc.getMoonTimes(noon, lat, lon) as { rise?: Date; set?: Date };
     const isValid = (d: unknown): d is Date => d instanceof Date && isFinite(d.getTime());
     return {
