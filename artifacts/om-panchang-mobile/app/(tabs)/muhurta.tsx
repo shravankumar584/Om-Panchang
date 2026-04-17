@@ -6,6 +6,7 @@ import { useCity } from "@/contexts/CityContext";
 import { computeDayPanchang } from "@/lib/panchangData";
 import { computeChoghadiya, getUtcOffsetHours, type ChoghadiyaSlot } from "@/lib/choghadiya";
 import { useColors } from "@/hooks/useColors";
+import { MonthCardList } from "@/components/MonthCardList";
 
 export default function MuhurtaScreen() {
   const colors = useColors();
@@ -67,6 +68,14 @@ export default function MuhurtaScreen() {
             <SlotRow key={idx} slot={slot} colors={colors} isLast={idx === slots.length - 1} />
           ))}
         </View>
+
+        <View style={styles.monthHeader}>
+          <Text style={[styles.monthTitle, { color: colors.primary }]}>30-DAY MUHURTA CALENDAR</Text>
+          <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>
+            Daily Rahu Kalam, Abhijit &amp; Brahma Muhurta for {selectedCity.name}
+          </Text>
+        </View>
+        <MonthCardList city={selectedCity} mode="muhurta" />
 
         <View style={[styles.legendCard, { backgroundColor: colors.muted }]}>
           <Text style={[styles.legendTitle, { color: colors.foreground }]}>Legend</Text>
@@ -139,4 +148,7 @@ const styles = StyleSheet.create({
   legendRow: { flexDirection: "row", alignItems: "center", gap: 8 },
   legendDot: { width: 8, height: 8, borderRadius: 4 },
   legendText: { fontSize: 12, fontFamily: "Inter_400Regular" },
+  monthHeader: { marginTop: 8, marginBottom: 6, paddingHorizontal: 4 },
+  monthTitle: { fontSize: 11, fontWeight: "700", letterSpacing: 1, fontFamily: "Inter_700Bold" },
+  monthSub: { fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },
 });

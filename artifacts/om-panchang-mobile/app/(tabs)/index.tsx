@@ -10,6 +10,7 @@ import * as Haptics from "expo-haptics";
 import { useCity } from "@/contexts/CityContext";
 import { computeDayPanchang, type DayPanchang } from "@/lib/panchangData";
 import { useColors } from "@/hooks/useColors";
+import { MonthCardList } from "@/components/MonthCardList";
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -127,6 +128,14 @@ export default function TodayScreen() {
             <DetailRow label="Sun Sign (Rashi)" value={panchang.sunsign} colors={colors} />
             <DetailRow label="Moon Sign (Rashi)" value={panchang.moonsign} colors={colors} />
           </SectionCard>
+
+          <View style={styles.monthHeader}>
+            <Text style={[styles.monthTitle, { color: colors.primary }]}>30-DAY PANCHANG</Text>
+            <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>
+              Daily Tithi, Nakshatra &amp; Sun timings for {selectedCity.name}
+            </Text>
+          </View>
+          <MonthCardList city={selectedCity} mode="panchang" />
         </ScrollView>
       ) : null}
 
@@ -237,4 +246,7 @@ const styles = StyleSheet.create({
   cityRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20, paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
   cityName: { fontSize: 15, fontFamily: "Inter_500Medium" },
   cityCountry: { fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 1 },
+  monthHeader: { marginTop: 12, marginBottom: 6, paddingHorizontal: 4 },
+  monthTitle: { fontSize: 11, fontWeight: "700", letterSpacing: 1, fontFamily: "Inter_700Bold" },
+  monthSub: { fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },
 });
