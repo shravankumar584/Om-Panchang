@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather } from "@expo/vector-icons";
 import { getUpcomingFestivals } from "@/lib/panchangData";
 import { useColors } from "@/hooks/useColors";
 
@@ -13,26 +12,25 @@ function formatFestDate(dateStr: string): string {
   return `${d} ${MONTHS[(m ?? 1) - 1]} ${y}`;
 }
 
-const FESTIVAL_ICONS: Record<string, string> = {
-  "Diwali": "sun",
-  "Holi": "droplet",
-  "Ganesh Chaturthi": "star",
-  "Krishna Janmashtami": "moon",
-  "Navratri": "zap",
-  "Dussehra": "shield",
-  "Makar Sankranti": "wind",
-  "Maha Shivaratri": "moon",
-  "Guru Purnima": "book",
-  "Raksha Bandhan": "heart",
-  "Ram Navami": "sun",
-  "Hanuman Jayanti": "zap",
+const FESTIVAL_EMOJI: Record<string, string> = {
+  "Makar Sankranti": "🪁", "Pongal": "🍚", "Vasant Panchami": "🌸",
+  "Maha Shivaratri": "🔱", "Holika Dahan": "🔥", "Holi": "🎨",
+  "Ugadi": "🌿", "Gudi Padwa": "🪔", "Ram Navami": "🏹",
+  "Hanuman Jayanti": "🙏", "Tamil New Year": "🌺", "Vishu": "🌼",
+  "Baisakhi": "🌾", "Akshaya Tritiya": "💛", "Vat Savitri": "🌳",
+  "Guru Purnima": "📿", "Rath Yatra": "🎡", "Naga Panchami": "🐍",
+  "Raksha Bandhan": "🎀", "Krishna Janmashtami": "🎶", "Ganesh Chaturthi": "🐘",
+  "Onam": "🌸", "Navratri": "💃", "Dussehra": "🎯",
+  "Karva Chauth": "🌙", "Diwali": "🪔", "Govardhan Puja": "🌿",
+  "Bhai Dooj": "❤️", "Chhath Puja": "🌅", "Dev Uthani Ekadashi": "🛐",
+  "Christmas": "⭐",
 };
 
-function getIcon(name: string): string {
-  for (const [key, icon] of Object.entries(FESTIVAL_ICONS)) {
-    if (name.includes(key)) return icon;
+function getFestivalEmoji(name: string): string {
+  for (const [key, emoji] of Object.entries(FESTIVAL_EMOJI)) {
+    if (name.includes(key)) return emoji;
   }
-  return "calendar";
+  return "🎉";
 }
 
 export default function FestivalsScreen() {
@@ -52,7 +50,7 @@ export default function FestivalsScreen() {
         colors={[colors.headerStart, colors.headerEnd]}
         style={[styles.header, { paddingTop: topPad + 12 }]}
       >
-        <Text style={styles.headerTitle}>Festivals & Vrats</Text>
+        <Text style={styles.headerTitle}>🎉 Festivals & Vrats</Text>
         <Text style={styles.headerSub}>Upcoming Hindu celebrations</Text>
       </LinearGradient>
 
@@ -65,7 +63,7 @@ export default function FestivalsScreen() {
           <>
             <Text style={[styles.groupLabel, { color: colors.mutedForeground }]}>Today</Text>
             {todayFests.map((f, i) => (
-              <TodayFestCard key={i} names={f.names} colors={colors} />
+              <TodayFestCard key={i} names={f.names} />
             ))}
           </>
         )}
@@ -79,11 +77,12 @@ export default function FestivalsScreen() {
   );
 }
 
-function TodayFestCard({ names, colors }: { names: string[]; colors: ReturnType<typeof useColors> }) {
+function TodayFestCard({ names }: { names: string[] }) {
+  const emoji = getFestivalEmoji(names[0] ?? "");
   return (
     <View style={[styles.todayCard, { backgroundColor: "#FEF3C7", borderColor: "#FCD34D" }]}>
       <View style={[styles.todayIcon, { backgroundColor: "#F59E0B" }]}>
-        <Feather name="star" size={18} color="#FFFFFF" />
+        <Text style={styles.todayEmoji}>{emoji}</Text>
       </View>
       <View style={styles.cardContent}>
         {names.map((name, i) => (
@@ -96,13 +95,13 @@ function TodayFestCard({ names, colors }: { names: string[]; colors: ReturnType<
 }
 
 function FestCard({ dateStr, names, daysLeft, colors }: { dateStr: string; names: string[]; daysLeft: number; colors: ReturnType<typeof useColors> }) {
-  const iconName = getIcon(names[0] ?? "");
+  const emoji = getFestivalEmoji(names[0] ?? "");
   const isClose = daysLeft <= 7;
 
   return (
     <View style={[styles.festCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <View style={[styles.festIcon, { backgroundColor: isClose ? "#EEF2FF" : colors.muted }]}>
-        <Feather name={iconName as "calendar"} size={20} color={isClose ? colors.primary : colors.mutedForeground} />
+        <Text style={styles.festEmoji}>{emoji}</Text>
       </View>
       <View style={styles.cardContent}>
         {names.map((name, i) => (
@@ -127,9 +126,11 @@ const styles = StyleSheet.create({
   content: { padding: 16, gap: 10 },
   groupLabel: { fontSize: 11, fontFamily: "Inter_700Bold", textTransform: "uppercase", letterSpacing: 1, marginTop: 4, marginBottom: 2 },
   todayCard: { flexDirection: "row", alignItems: "center", borderRadius: 16, borderWidth: 1, padding: 14, gap: 12 },
-  todayIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: "center", alignItems: "center" },
+  todayIcon: { width: 48, height: 48, borderRadius: 14, justifyContent: "center", alignItems: "center" },
+  todayEmoji: { fontSize: 24 },
   festCard: { flexDirection: "row", alignItems: "center", borderRadius: 16, borderWidth: 1, padding: 14, gap: 12 },
-  festIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: "center", alignItems: "center" },
+  festIcon: { width: 48, height: 48, borderRadius: 14, justifyContent: "center", alignItems: "center" },
+  festEmoji: { fontSize: 24 },
   cardContent: { flex: 1 },
   festName: { fontSize: 15, fontFamily: "Inter_600SemiBold" },
   festDate: { fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 2 },

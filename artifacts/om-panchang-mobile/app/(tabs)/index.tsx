@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  ActivityIndicator, Modal, Platform, Pressable, ScrollView,
+  ActivityIndicator, Alert, Modal, Platform, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -22,7 +22,7 @@ function formatDate(date: Date): string {
 export default function TodayScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { selectedCity, setCity, cities } = useCity();
+  const { selectedCity, setCity, cities, detectLocation, detectingLocation } = useCity();
   const [panchang, setPanchang] = useState<DayPanchang | null>(null);
   const [loading, setLoading] = useState(true);
   const [showCityModal, setShowCityModal] = useState(false);
@@ -147,6 +147,29 @@ export default function TodayScreen() {
               <Feather name="x" size={22} color={colors.foreground} />
             </Pressable>
           </View>
+          <Pressable
+            style={[styles.locateBtn, { backgroundColor: colors.primary }]}
+            onPress={async () => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              const r = await detectLocation();
+              if (r.ok) {
+                setShowCityModal(false);
+                setCitySearch("");
+              } else {
+                Alert.alert("Location unavailable", r.message ?? "Please enable location permission in settings.");
+              }
+            }}
+            disabled={detectingLocation}
+          >
+            {detectingLocation ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              <Feather name="navigation" size={16} color="#FFFFFF" />
+            )}
+            <Text style={styles.locateBtnText}>
+              {detectingLocation ? "Detecting…" : "Use My Location"}
+            </Text>
+          </Pressable>
           <View style={[styles.searchContainer, { backgroundColor: colors.muted, borderColor: colors.border }]}>
             <Feather name="search" size={16} color={colors.mutedForeground} />
             <TextInput
@@ -246,6 +269,8 @@ const styles = StyleSheet.create({
   cityRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20, paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
   cityName: { fontSize: 15, fontFamily: "Inter_500Medium" },
   cityCountry: { fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 1 },
+  locateBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, marginHorizontal: 16, marginTop: 12, paddingVertical: 12, borderRadius: 10 },
+  locateBtnText: { fontSize: 14, color: "#FFFFFF", fontFamily: "Inter_600SemiBold" },
   monthHeader: { marginTop: 12, marginBottom: 6, paddingHorizontal: 4 },
   monthTitle: { fontSize: 11, fontWeight: "700", letterSpacing: 1, fontFamily: "Inter_700Bold" },
   monthSub: { fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },

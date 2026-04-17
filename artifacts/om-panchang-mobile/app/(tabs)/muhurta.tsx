@@ -31,7 +31,7 @@ export default function MuhurtaScreen() {
         colors={[colors.headerStart, colors.headerEnd]}
         style={[styles.header, { paddingTop: topPad + 12 }]}
       >
-        <Text style={styles.headerTitle}>Choghadiya</Text>
+        <Text style={styles.headerTitle}>⏰ Choghadiya</Text>
         <Text style={styles.headerSub}>Auspicious Time Finder — {selectedCity.name}</Text>
         <View style={styles.toggle}>
           <Pressable
@@ -97,12 +97,19 @@ export default function MuhurtaScreen() {
   );
 }
 
+const CHOGHADIYA_EMOJI: Record<string, string> = {
+  Amrit: "🍯", Shubh: "✨", Labh: "💰", Char: "🚶",
+  Udveg: "⚠️", Rog: "🤒", Kaal: "☠️",
+};
+
 function SlotRow({ slot, colors, isLast }: { slot: ChoghadiyaSlot; colors: ReturnType<typeof useColors>; isLast: boolean }) {
   const dotColor = slot.quality === "good" ? "#16A34A" : slot.quality === "neutral" ? "#EAB308" : "#EF4444";
   const bg = slot.isCurrent ? (slot.quality === "good" ? "#F0FDF4" : slot.quality === "neutral" ? "#FEFCE8" : "#FEF2F2") : "transparent";
+  const emoji = CHOGHADIYA_EMOJI[slot.name] ?? "⏱️";
 
   return (
     <View style={[styles.slotRow, { borderBottomWidth: isLast ? 0 : StyleSheet.hairlineWidth, borderBottomColor: colors.border, backgroundColor: bg }]}>
+      <Text style={styles.slotEmoji}>{emoji}</Text>
       <View style={[styles.slotDot, { backgroundColor: dotColor }]} />
       <View style={styles.slotLeft}>
         <View style={styles.slotNameRow}>
@@ -134,7 +141,8 @@ const styles = StyleSheet.create({
   currentTime: { fontSize: 14, color: "rgba(255,255,255,0.85)", marginTop: 2, fontFamily: "Inter_500Medium" },
   currentMeaning: { fontSize: 13, color: "rgba(255,255,255,0.75)", marginTop: 6, fontFamily: "Inter_400Regular" },
   card: { borderRadius: 16, borderWidth: 1, overflow: "hidden" },
-  slotRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 16, paddingVertical: 12, gap: 12 },
+  slotRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 16, paddingVertical: 12, gap: 10 },
+  slotEmoji: { fontSize: 20 },
   slotDot: { width: 10, height: 10, borderRadius: 5 },
   slotLeft: { flex: 1 },
   slotNameRow: { flexDirection: "row", alignItems: "center", gap: 8 },

@@ -61,17 +61,17 @@ export function MonthCardList({ city, mode }: { city: City; mode: Mode }) {
             <View style={styles.infoCol}>
               {mode === "panchang" ? (
                 <>
-                  <Row label="Tithi" value={panchang.tithi} colors={colors} accent />
-                  <Row label="Nakshatra" value={panchang.nakshatra} colors={colors} accent />
+                  <Row emoji="🌓" label="Tithi" value={panchang.tithi} colors={colors} accent />
+                  <Row emoji="⭐" label="Nakshatra" value={panchang.nakshatra} colors={colors} accent />
                   <View style={styles.timeRow}>
                     <View style={styles.timePair}>
-                      <Feather name="sunrise" size={11} color="#F59E0B" />
+                      <Text style={{ fontSize: 12 }}>🌅</Text>
                       <Text style={[styles.timeText, { color: colors.mutedForeground }]}>
                         {panchang.sunrise}
                       </Text>
                     </View>
                     <View style={styles.timePair}>
-                      <Feather name="sunset" size={11} color="#F97316" />
+                      <Text style={{ fontSize: 12 }}>🌇</Text>
                       <Text style={[styles.timeText, { color: colors.mutedForeground }]}>
                         {panchang.sunset}
                       </Text>
@@ -80,15 +80,15 @@ export function MonthCardList({ city, mode }: { city: City; mode: Mode }) {
                 </>
               ) : (
                 <>
-                  <Row label="Rahu Kalam" value={panchang.rahuKalam} colors={colors} bad />
-                  <Row label="Yamaganda" value={panchang.yamagandaKalam} colors={colors} bad />
-                  <Row label="Abhijit" value={panchang.abhijitMuhurta} colors={colors} good />
-                  <Row label="Brahma Muhurta" value={panchang.brahmaMuhurta} colors={colors} good />
+                  <Row emoji="⚠️" label="Rahu Kalam" value={panchang.rahuKalam} colors={colors} bad />
+                  <Row emoji="☠️" label="Yamaganda" value={panchang.yamagandaKalam} colors={colors} bad />
+                  <Row emoji="✨" label="Abhijit" value={panchang.abhijitMuhurta} colors={colors} good />
+                  <Row emoji="🌅" label="Brahma Muhurta" value={panchang.brahmaMuhurta} colors={colors} good />
                 </>
               )}
               {panchang.festivals.length > 0 && (
                 <View style={styles.festivalRow}>
-                  <Feather name="star" size={10} color="#D97706" />
+                  <Text style={{ fontSize: 12 }}>🎉</Text>
                   <Text style={styles.festivalText} numberOfLines={2}>
                     {panchang.festivals.join(", ")}
                   </Text>
@@ -103,6 +103,7 @@ export function MonthCardList({ city, mode }: { city: City; mode: Mode }) {
 }
 
 function Row({
+  emoji,
   label,
   value,
   colors,
@@ -110,6 +111,7 @@ function Row({
   bad,
   good,
 }: {
+  emoji?: string;
   label: string;
   value: string;
   colors: ReturnType<typeof useColors>;
@@ -126,7 +128,10 @@ function Row({
     : colors.foreground;
   return (
     <View style={styles.row}>
-      <Text style={[styles.rowLabel, { color: colors.mutedForeground }]}>{label}</Text>
+      <View style={styles.rowLabelWrap}>
+        {emoji && <Text style={styles.rowEmoji}>{emoji}</Text>}
+        <Text style={[styles.rowLabel, { color: colors.mutedForeground }]}>{label}</Text>
+      </View>
       <Text style={[styles.rowValue, { color: valueColor }]} numberOfLines={1}>
         {value}
       </Text>
@@ -158,6 +163,8 @@ const styles = StyleSheet.create({
   todayText: { fontSize: 8, color: "#FFFFFF", fontFamily: "Inter_700Bold" },
   infoCol: { flex: 1, padding: 12, gap: 4, justifyContent: "center" },
   row: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: 8 },
+  rowLabelWrap: { flexDirection: "row", alignItems: "center", gap: 4 },
+  rowEmoji: { fontSize: 11 },
   rowLabel: { fontSize: 11, fontFamily: "Inter_400Regular" },
   rowValue: { fontSize: 12, fontFamily: "Inter_600SemiBold", flexShrink: 1, textAlign: "right" },
   timeRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 4, paddingTop: 4, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#E5E7EB" },
