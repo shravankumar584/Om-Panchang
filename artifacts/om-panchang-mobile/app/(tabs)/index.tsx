@@ -49,7 +49,7 @@ export default function TodayScreen() {
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>      
       <LinearGradient
         colors={[colors.headerStart, colors.headerEnd]}
         style={[styles.header, { paddingTop: topPad + 12 }]}
@@ -130,7 +130,7 @@ export default function TodayScreen() {
             <DetailRow label="Moon Sign (Rashi)" value={panchang.moonsign} colors={colors} />
           </SectionCard>
 
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>            
             <Text style={[styles.sectionTitle, { color: colors.primary }]}>Vedic Tools</Text>
             <View style={styles.toolsGrid}>
               <Pressable
@@ -162,16 +162,14 @@ export default function TodayScreen() {
 
           <View style={styles.monthHeader}>
             <Text style={[styles.monthTitle, { color: colors.primary }]}>30-DAY PANCHANG</Text>
-            <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>
-              Daily Tithi, Nakshatra &amp; Sun timings for {selectedCity.name}
-            </Text>
+            <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>Daily Tithi, Nakshatra &amp; Sun timings for {selectedCity.name}</Text>
           </View>
           <MonthCardList city={selectedCity} mode="panchang" />
         </ScrollView>
       ) : null}
 
       <Modal visible={showCityModal} animationType="slide" presentationStyle="pageSheet">
-        <View style={[styles.modalContainer, { backgroundColor: colors.background }]}>
+        <View style={[styles.modalContainer, { backgroundColor: colors.background }]}>          
           <View style={[styles.modalHeader, { borderBottomColor: colors.border }]}>
             <Text style={[styles.modalTitle, { color: colors.foreground }]}>Select City</Text>
             <Pressable onPress={() => { setShowCityModal(false); setCitySearch(""); }}>
@@ -197,11 +195,9 @@ export default function TodayScreen() {
             ) : (
               <Feather name="navigation" size={16} color="#FFFFFF" />
             )}
-            <Text style={styles.locateBtnText}>
-              {detectingLocation ? "Detecting…" : "Use My Location"}
-            </Text>
+            <Text style={styles.locateBtnText}>{detectingLocation ? "Detecting…" : "Use My Location"}</Text>
           </Pressable>
-          <View style={[styles.searchContainer, { backgroundColor: colors.muted, borderColor: colors.border }]}>
+          <View style={[styles.searchContainer, { backgroundColor: colors.muted, borderColor: colors.border }]}>            
             <Feather name="search" size={16} color={colors.mutedForeground} />
             <TextInput
               style={[styles.searchInput, { color: colors.foreground }]}
@@ -246,7 +242,7 @@ export default function TodayScreen() {
 
 function SectionCard({ title, children, colors }: { title: string; children: React.ReactNode; colors: ReturnType<typeof useColors> }) {
   return (
-    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>      
       <Text style={[styles.sectionTitle, { color: colors.primary }]}>{title}</Text>
       {children}
     </View>
@@ -259,11 +255,11 @@ function DetailRow({ label, value, sub, colors, accent, bad, good }: {
 }) {
   const valueColor = bad ? "#EF4444" : good ? "#16A34A" : accent ? colors.primary : colors.foreground;
   return (
-    <View style={styles.detailRow}>
-      <Text style={[styles.detailLabel, { color: colors.mutedForeground }]}>{label}</Text>
-      <View style={styles.detailRight}>
-        <Text style={[styles.detailValue, { color: valueColor }]}>{value}</Text>
-        {sub && <Text style={[styles.detailSub, { color: colors.mutedForeground }]}>{sub}</Text>}
+    <View style={styles.row}>
+      <View style={styles.rowLeft}><Text style={[styles.label, { color: colors.mutedForeground }]}>{label}</Text></View>
+      <View style={styles.rowRight}>
+        <Text style={[styles.value, { color: valueColor }]} numberOfLines={2}>{value}</Text>
+        {!!sub && <Text style={[styles.sub, { color: colors.mutedForeground }]}>{sub}</Text>}
       </View>
     </View>
   );
@@ -271,43 +267,44 @@ function DetailRow({ label, value, sub, colors, accent, bad, good }: {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: { paddingHorizontal: 16, paddingBottom: 16 },
+  header: { paddingHorizontal: 20, paddingBottom: 20 },
   headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 10 },
-  headerOm: { fontSize: 28, color: "#FBBE23" },
-  headerTitle: { fontSize: 18, fontWeight: "700", color: "#FFFFFF", fontFamily: "Inter_700Bold" },
-  headerDate: { fontSize: 12, color: "#C7D2FE", marginTop: 1, fontFamily: "Inter_400Regular" },
-  cityButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "rgba(255,255,255,0.15)", borderRadius: 20, paddingHorizontal: 10, paddingVertical: 6, maxWidth: 140 },
-  cityButtonText: { fontSize: 12, color: "#C7D2FE", fontFamily: "Inter_500Medium", flex: 1 },
-  loadingContainer: { flex: 1, justifyContent: "center", alignItems: "center", gap: 12 },
-  loadingText: { fontSize: 14, fontFamily: "Inter_400Regular" },
+  headerOm: { fontSize: 28 },
+  headerTitle: { color: "#FFFFFF", fontSize: 26, fontWeight: "700", fontFamily: "Inter_700Bold" },
+  headerDate: { color: "#E0E7FF", fontSize: 14, marginTop: 2, fontFamily: "Inter_500Medium" },
+  cityButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "rgba(255,255,255,0.14)", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 14, maxWidth: 140 },
+  cityButtonText: { color: "#FFFFFF", fontSize: 12, fontFamily: "Inter_600SemiBold" },
   scroll: { flex: 1 },
-  content: { padding: 16, gap: 12 },
-  festivalBanner: { flexDirection: "row", alignItems: "center", gap: 8, borderRadius: 12, padding: 12 },
-  festivalText: { fontSize: 13, color: "#92400E", fontFamily: "Inter_600SemiBold", flex: 1 },
-  card: { borderRadius: 16, borderWidth: 1, padding: 16, gap: 2 },
-  sectionTitle: { fontSize: 11, fontWeight: "700", letterSpacing: 1, textTransform: "uppercase", marginBottom: 8, fontFamily: "Inter_700Bold" },
-  detailRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", paddingVertical: 6, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#F0F0F5" },
-  detailLabel: { fontSize: 13, fontFamily: "Inter_400Regular", flex: 1 },
-  detailRight: { flex: 1, alignItems: "flex-end" },
-  detailValue: { fontSize: 14, fontFamily: "Inter_600SemiBold", textAlign: "right" },
-  detailSub: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 1 },
-  modalContainer: { flex: 1 },
-  modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 20, borderBottomWidth: StyleSheet.hairlineWidth },
-  modalTitle: { fontSize: 18, fontFamily: "Inter_700Bold" },
-  searchContainer: { flexDirection: "row", alignItems: "center", gap: 10, margin: 16, borderRadius: 12, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 10 },
-  searchInput: { flex: 1, fontSize: 15, fontFamily: "Inter_400Regular" },
-  cityRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20, paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
-  cityName: { fontSize: 15, fontFamily: "Inter_500Medium" },
-  cityCountry: { fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 1 },
-  locateBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, marginHorizontal: 16, marginTop: 12, paddingVertical: 12, borderRadius: 10 },
-  locateBtnText: { fontSize: 14, color: "#FFFFFF", fontFamily: "Inter_600SemiBold" },
-  toolsGrid: { flexDirection: "row", gap: 8, marginTop: 4 },
-  toolCard: { flex: 1, borderRadius: 12, borderWidth: 1, padding: 12, alignItems: "center" },
-  toolEmoji: { fontSize: 28, marginBottom: 4 },
-  toolName: { fontSize: 13, fontFamily: "Inter_700Bold" },
-  toolDesc: { fontSize: 10, fontFamily: "Inter_500Medium", marginTop: 1 },
-  monthHeader: { marginTop: 12, marginBottom: 6, paddingHorizontal: 4 },
-  monthTitle: { fontSize: 11, fontWeight: "700", letterSpacing: 1, fontFamily: "Inter_700Bold" },
-  monthSub: { fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },
+  content: { paddingHorizontal: 16, paddingTop: 16, gap: 14 },
+  loadingContainer: { flex: 1, justifyContent: "center", alignItems: "center", gap: 12 },
+  loadingText: { fontSize: 15, fontFamily: "Inter_500Medium" },
+  festivalBanner: { flexDirection: "row", alignItems: "center", gap: 8, borderRadius: 14, padding: 12 },
+  festivalText: { color: "#92400E", fontSize: 13, fontFamily: "Inter_600SemiBold", flex: 1 },
+  card: { borderWidth: 1, borderRadius: 18, padding: 14, gap: 10 },
+  sectionTitle: { fontSize: 15, fontWeight: "700", fontFamily: "Inter_700Bold", marginBottom: 2, textTransform: "uppercase", letterSpacing: 1 },
+  row: { flexDirection: "row", paddingVertical: 10, borderTopWidth: 1, borderTopColor: "rgba(148,163,184,0.12)" },
+  rowLeft: { width: 110, paddingRight: 10 },
+  rowRight: { flex: 1, alignItems: "flex-end" },
+  label: { fontSize: 12, fontFamily: "Inter_500Medium" },
+  value: { fontSize: 14, fontFamily: "Inter_600SemiBold", textAlign: "right" },
+  sub: { fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular", textAlign: "right" },
+  monthHeader: { marginTop: 8, marginBottom: 2, gap: 2 },
+  monthTitle: { fontSize: 15, fontWeight: "700", fontFamily: "Inter_700Bold", letterSpacing: 1 },
+  monthSub: { fontSize: 13, fontFamily: "Inter_400Regular" },
+  modalContainer: { flex: 1, paddingTop: 20 },
+  modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 18, paddingBottom: 14, borderBottomWidth: 1 },
+  modalTitle: { fontSize: 20, fontWeight: "700", fontFamily: "Inter_700Bold" },
+  locateBtn: { marginHorizontal: 18, marginTop: 14, borderRadius: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8 },
+  locateBtnText: { color: "#FFFFFF", fontSize: 14, fontWeight: "600", fontFamily: "Inter_600SemiBold" },
+  searchContainer: { flexDirection: "row", alignItems: "center", margin: 18, marginBottom: 0, borderWidth: 1, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 10, gap: 8 },
+  searchInput: { flex: 1, fontSize: 14, fontFamily: "Inter_500Medium" },
+  cityRow: { paddingHorizontal: 18, paddingVertical: 14, borderBottomWidth: 1, flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  cityName: { fontSize: 15, fontWeight: "600", fontFamily: "Inter_600SemiBold" },
+  cityCountry: { fontSize: 13, marginTop: 2, fontFamily: "Inter_400Regular" },
+  toolsGrid: { flexDirection: "row", gap: 10 },
+  toolCard: { flex: 1, borderWidth: 1, borderRadius: 16, paddingVertical: 14, paddingHorizontal: 10, alignItems: "center", gap: 4 },
+  toolEmoji: { fontSize: 22 },
+  toolName: { fontSize: 15, fontFamily: "Inter_700Bold" },
+  toolDesc: { fontSize: 12, fontFamily: "Inter_500Medium" },
 });
