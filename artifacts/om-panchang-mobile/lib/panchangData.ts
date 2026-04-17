@@ -203,9 +203,29 @@ export function getUpcomingFestivals(from: Date, count = 10): { dateStr: string;
 
 function getTimezoneOffsetMinutes(date: Date, timezone: string): number {
   try {
-    const utcDate = new Date(date.toLocaleString("en-US", { timeZone: "UTC" }));
-    const tzDate = new Date(date.toLocaleString("en-US", { timeZone: timezone }));
-    return (tzDate.getTime() - utcDate.getTime()) / 60000;
+    // Use Intl.DateTimeFormat.formatToParts — works reliably on Hermes (React Native).
+    // Avoids new Date(date.toLocaleString(...)) which returns NaN on Hermes because
+    // it cannot parse locale-formatted strings.
+    const dtf = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      hour12: false,
+      year: "numeric", month: "numeric", day: "numeric",
+      hour: "numeric", minute: "numeric", second: "numeric",
+    });
+    const parts = dtf.formatToParts(date);
+    const map: Record<string, number> = {};
+    for (const p of parts) {
+      if (p.type !== "literal") map[p.type] = parseInt(p.value, 10);
+    }
+    if (
+      isNaN(map.year)  || isNaN(map.month) || isNaN(map.day) ||
+      isNaN(map.hour)  || isNaN(map.minute)
+    ) return 0;
+    // Some locales emit hour "24" for midnight — normalize to 0.
+    const hour = map.hour === 24 ? 0 : map.hour;
+    const second = isNaN(map.second) ? 0 : map.second;
+    const tzAsUtcMs = Date.UTC(map.year, map.month - 1, map.day, hour, map.minute, second);
+    return Math.round((tzAsUtcMs - date.getTime()) / 60000);
   } catch {
     return 0;
   }
