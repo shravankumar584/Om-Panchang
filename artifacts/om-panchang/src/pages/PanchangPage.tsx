@@ -726,6 +726,13 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       window.dispatchEvent(new PopStateEvent("popstate"));
     } else {
       setActiveTab(id);
+      // On mobile the header is sticky, so when the user has scrolled down and
+      // taps a different tab, the new (often shorter) content swaps in below
+      // their viewport — making it look like the tap did nothing. Scroll the
+      // page back to the top so the new tab's content is always visible.
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      });
     }
   }
 
