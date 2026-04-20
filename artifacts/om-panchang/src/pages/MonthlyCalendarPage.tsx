@@ -316,7 +316,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
       </header>
 
       {/* SEO intro text */}
-      <div className="max-w-7xl mx-auto px-4 pt-4 pb-1">
+      <div className="no-print max-w-7xl mx-auto px-4 pt-4 pb-1">
         <p className="text-slate-500 text-xs sm:text-sm">
           Complete Hindu Panchang for <strong>{MONTHS[month]} {year}</strong> in <strong>{city.name}, {city.country}</strong> —
           Tithi, Nakshatra, Yoga, Rahu Kalam, and all festivals. Calculated using Drik method & Lahiri Ayanamsa.
@@ -421,7 +421,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
           )}
 
           {/* Legend */}
-          <div className="px-4 py-3 border-t border-indigo-50 bg-indigo-50/40 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500">
+          <div className="no-print px-4 py-3 border-t border-indigo-50 bg-indigo-50/40 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500">
             <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-amber-400" /><span>Today</span></div>
             <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-rose-500" /><span>Festival</span></div>
             <div className="flex items-center gap-1"><span className="text-indigo-400 font-bold">↑</span><span>Tithi ends next day</span></div>
@@ -430,7 +430,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
         </div>
 
         {/* Month quick-jump grid */}
-        <div className="mt-6 bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+        <div className="no-print mt-6 bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
           <div className="panchang-gradient px-4 py-3">
             <h3 className="text-white font-bold text-sm">Explore Other Months – {city.name}</h3>
             <p className="text-indigo-200 text-xs mt-0.5">Jump to any month's Hindu Panchang calendar</p>

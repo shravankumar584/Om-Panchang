@@ -185,23 +185,43 @@
   .print-title p  { font-size: 12px; margin: 4px 0 0 0; color: #333; }
 
   /* Calendar grid sizing for one-page landscape print */
-  main { padding: 8px !important; max-width: 100% !important; }
+  main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
   .calendar-grid-print {
     border: 1px solid #444 !important;
     border-radius: 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
   .calendar-grid-print > div {
     border-color: #888 !important;
   }
-  .calendar-grid-print .day-cell {
-    min-height: 90px !important;
+  /* Force every day cell to be small so all 5-6 rows fit on a single landscape page */
+  .calendar-grid-print .grid > div {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 3px 4px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
     page-break-inside: avoid;
-    font-size: 10px !important;
+    break-inside: avoid;
   }
-  .calendar-grid-print .day-cell .date-num { font-size: 13px !important; font-weight: 700; }
+  .calendar-grid-print .grid > div p {
+    font-size: 8.5px !important;
+    margin: 0 !important;
+    line-height: 1.15 !important;
+  }
+  .calendar-grid-print .grid > div span {
+    font-size: 9px !important;
+  }
+  /* Hide the sunrise/sunset and Rahu Kalam helper rows on print to save vertical space */
+  .calendar-grid-print .hidden.lg\:block { display: none !important; }
+  /* Show the nakshatra/yoga (sm:block) on print since they fit */
+  .calendar-grid-print .hidden.sm\:block { display: block !important; }
 
-  /* Landscape orientation for calendar grid */
-  @page { size: A4 landscape; margin: 10mm; }
+  .print-title { margin-top: 0 !important; padding: 0 !important; }
+
+  /* Landscape orientation, narrow margins to maximize calendar space */
+  @page { size: A4 landscape; margin: 8mm; }
 }
 
 /* By default the print-only title is hidden on screen */
