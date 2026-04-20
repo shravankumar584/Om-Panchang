@@ -391,7 +391,7 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
                             <p className="text-[8px] sm:text-[9px] text-slate-400 leading-tight truncate hidden sm:block">{p.yoga}</p>
                             {/* Sunrise / Sunset – desktop only */}
                             {p.sunrise && p.sunset && (
-                              <p className="text-[8px] text-amber-500 leading-tight hidden lg:block">
+                              <p className="text-[8px] text-orange-700 font-medium leading-tight hidden lg:block">
                                 🌅{p.sunrise} 🌇{p.sunset}
                               </p>
                             )}
