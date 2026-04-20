@@ -300,6 +300,13 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
                 Today
               </button>
             )}
+            <button
+              onClick={() => window.print()}
+              title="Print this calendar"
+              className="px-3 py-1 bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-semibold rounded-full transition flex items-center gap-1.5">
+              <span>🖨️</span>
+              <span className="hidden sm:inline">Print</span>
+            </button>
             <a href="/" onClick={e => { e.preventDefault(); navHome(); }}
               className="text-indigo-200 hover:text-white text-xs sm:text-sm transition flex items-center gap-1">
               ← Full Panchang
@@ -316,9 +323,15 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
         </p>
       </div>
 
+      {/* Print-only title (hidden on screen, shown on paper) */}
+      <div className="print-title">
+        <h1>Om Panchang — {MONTHS[month]} {year}</h1>
+        <p>{city.name}, {city.country} · Drik Method · Lahiri Ayanamsa</p>
+      </div>
+
       {/* Calendar */}
       <main className="max-w-7xl mx-auto px-2 sm:px-4 py-3 pb-10">
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-indigo-100">
+        <div className="calendar-grid-print bg-white rounded-2xl shadow-sm overflow-hidden border border-indigo-100">
           {/* Weekday headers */}
           <div className="grid grid-cols-7 border-b border-indigo-100">
             {WEEKDAYS.map((day, i) => (

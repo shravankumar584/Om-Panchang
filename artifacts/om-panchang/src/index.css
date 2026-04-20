@@ -153,3 +153,56 @@
     filter: invert(100%) hue-rotate(180deg);
   }
 }
+
+/* ── Print styles for monthly calendar ── */
+@media print {
+  /* Hide chrome that doesn't belong on paper */
+  header,
+  aside,
+  nav,
+  .no-print,
+  button,
+  a[href="/"] {
+    display: none !important;
+  }
+
+  /* Force a clean white background and black text for ink savings */
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body * {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Show our print-only title block */
+  .print-title { display: block !important; text-align: center; margin: 0 0 12px 0; }
+  .print-title h1 { font-size: 22px; font-weight: 800; margin: 0; color: #000; }
+  .print-title p  { font-size: 12px; margin: 4px 0 0 0; color: #333; }
+
+  /* Calendar grid sizing for one-page landscape print */
+  main { padding: 8px !important; max-width: 100% !important; }
+  .calendar-grid-print {
+    border: 1px solid #444 !important;
+    border-radius: 0 !important;
+  }
+  .calendar-grid-print > div {
+    border-color: #888 !important;
+  }
+  .calendar-grid-print .day-cell {
+    min-height: 90px !important;
+    page-break-inside: avoid;
+    font-size: 10px !important;
+  }
+  .calendar-grid-print .day-cell .date-num { font-size: 13px !important; font-weight: 700; }
+
+  /* Landscape orientation for calendar grid */
+  @page { size: A4 landscape; margin: 10mm; }
+}
+
+/* By default the print-only title is hidden on screen */
+.print-title { display: none; }
