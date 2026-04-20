@@ -806,11 +806,25 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       <header className="panchang-gradient shadow-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
           <div className="flex items-center justify-between gap-2 sm:gap-4">
-            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 bg-white/15 rounded-full flex items-center justify-center text-base sm:text-xl border border-white/20">
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.location.pathname === "/") {
+                  setActiveTab("home");
+                  window.scrollTo({ top: 0, behavior: "auto" });
+                } else {
+                  window.history.pushState({}, "", "/");
+                  window.dispatchEvent(new PopStateEvent("popstate"));
+                }
+              }}
+              title="Go to homepage"
+              className="flex items-center gap-2 sm:gap-3 min-w-0 hover:opacity-90 transition group"
+            >
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 bg-white/15 rounded-full flex items-center justify-center text-base sm:text-xl border border-white/20 group-hover:bg-white/25 transition">
                 🕉️
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 text-left">
                 <h1 className="text-base sm:text-xl font-bold text-white tracking-tight leading-tight truncate">
                   {VARIANT_CONFIG[variant].heading
                     .replace("{city}", selectedCity.name)
@@ -822,7 +836,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                     .replace("{year}", String(viewDate.getFullYear()))}
                 </p>
               </div>
-            </div>
+            </a>
             <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
               {/* Language cycle: EN → हि → తె */}
               <button
