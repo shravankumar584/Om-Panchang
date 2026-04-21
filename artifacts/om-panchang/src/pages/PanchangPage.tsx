@@ -7,6 +7,7 @@ import VedicClock from "@/components/VedicClock";
 import TodayDeity from "@/components/TodayDeity";
 import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
+import FestivalGuidesGrid from "@/components/FestivalGuidesGrid";
 import KundaliSection from "@/components/KundaliSection";
 import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
@@ -543,7 +544,10 @@ function FestivalsSubTabs({ variant }: { variant: CalendarVariant }) {
         </button>
       </div>
       {view === "festivals"
-        ? <UpcomingFestivals today={new Date()} count={50} />
+        ? <div className="space-y-4">
+            <FestivalGuidesGrid />
+            <UpcomingFestivals today={new Date()} count={50} />
+          </div>
         : <VratCalendarSection defaultFilter={defaultFilter} />
       }
     </>

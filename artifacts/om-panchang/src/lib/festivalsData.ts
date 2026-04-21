@@ -116,6 +116,7 @@ export const FESTIVALS: FestivalDetail[] = [
     sanskrit: "भाई दूज",
     alsoKnownAs: ["Bhau Beej", "Bhai Phonta", "Yama Dwitiya"],
     deity: "Lord Yama & Yamuna",
+    deityImage: "/deities/friday-lakshmi.png",
     category: "major",
     shortDescription: "Bhai Dooj celebrates the bond between brothers and sisters. Sisters apply tilak on their brothers' foreheads and pray for their long life and prosperity. It is the fifth and final day of Diwali festivities.",
     occurrences: [
@@ -141,6 +142,7 @@ export const FESTIVALS: FestivalDetail[] = [
     sanskrit: "रक्षा बन्धन",
     alsoKnownAs: ["Rakhi", "Rakhi Purnima", "Saluno"],
     deity: "Goddess Indrani (traditional)",
+    deityImage: "/deities/tuesday-hanuman.png",
     category: "major",
     shortDescription: "Raksha Bandhan celebrates the sacred bond between brothers and sisters. Sisters tie a protective thread (rakhi) on their brothers' wrists, and brothers in return promise lifelong protection.",
     occurrences: [
@@ -259,6 +261,7 @@ export const FESTIVALS: FestivalDetail[] = [
     sanskrit: "शरद नवरात्रि",
     alsoKnownAs: ["Maha Navratri", "Durga Puja", "Dasara"],
     deity: "Goddess Durga (9 forms)",
+    deityImage: "/deities/friday-lakshmi.png",
     category: "major",
     shortDescription: "Navratri (nine nights) celebrates the divine feminine in nine forms of Goddess Durga over nine days. It culminates with Vijayadashami (Dussehra), marking the goddess's victory over the demon Mahishasura and Lord Rama's victory over Ravana.",
     occurrences: [
@@ -297,6 +300,7 @@ export const FESTIVALS: FestivalDetail[] = [
     sanskrit: "दशहरा",
     alsoKnownAs: ["Vijayadashami", "Dasara", "Ayudha Puja"],
     deity: "Goddess Durga & Lord Rama",
+    deityImage: "/deities/thursday-vishnu.png",
     category: "major",
     shortDescription: "Dussehra (Vijayadashami) marks the triumph of good over evil. It celebrates Lord Rama's victory over Ravana and Goddess Durga's victory over Mahishasura. Effigies of Ravana, Meghnad, and Kumbhakarna are burnt across India.",
     occurrences: [
@@ -398,6 +402,7 @@ export const FESTIVALS: FestivalDetail[] = [
     sanskrit: "गुरु पूर्णिमा",
     alsoKnownAs: ["Vyasa Purnima", "Ashadha Purnima"],
     deity: "Sage Veda Vyasa & all Gurus",
+    deityImage: "/deities/thursday-vishnu.png",
     category: "major",
     shortDescription: "Guru Purnima is dedicated to honoring all spiritual and academic teachers (gurus). It falls on the full moon of Ashadha month and marks the birth of Sage Veda Vyasa, who composed the Mahabharata and divided the Vedas.",
     occurrences: [
@@ -654,6 +659,7 @@ export const FESTIVALS: FestivalDetail[] = [
     sanskrit: "उगादि / गुड़ी पाडवा",
     alsoKnownAs: ["Yugadi", "Samvatsaradi", "Chaitra Shukla Pratipada"],
     deity: "Lord Brahma",
+    deityImage: "/deities/sunday-surya.png",
     category: "major",
     shortDescription: "Ugadi (in Karnataka, Andhra, Telangana) and Gudi Padwa (in Maharashtra, Goa) mark the Hindu New Year — the first day of Chaitra Shukla Paksha. It is believed Lord Brahma created the universe on this day.",
     occurrences: [
