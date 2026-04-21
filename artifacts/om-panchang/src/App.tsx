@@ -4,8 +4,23 @@ import PanchangPage from "@/pages/PanchangPage";
 import LegalPage from "@/pages/LegalPage";
 import AboutPage from "@/pages/AboutPage";
 import MonthlyCalendarPage from "@/pages/MonthlyCalendarPage";
+import FestivalPage from "@/pages/FestivalPage";
 import { slugToMonthYear } from "@/lib/calendarUtils";
 import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/panchangData";
+import { FESTIVALS } from "@/lib/festivalsData";
+
+const FESTIVAL_SLUGS = new Set(FESTIVALS.map(f => f.slug));
+
+function detectFestival(path: string): string | null {
+  const segments = path.split("/").filter(Boolean);
+  if (segments.length === 0) return null;
+  // Strip optional trailing year suffix (e.g. "diwali-2026" → "diwali")
+  let slug = segments[0].toLowerCase();
+  const yearStripped = slug.replace(/-20\d{2}$/, "");
+  if (FESTIVAL_SLUGS.has(slug)) return slug;
+  if (FESTIVAL_SLUGS.has(yearStripped)) return yearStripped;
+  return null;
+}
 
 const queryClient = new QueryClient();
 
@@ -73,6 +88,7 @@ function parseRoute(path: string) {
   return {
     legalPage:     detectLegalPage(path),
     monthly:       detectMonthlyCalendar(path),
+    festivalSlug:  detectFestival(path),
     variant:       detectVariant(path),
     initialCity:   detectInitialCity(path),
   };
@@ -89,10 +105,11 @@ function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  const { legalPage, monthly, variant, initialCity } = route;
+  const { legalPage, monthly, festivalSlug, variant, initialCity } = route;
 
   if (legalPage === "about") return <QueryClientProvider client={queryClient}><AboutPage /></QueryClientProvider>;
   if (legalPage)             return <QueryClientProvider client={queryClient}><LegalPage page={legalPage} /></QueryClientProvider>;
+  if (festivalSlug)          return <QueryClientProvider client={queryClient}><FestivalPage slug={festivalSlug} /></QueryClientProvider>;
   if (monthly)               return (
     <QueryClientProvider client={queryClient}>
       <MonthlyCalendarPage

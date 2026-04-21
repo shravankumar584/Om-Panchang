@@ -1,6 +1,48 @@
 import { useMemo } from "react";
 import { getUpcomingFestivals } from "@/lib/panchangData";
 import { gcalUrl } from "@/lib/i18n";
+import { FESTIVALS } from "@/lib/festivalsData";
+
+// Map of festival-name keywords → dedicated landing page slug
+const FESTIVAL_SLUG_MAP: { match: string; slug: string }[] = [
+  { match: "Diwali", slug: "diwali" },
+  { match: "Dhanteras", slug: "dhanteras" },
+  { match: "Bhai Dooj", slug: "bhai-dooj" },
+  { match: "Bhai Phonta", slug: "bhai-dooj" },
+  { match: "Raksha Bandhan", slug: "raksha-bandhan" },
+  { match: "Rakhi", slug: "raksha-bandhan" },
+  { match: "Janmashtami", slug: "janmashtami" },
+  { match: "Krishna Jayanti", slug: "janmashtami" },
+  { match: "Ganesh Chaturthi", slug: "ganesh-chaturthi" },
+  { match: "Vinayaka Chaturthi", slug: "ganesh-chaturthi" },
+  { match: "Navratri", slug: "navratri" },
+  { match: "Dussehra", slug: "dussehra" },
+  { match: "Vijayadashami", slug: "dussehra" },
+  { match: "Karva Chauth", slug: "karwa-chauth" },
+  { match: "Karwa Chauth", slug: "karwa-chauth" },
+  { match: "Chhath", slug: "chhath-puja" },
+  { match: "Guru Purnima", slug: "guru-purnima" },
+  { match: "Buddha Purnima", slug: "buddha-purnima" },
+  { match: "Vesak", slug: "buddha-purnima" },
+  { match: "Akshaya Tritiya", slug: "akshaya-tritiya" },
+  { match: "Holi", slug: "holi" },
+  { match: "Holika", slug: "holi" },
+  { match: "Maha Shivratri", slug: "maha-shivratri" },
+  { match: "Maha Shivaratri", slug: "maha-shivratri" },
+  { match: "Ram Navami", slug: "ram-navami" },
+  { match: "Hanuman Jayanti", slug: "hanuman-jayanti" },
+  { match: "Ugadi", slug: "ugadi" },
+  { match: "Gudi Padwa", slug: "ugadi" },
+];
+
+const VALID_SLUGS = new Set(FESTIVALS.map(f => f.slug));
+
+function getFestivalSlug(name: string): string | null {
+  for (const { match, slug } of FESTIVAL_SLUG_MAP) {
+    if (name.includes(match) && VALID_SLUGS.has(slug)) return slug;
+  }
+  return null;
+}
 
 const FESTIVAL_ICONS: Record<string, string> = {
   "Makar Sankranti": "🪁", "Pongal": "🍚", "Vasant Panchami": "🌸",
@@ -72,14 +114,24 @@ export default function UpcomingFestivals({ today, count = 10, onViewAll }: Prop
               </div>
 
               <div className="flex-1 min-w-0">
-                {names.map((name, i) => (
-                  <div key={i} className="flex items-center gap-1.5">
-                    <span className="text-base leading-none">{getFestivalIcon(name)}</span>
-                    <p className={`font-semibold text-sm truncate ${i === 0 ? "text-slate-800" : "text-slate-600 text-xs"}`}>
-                      {name}
-                    </p>
-                  </div>
-                ))}
+                {names.map((name, i) => {
+                  const slug = getFestivalSlug(name);
+                  const inner = (
+                    <>
+                      <span className="text-base leading-none">{getFestivalIcon(name)}</span>
+                      <p className={`font-semibold text-sm truncate ${i === 0 ? "text-slate-800" : "text-slate-600 text-xs"} ${slug ? "group-hover:text-indigo-700 group-hover:underline" : ""}`}>
+                        {name}
+                      </p>
+                    </>
+                  );
+                  return slug ? (
+                    <a key={i} href={`/${slug}`} className="group flex items-center gap-1.5" title={`Read about ${name}`}>
+                      {inner}
+                    </a>
+                  ) : (
+                    <div key={i} className="flex items-center gap-1.5">{inner}</div>
+                  );
+                })}
                 <p className="text-xs text-slate-400 mt-0.5">{formatDate(dateStr)}</p>
               </div>
 
