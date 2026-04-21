@@ -4,6 +4,7 @@ import { monthToSlug } from "@/lib/calendarUtils";
 import { CalendarLang, LANG_LABELS, LANG_CYCLE, translateTithi, translateNakshatra } from "@/lib/i18n";
 import ReferenceSection from "@/components/ReferenceSection";
 import VedicClock from "@/components/VedicClock";
+import TodayDeity from "@/components/TodayDeity";
 import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 import KundaliSection from "@/components/KundaliSection";
@@ -797,6 +798,8 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       </div>
 
       {sp && <VedicClock city={selectedCity} sunriseStr={sp.sunrise} sunsetStr={sp.sunset} />}
+
+      <TodayDeity date={selectedDate} />
     </aside>
   );
 

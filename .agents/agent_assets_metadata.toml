@@ -6,6 +6,48 @@ uri = "file://artifacts/om-panchang-mobile/assets/images/icon.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "8i6nu0Z-29EJbrx6J3hWv"
+uri = "file://artifacts/om-panchang/public/deities/sunday-surya.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "klLVpvCuHv3GJwgDO7yLu"
+uri = "file://artifacts/om-panchang/public/deities/monday-shiva.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "z2_QipBbz-lpLje5Q8DxP"
+uri = "file://artifacts/om-panchang/public/deities/tuesday-hanuman.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "fyb_hXbYsMXbiXr714iwD"
+uri = "file://artifacts/om-panchang/public/deities/wednesday-ganesha.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "sNaNcwGuIejn5GNIvqVzw"
+uri = "file://artifacts/om-panchang/public/deities/thursday-vishnu.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "pnCxgqLhFKNZhhWnGqkWQ"
+uri = "file://artifacts/om-panchang/public/deities/friday-lakshmi.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "um28FP2GbW9l0TDdAE16O"
+uri = "file://artifacts/om-panchang/public/deities/saturday-shani.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "k30xramlEh7Y9c4LxrSVK"
 uri = "file://om-panchang-source.tar.gz"
