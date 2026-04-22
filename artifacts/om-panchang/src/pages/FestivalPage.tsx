@@ -44,6 +44,9 @@ export default function FestivalPage({ slug }: Props) {
     const script = document.createElement("script");
     script.type = "application/ld+json";
     script.id = "festival-schema";
+    const imageUrl = festival.deityImage
+      ? `https://ompanchang.org${festival.deityImage}`
+      : "https://ompanchang.org/og-image.png";
     script.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Event",
@@ -54,6 +57,7 @@ export default function FestivalPage({ slug }: Props) {
       "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "description": festival.metaDescription,
+      "image": [imageUrl],
       "location": {
         "@type": "Place",
         "name": "Hindu temples worldwide",
@@ -62,7 +66,20 @@ export default function FestivalPage({ slug }: Props) {
       "organizer": {
         "@type": "Organization",
         "name": "Om Panchang",
-        "url": "https://ompanchang.org"
+        "url": "https://ompanchang.org",
+        "logo": "https://ompanchang.org/og-image.png"
+      },
+      "performer": {
+        "@type": "Organization",
+        "name": "Hindu devotees & temple priests"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": `https://ompanchang.org/${festival.slug}`,
+        "validFrom": next.date
       }
     });
     document.head.appendChild(script);
