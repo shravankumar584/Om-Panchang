@@ -8,6 +8,7 @@ import TodayDeity from "@/components/TodayDeity";
 import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 import FestivalGuidesGrid from "@/components/FestivalGuidesGrid";
+import FindTempleCard from "@/components/FindTempleCard";
 import KundaliSection from "@/components/KundaliSection";
 import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
@@ -745,6 +746,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
   const Sidebar = (
     <aside className="w-full lg:w-72 flex-shrink-0 space-y-4">
       <TodayDeity date={selectedDate} />
+      <FindTempleCard variant="sidebar" />
       <div className="bg-white rounded-2xl shadow-sm card-glow overflow-hidden border border-indigo-100">
         <div className="panchang-gradient px-4 py-3">
           <p className="text-indigo-200 text-xs font-semibold uppercase tracking-widest">Daily Panchang</p>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { FESTIVALS, FestivalDetail, getCurrentOrNextOccurrence, getFestivalBySlug } from "@/lib/festivalsData";
+import FindTempleCard from "@/components/FindTempleCard";
 
 interface Props {
   slug: string;
@@ -292,6 +293,9 @@ export default function FestivalPage({ slug }: Props) {
             </div>
           </section>
         )}
+
+        {/* Find a temple near you */}
+        <FindTempleCard variant="inline" context={festival.name} />
 
         {/* Related */}
         {related.length > 0 && (
