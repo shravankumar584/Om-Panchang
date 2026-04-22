@@ -764,8 +764,6 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
           </div>
         )}
 
-        <FindTempleCard variant="sidebar" />
-
         {isLoadingSidebar ? <Spinner /> : sp ? (
           <>
             <SectionHeader icon="🌞" title="Astronomical Times" />
@@ -806,6 +804,8 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       </div>
 
       {sp && <VedicClock city={selectedCity} sunriseStr={sp.sunrise} sunsetStr={sp.sunset} />}
+
+      <FindTempleCard variant="sidebar" />
 
       <TodayDeity date={selectedDate} />
     </aside>
