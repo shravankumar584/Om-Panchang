@@ -805,9 +805,8 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
 
       {sp && <VedicClock city={selectedCity} sunriseStr={sp.sunrise} sunsetStr={sp.sunset} />}
 
-      <FindTempleCard variant="sidebar" />
-
       <TodayDeity date={selectedDate} />
+      <FindTempleCard variant="sidebar" />
     </aside>
   );
 
