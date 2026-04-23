@@ -1,6 +1,10 @@
 export function getCanonicalUrl(pathname: string): string {
   const path = pathname.split(/[?#]/)[0].replace(/\/+$|^$/, "");
   if (!path || path === "/") return "https://ompanchang.org/";
+  const monthlyMatch = path.match(/^\/panchang-calendar\/[a-z0-9-]+\/([a-z0-9-]+)$/);
+  if (monthlyMatch) return `https://ompanchang.org${path}`;
+  const cityCalendarMatch = path.match(/^\/panchang-([a-z0-9-]+)$/);
+  if (cityCalendarMatch) return `https://ompanchang.org${path}`;
   if (path === "/about-us") return "https://ompanchang.org/about-us";
   if (path === "/disclaimer") return "https://ompanchang.org/disclaimer";
   if (path === "/contact-us") return "https://ompanchang.org/contact-us";
@@ -22,9 +26,5 @@ export function getCanonicalUrl(pathname: string): string {
   if (path === "/brahma-muhurta") return "https://ompanchang.org/brahma-muhurta";
   const festivalMatch = path.match(/^\/(diwali|dhanteras|bhai-dooj|raksha-bandhan|janmashtami|ganesh-chaturthi|navratri|dussehra|karwa-chauth|chhath-puja|guru-purnima|buddha-purnima|akshaya-tritiya|holi|maha-shivratri|ram-navami|hanuman-jayanti|ugadi)(?:-20\d{2})?$/);
   if (festivalMatch) return `https://ompanchang.org/${festivalMatch[1]}`;
-  const cityMatch = path.match(/^\/panchang-([a-z0-9-]+)$/);
-  if (cityMatch) return `https://ompanchang.org/panchang-${cityMatch[1]}`;
-  const monthlyMatch = path.match(/^\/panchang-calendar\/[a-z0-9-]+\/([a-z0-9-]+)$/);
-  if (monthlyMatch) return `https://ompanchang.org${path}`;
   return `https://ompanchang.org${path}`;
 }
