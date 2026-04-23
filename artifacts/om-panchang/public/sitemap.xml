@@ -96,38 +96,6 @@
   </url>
 
   <!-- ===== PANCHANG TODAY — ALL CITIES ===== -->
-  <url><loc>https://ompanchang.org/panchang/delhi</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/mumbai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/bangalore</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/chennai</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/kolkata</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/hyderabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/pune</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/ahmedabad</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/jaipur</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ompanchang.org/panchang/lucknow</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/varanasi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/surat</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/kochi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/chandigarh</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/indore</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/nagpur</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/bhopal</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/patna</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/amritsar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/haridwar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/rishikesh</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/mathura</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/vrindavan</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/ayodhya</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/agra</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/prayagraj</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/tirupati</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/shirdi</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/nashik</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ompanchang.org/panchang/warangal</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.org/panchang/visakhapatnam</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ompanchang.org/panchang/coimbatore</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
   <url><loc>https://ompanchang.org/panchang/madurai</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
   <url><loc>https://ompanchang.org/panchang/thiruvananthapuram</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
   <url><loc>https://ompanchang.org/panchang/mysuru</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
