@@ -8,6 +8,7 @@ import FestivalPage from "@/pages/FestivalPage";
 import { slugToMonthYear } from "@/lib/calendarUtils";
 import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/panchangData";
 import { FESTIVALS } from "@/lib/festivalsData";
+import CanonicalTag from "@/components/CanonicalTag";
 
 const FESTIVAL_SLUGS = new Set(FESTIVALS.map(f => f.slug));
 
@@ -112,6 +113,7 @@ function App() {
   if (festivalSlug)          return <QueryClientProvider client={queryClient}><FestivalPage slug={festivalSlug} /></QueryClientProvider>;
   if (monthly)               return (
     <QueryClientProvider client={queryClient}>
+      <CanonicalTag />
       <MonthlyCalendarPage
         key={`${monthly.month}-${monthly.year}-${monthly.city.name}`}
         initialMonth={monthly.month}
@@ -123,6 +125,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <CanonicalTag />
       <PanchangPage
         key={`${variant}-${initialCity.name}`}
         variant={variant as any}

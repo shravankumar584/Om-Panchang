@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { FESTIVALS, FestivalDetail, getCurrentOrNextOccurrence, getFestivalBySlug } from "@/lib/festivalsData";
 import FindTempleCard from "@/components/FindTempleCard";
+import { getCanonicalUrl } from "@/lib/canonical";
 
 interface Props {
   slug: string;
@@ -38,6 +39,13 @@ export default function FestivalPage({ slug }: Props) {
     document.title = `${festival.name} ${year} – Date, Muhurat, Rituals & Significance | Om Panchang`;
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", festival.metaDescription);
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = getCanonicalUrl(window.location.pathname);
 
     // Inject Schema.org Event JSON-LD
     const existing = document.getElementById("festival-schema");
