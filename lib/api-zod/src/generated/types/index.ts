@@ -8,6 +8,7 @@
 
 export * from "./apiError";
 export * from "./healthStatus";
+export * from "./horoscopeResult";
 export * from "./subscribeRequest";
 export * from "./subscribeResult";
 export * from "./unsubscribeParams";

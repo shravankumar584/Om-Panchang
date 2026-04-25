@@ -19,6 +19,7 @@ import type {
 import type {
   ApiError,
   HealthStatus,
+  HoroscopeResult,
   SubscribeRequest,
   SubscribeResult,
   UnsubscribeParams,
@@ -284,6 +285,158 @@ export function useUnsubscribe<
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getUnsubscribeQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Returns today's horoscope for the given sign. Generates and caches it on demand.
+ * @summary Get today's horoscope for a zodiac sign
+ */
+export const getGetHoroscopeUrl = (
+  sign:
+    | "aries"
+    | "taurus"
+    | "gemini"
+    | "cancer"
+    | "leo"
+    | "virgo"
+    | "libra"
+    | "scorpio"
+    | "sagittarius"
+    | "capricorn"
+    | "aquarius"
+    | "pisces",
+) => {
+  return `/api/horoscope/${sign}`;
+};
+
+export const getHoroscope = async (
+  sign:
+    | "aries"
+    | "taurus"
+    | "gemini"
+    | "cancer"
+    | "leo"
+    | "virgo"
+    | "libra"
+    | "scorpio"
+    | "sagittarius"
+    | "capricorn"
+    | "aquarius"
+    | "pisces",
+  options?: RequestInit,
+): Promise<HoroscopeResult> => {
+  return customFetch<HoroscopeResult>(getGetHoroscopeUrl(sign), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetHoroscopeQueryKey = (
+  sign:
+    | "aries"
+    | "taurus"
+    | "gemini"
+    | "cancer"
+    | "leo"
+    | "virgo"
+    | "libra"
+    | "scorpio"
+    | "sagittarius"
+    | "capricorn"
+    | "aquarius"
+    | "pisces",
+) => {
+  return [`/api/horoscope/${sign}`] as const;
+};
+
+export const getGetHoroscopeQueryOptions = <
+  TData = Awaited<ReturnType<typeof getHoroscope>>,
+  TError = ErrorType<ApiError>,
+>(
+  sign:
+    | "aries"
+    | "taurus"
+    | "gemini"
+    | "cancer"
+    | "leo"
+    | "virgo"
+    | "libra"
+    | "scorpio"
+    | "sagittarius"
+    | "capricorn"
+    | "aquarius"
+    | "pisces",
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getHoroscope>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetHoroscopeQueryKey(sign);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getHoroscope>>> = ({
+    signal,
+  }) => getHoroscope(sign, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!sign,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getHoroscope>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetHoroscopeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getHoroscope>>
+>;
+export type GetHoroscopeQueryError = ErrorType<ApiError>;
+
+/**
+ * @summary Get today's horoscope for a zodiac sign
+ */
+
+export function useGetHoroscope<
+  TData = Awaited<ReturnType<typeof getHoroscope>>,
+  TError = ErrorType<ApiError>,
+>(
+  sign:
+    | "aries"
+    | "taurus"
+    | "gemini"
+    | "cancer"
+    | "leo"
+    | "virgo"
+    | "libra"
+    | "scorpio"
+    | "sagittarius"
+    | "capricorn"
+    | "aquarius"
+    | "pisces",
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getHoroscope>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetHoroscopeQueryOptions(sign, options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;

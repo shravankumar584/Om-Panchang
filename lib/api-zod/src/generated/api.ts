@@ -42,3 +42,38 @@ export const UnsubscribeResponse = zod.object({
   ok: zod.boolean(),
   message: zod.string(),
 });
+
+/**
+ * Returns today's horoscope for the given sign. Generates and caches it on demand.
+ * @summary Get today's horoscope for a zodiac sign
+ */
+export const GetHoroscopeParams = zod.object({
+  sign: zod.enum([
+    "aries",
+    "taurus",
+    "gemini",
+    "cancer",
+    "leo",
+    "virgo",
+    "libra",
+    "scorpio",
+    "sagittarius",
+    "capricorn",
+    "aquarius",
+    "pisces",
+  ]),
+});
+
+export const GetHoroscopeResponse = zod.object({
+  sign: zod.string(),
+  date: zod.string(),
+  overview: zod.string(),
+  love: zod.string(),
+  career: zod.string(),
+  health: zod.string(),
+  finance: zod.string(),
+  luckyNumber: zod.number(),
+  luckyColor: zod.string(),
+  luckyTime: zod.string(),
+  mood: zod.string(),
+});

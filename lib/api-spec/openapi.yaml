@@ -12,6 +12,8 @@ tags:
     description: Health operations
   - name: subscribers
     description: Email subscriber operations
+  - name: horoscopes
+    description: Daily horoscope operations
 paths:
   /healthz:
     get:
@@ -77,6 +79,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+  /horoscope/{sign}:
+    get:
+      operationId: getHoroscope
+      tags: [horoscopes]
+      summary: Get today's horoscope for a zodiac sign
+      description: Returns today's horoscope for the given sign. Generates and caches it on demand.
+      parameters:
+        - in: path
+          name: sign
+          required: true
+          schema:
+            type: string
+            enum:
+              - aries
+              - taurus
+              - gemini
+              - cancer
+              - leo
+              - virgo
+              - libra
+              - scorpio
+              - sagittarius
+              - capricorn
+              - aquarius
+              - pisces
+      responses:
+        "200":
+          description: Today's horoscope
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HoroscopeResult"
+        "400":
+          description: Invalid sign
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   schemas:
     HealthStatus:
@@ -122,3 +168,40 @@ components:
           type: string
       required:
         - error
+    HoroscopeResult:
+      type: object
+      properties:
+        sign:
+          type: string
+        date:
+          type: string
+        overview:
+          type: string
+        love:
+          type: string
+        career:
+          type: string
+        health:
+          type: string
+        finance:
+          type: string
+        luckyNumber:
+          type: integer
+        luckyColor:
+          type: string
+        luckyTime:
+          type: string
+        mood:
+          type: string
+      required:
+        - sign
+        - date
+        - overview
+        - love
+        - career
+        - health
+        - finance
+        - luckyNumber
+        - luckyColor
+        - luckyTime
+        - mood

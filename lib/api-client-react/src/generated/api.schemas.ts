@@ -28,6 +28,20 @@ export interface ApiError {
   error: string;
 }
 
+export interface HoroscopeResult {
+  sign: string;
+  date: string;
+  overview: string;
+  love: string;
+  career: string;
+  health: string;
+  finance: string;
+  luckyNumber: number;
+  luckyColor: string;
+  luckyTime: string;
+  mood: string;
+}
+
 export type UnsubscribeParams = {
   token: string;
 };

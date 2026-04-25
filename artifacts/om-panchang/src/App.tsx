@@ -6,12 +6,23 @@ import AboutPage from "@/pages/AboutPage";
 import MonthlyCalendarPage from "@/pages/MonthlyCalendarPage";
 import FestivalPage from "@/pages/FestivalPage";
 import UnsubscribePage from "@/pages/UnsubscribePage";
+import HoroscopePage from "@/pages/HoroscopePage";
 import { slugToMonthYear } from "@/lib/calendarUtils";
 import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/panchangData";
 import { FESTIVALS } from "@/lib/festivalsData";
+import { ZODIAC_SLUGS } from "@/lib/horoscopeData";
 import CanonicalTag from "@/components/CanonicalTag";
 
 const FESTIVAL_SLUGS = new Set(FESTIVALS.map(f => f.slug));
+
+function detectHoroscope(path: string): { isIndex: boolean; sign?: string } | null {
+  const segments = path.split("/").filter(Boolean);
+  if (segments[0] !== "horoscope") return null;
+  if (segments.length === 1) return { isIndex: true };
+  const slug = segments[1].toLowerCase();
+  if (ZODIAC_SLUGS.has(slug)) return { isIndex: false, sign: slug };
+  return { isIndex: true };
+}
 
 function detectFestival(path: string): string | null {
   const segments = path.split("/").filter(Boolean);
@@ -111,6 +122,16 @@ function App() {
 
   if (window.location.pathname.startsWith("/unsubscribe")) {
     return <QueryClientProvider client={queryClient}><UnsubscribePage /></QueryClientProvider>;
+  }
+
+  const horoscope = detectHoroscope(window.location.pathname);
+  if (horoscope) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <CanonicalTag />
+        <HoroscopePage slug={horoscope.sign} />
+      </QueryClientProvider>
+    );
   }
 
   if (legalPage === "about") return <QueryClientProvider client={queryClient}><AboutPage /></QueryClientProvider>;
