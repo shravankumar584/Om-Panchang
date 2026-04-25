@@ -9,6 +9,7 @@ import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 import FestivalGuidesGrid from "@/components/FestivalGuidesGrid";
 import FindTempleCard from "@/components/FindTempleCard";
+import SubscribeCard from "@/components/SubscribeCard";
 import KundaliSection from "@/components/KundaliSection";
 import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
@@ -806,6 +807,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       {sp && <VedicClock city={selectedCity} sunriseStr={sp.sunrise} sunsetStr={sp.sunset} />}
 
       <TodayDeity date={selectedDate} />
+      <SubscribeCard variant="sidebar" />
       <FindTempleCard variant="sidebar" />
     </aside>
   );

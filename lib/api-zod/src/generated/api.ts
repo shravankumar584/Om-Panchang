@@ -14,3 +14,31 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Adds an email to the subscriber list
+ * @summary Subscribe to the newsletter
+ */
+export const subscribeBodyEmailMax = 254;
+
+export const SubscribeBody = zod.object({
+  email: zod.string().email().max(subscribeBodyEmailMax),
+});
+
+export const SubscribeResponse = zod.object({
+  ok: zod.boolean(),
+  message: zod.string(),
+});
+
+/**
+ * Removes a subscriber given an unsubscribe token
+ * @summary Unsubscribe via token
+ */
+export const UnsubscribeQueryParams = zod.object({
+  token: zod.coerce.string().uuid(),
+});
+
+export const UnsubscribeResponse = zod.object({
+  ok: zod.boolean(),
+  message: zod.string(),
+});

@@ -6,4 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./apiError";
 export * from "./healthStatus";
+export * from "./subscribeRequest";
+export * from "./subscribeResult";
+export * from "./unsubscribeParams";
+export * from "./unsubscribeResult";

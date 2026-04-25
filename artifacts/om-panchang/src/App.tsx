@@ -5,6 +5,7 @@ import LegalPage from "@/pages/LegalPage";
 import AboutPage from "@/pages/AboutPage";
 import MonthlyCalendarPage from "@/pages/MonthlyCalendarPage";
 import FestivalPage from "@/pages/FestivalPage";
+import UnsubscribePage from "@/pages/UnsubscribePage";
 import { slugToMonthYear } from "@/lib/calendarUtils";
 import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/panchangData";
 import { FESTIVALS } from "@/lib/festivalsData";
@@ -107,6 +108,10 @@ function App() {
   }, []);
 
   const { legalPage, monthly, festivalSlug, variant, initialCity } = route;
+
+  if (window.location.pathname.startsWith("/unsubscribe")) {
+    return <QueryClientProvider client={queryClient}><UnsubscribePage /></QueryClientProvider>;
+  }
 
   if (legalPage === "about") return <QueryClientProvider client={queryClient}><AboutPage /></QueryClientProvider>;
   if (legalPage)             return <QueryClientProvider client={queryClient}><LegalPage page={legalPage} /></QueryClientProvider>;

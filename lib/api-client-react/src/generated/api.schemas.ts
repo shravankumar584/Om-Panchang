@@ -8,3 +8,26 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface SubscribeRequest {
+  /** @maxLength 254 */
+  email: string;
+}
+
+export interface SubscribeResult {
+  ok: boolean;
+  message: string;
+}
+
+export interface UnsubscribeResult {
+  ok: boolean;
+  message: string;
+}
+
+export interface ApiError {
+  error: string;
+}
+
+export type UnsubscribeParams = {
+  token: string;
+};

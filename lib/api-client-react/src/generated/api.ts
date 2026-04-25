@@ -5,18 +5,28 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ApiError,
+  HealthStatus,
+  SubscribeRequest,
+  SubscribeResult,
+  UnsubscribeParams,
+  UnsubscribeResult,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -92,6 +102,188 @@ export function useHealthCheck<
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getHealthCheckQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Adds an email to the subscriber list
+ * @summary Subscribe to the newsletter
+ */
+export const getSubscribeUrl = () => {
+  return `/api/subscribe`;
+};
+
+export const subscribe = async (
+  subscribeRequest: SubscribeRequest,
+  options?: RequestInit,
+): Promise<SubscribeResult> => {
+  return customFetch<SubscribeResult>(getSubscribeUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(subscribeRequest),
+  });
+};
+
+export const getSubscribeMutationOptions = <
+  TError = ErrorType<ApiError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof subscribe>>,
+    TError,
+    { data: BodyType<SubscribeRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof subscribe>>,
+  TError,
+  { data: BodyType<SubscribeRequest> },
+  TContext
+> => {
+  const mutationKey = ["subscribe"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof subscribe>>,
+    { data: BodyType<SubscribeRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return subscribe(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubscribeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof subscribe>>
+>;
+export type SubscribeMutationBody = BodyType<SubscribeRequest>;
+export type SubscribeMutationError = ErrorType<ApiError>;
+
+/**
+ * @summary Subscribe to the newsletter
+ */
+export const useSubscribe = <
+  TError = ErrorType<ApiError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof subscribe>>,
+    TError,
+    { data: BodyType<SubscribeRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof subscribe>>,
+  TError,
+  { data: BodyType<SubscribeRequest> },
+  TContext
+> => {
+  return useMutation(getSubscribeMutationOptions(options));
+};
+
+/**
+ * Removes a subscriber given an unsubscribe token
+ * @summary Unsubscribe via token
+ */
+export const getUnsubscribeUrl = (params: UnsubscribeParams) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/unsubscribe?${stringifiedParams}`
+    : `/api/unsubscribe`;
+};
+
+export const unsubscribe = async (
+  params: UnsubscribeParams,
+  options?: RequestInit,
+): Promise<UnsubscribeResult> => {
+  return customFetch<UnsubscribeResult>(getUnsubscribeUrl(params), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getUnsubscribeQueryKey = (params?: UnsubscribeParams) => {
+  return [`/api/unsubscribe`, ...(params ? [params] : [])] as const;
+};
+
+export const getUnsubscribeQueryOptions = <
+  TData = Awaited<ReturnType<typeof unsubscribe>>,
+  TError = ErrorType<ApiError>,
+>(
+  params: UnsubscribeParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof unsubscribe>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getUnsubscribeQueryKey(params);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof unsubscribe>>> = ({
+    signal,
+  }) => unsubscribe(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof unsubscribe>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type UnsubscribeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof unsubscribe>>
+>;
+export type UnsubscribeQueryError = ErrorType<ApiError>;
+
+/**
+ * @summary Unsubscribe via token
+ */
+
+export function useUnsubscribe<
+  TData = Awaited<ReturnType<typeof unsubscribe>>,
+  TError = ErrorType<ApiError>,
+>(
+  params: UnsubscribeParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof unsubscribe>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getUnsubscribeQueryOptions(params, options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;
