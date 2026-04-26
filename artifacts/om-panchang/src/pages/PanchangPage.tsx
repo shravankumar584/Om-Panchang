@@ -138,7 +138,7 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc" | "babynames" | "hora";
+type ActiveTab = "home" | "panchang" | "muhurat" | "festivals" | "planets" | "guide" | "kundali" | "milan" | "muhurtacalc" | "babynames" | "hora" | "blog";
 
 interface CalendarDay {
   date: Date;
@@ -749,6 +749,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
     { id: "muhurtacalc", label: "Muhurta", icon: "✨" },
     { id: "babynames", label: "Baby Names", icon: "👶" },
     { id: "hora",      label: "Hora",       icon: "⏳" },
+    { id: "blog",      label: "Blog",       icon: "📚" },
   ];
 
   function handleTabClick(id: ActiveTab | "calendar-nav") {
@@ -757,6 +758,9 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       const citySlug = cityToSlug(selectedCity.name);
       const url = `/panchang-calendar/${slug}/${citySlug}`;
       window.history.pushState({}, "", url);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    } else if (id === "blog") {
+      window.history.pushState({}, "", "/blog");
       window.dispatchEvent(new PopStateEvent("popstate"));
     } else {
       setActiveTab(id);
@@ -902,14 +906,14 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
         {/* Tab navigation */}
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-2 sm:px-4">
-            <div className="flex flex-wrap sm:flex-nowrap sm:overflow-x-auto scrollbar-hide">
+            <div className="flex flex-wrap">
               {TABS.map(tab => (
                 <button
                   key={tab.id}
                   type="button"
                   onClick={() => handleTabClick(tab.id)}
                   style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
-                  className={`flex-1 sm:flex-initial basis-1/6 sm:basis-auto flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border-b-2 transition min-w-0 sm:min-w-0 select-none active:bg-white/15
+                  className={`basis-[14.2857%] sm:basis-[7.6923%] flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 px-1 sm:px-2 py-2 sm:py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border-b-2 transition min-w-0 select-none active:bg-white/15
                     ${activeTab === tab.id
                       ? "border-amber-400 text-amber-300 bg-white/10"
                       : tab.id === "calendar-nav"
@@ -918,7 +922,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                     }`}
                 >
                   <span className="text-base sm:text-sm">{tab.icon}</span>
-                  <span className="text-[10px] sm:text-sm leading-tight">{tab.label}</span>
+                  <span className="text-[10px] sm:text-xs leading-tight">{tab.label}</span>
                 </button>
               ))}
             </div>
