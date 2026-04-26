@@ -57,6 +57,15 @@ Express 5 API server. Routes live in `src/routes/` and use `@workspace/api-zod` 
 - Entry: `src/index.ts` — reads `PORT`, starts Express
 - App setup: `src/app.ts` — mounts CORS, JSON/urlencoded parsing, routes at `/api`
 - Routes: `src/routes/index.ts` mounts sub-routers; `src/routes/health.ts` exposes `GET /health` (full path: `/api/health`); `src/routes/subscribers.ts` exposes `POST /api/subscribe` and `GET /api/unsubscribe?token=` for newsletter signup/opt-out (backed by `subscribers` table); `src/routes/horoscopes.ts` exposes `GET /api/horoscope/:sign` for AI-generated daily horoscopes (cached one-per-sign-per-day in `horoscopes` table, generated lazily via OpenAI gpt-5-nano on cache miss)
+
+#### SEO indexing strategy (om-panchang web)
+
+To pass AdSense "low value content" review, we restrict the indexed surface area to original/high-quality pages only:
+
+- **Indexed (in sitemap, no `noindex` meta)**: homepage, festival pages, section landings (hindu-calendar, kundali, vedic-astrology, etc.), horoscope pages, legal pages — 49 URLs total
+- **Noindexed (NOT in sitemap, `<meta name="robots" content="noindex,follow">` injected)**: city-templated subroutes like `/panchang/<city>`, `/choghadiya/<city>`, `/rahu-kalam-today/<city>`, `/nakshatra-today/<city>`, `/hora-today/<city>`, `/brahma-muhurta/<city>`, and all `/panchang-calendar/...` monthly pages
+
+The `shouldNoindex(path)` helper in `App.tsx` decides this; `RobotsTag` component injects/removes the meta tag on each route. When adding new templated/city pages, list the variant in `CITY_TEMPLATED_VARIANTS` and exclude them from `public/sitemap.xml`.
 - Depends on: `@workspace/db`, `@workspace/api-zod`, `@workspace/integrations-openai-ai-server`
 - `pnpm --filter @workspace/api-server run dev` — run the dev server
 - `pnpm --filter @workspace/api-server run build` — production esbuild bundle (`dist/index.cjs`)

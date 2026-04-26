@@ -12,8 +12,33 @@ import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/p
 import { FESTIVALS } from "@/lib/festivalsData";
 import { ZODIAC_SLUGS } from "@/lib/horoscopeData";
 import CanonicalTag from "@/components/CanonicalTag";
+import RobotsTag from "@/components/RobotsTag";
 
 const FESTIVAL_SLUGS = new Set(FESTIVALS.map(f => f.slug));
+
+// Thin/templated routes that should NOT be indexed by search engines.
+// These pages share boilerplate text and only differ by city/date data,
+// which trips Google's "low value content" / doorway-page filters.
+const CITY_TEMPLATED_VARIANTS = new Set([
+  "panchang",
+  "choghadiya",
+  "rahu-kalam-today",
+  "nakshatra-today",
+  "hora-today",
+  "brahma-muhurta",
+]);
+
+function shouldNoindex(path: string): boolean {
+  const segments = path.split("/").filter(Boolean);
+  if (segments.length === 0) return false;
+  // All monthly calendar pages (e.g. /panchang-calendar/april-2026/delhi)
+  if (segments[0] === "panchang-calendar") return true;
+  // City-specific subroutes (e.g. /panchang/delhi, /choghadiya/mumbai)
+  if (segments.length >= 2 && CITY_TEMPLATED_VARIANTS.has(segments[0])) {
+    return true;
+  }
+  return false;
+}
 
 function detectHoroscope(path: string): { isIndex: boolean; sign?: string } | null {
   const segments = path.split("/").filter(Boolean);
@@ -119,27 +144,31 @@ function App() {
   }, []);
 
   const { legalPage, monthly, festivalSlug, variant, initialCity } = route;
+  const path = window.location.pathname;
+  const noindex = shouldNoindex(path);
 
-  if (window.location.pathname.startsWith("/unsubscribe")) {
-    return <QueryClientProvider client={queryClient}><UnsubscribePage /></QueryClientProvider>;
+  if (path.startsWith("/unsubscribe")) {
+    return <QueryClientProvider client={queryClient}><RobotsTag noindex={true} /><UnsubscribePage /></QueryClientProvider>;
   }
 
-  const horoscope = detectHoroscope(window.location.pathname);
+  const horoscope = detectHoroscope(path);
   if (horoscope) {
     return (
       <QueryClientProvider client={queryClient}>
         <CanonicalTag />
+        <RobotsTag noindex={noindex} />
         <HoroscopePage slug={horoscope.sign} />
       </QueryClientProvider>
     );
   }
 
-  if (legalPage === "about") return <QueryClientProvider client={queryClient}><AboutPage /></QueryClientProvider>;
-  if (legalPage)             return <QueryClientProvider client={queryClient}><LegalPage page={legalPage} /></QueryClientProvider>;
-  if (festivalSlug)          return <QueryClientProvider client={queryClient}><FestivalPage slug={festivalSlug} /></QueryClientProvider>;
+  if (legalPage === "about") return <QueryClientProvider client={queryClient}><RobotsTag noindex={noindex} /><AboutPage /></QueryClientProvider>;
+  if (legalPage)             return <QueryClientProvider client={queryClient}><RobotsTag noindex={noindex} /><LegalPage page={legalPage} /></QueryClientProvider>;
+  if (festivalSlug)          return <QueryClientProvider client={queryClient}><RobotsTag noindex={noindex} /><FestivalPage slug={festivalSlug} /></QueryClientProvider>;
   if (monthly)               return (
     <QueryClientProvider client={queryClient}>
       <CanonicalTag />
+      <RobotsTag noindex={noindex} />
       <MonthlyCalendarPage
         key={`${monthly.month}-${monthly.year}-${monthly.city.name}`}
         initialMonth={monthly.month}
@@ -152,6 +181,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <CanonicalTag />
+      <RobotsTag noindex={noindex} />
       <PanchangPage
         key={`${variant}-${initialCity.name}`}
         variant={variant as any}
