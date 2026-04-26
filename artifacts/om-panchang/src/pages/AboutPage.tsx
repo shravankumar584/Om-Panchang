@@ -1,4 +1,12 @@
+import { useEffect } from "react";
+
 export default function AboutPage() {
+  useEffect(() => {
+    document.title = "About Om Panchang – Our Mission, Methodology & Team";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", "Learn about Om Panchang — a free Hindu Vedic almanac built for the global Hindu diaspora. Our mission, accuracy methodology (Drik + Lahiri Ayanamsa), and the team behind the calendar.");
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50/30 font-sans">
       {/* Header */}

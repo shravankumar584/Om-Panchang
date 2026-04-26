@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type LegalVariant = "disclaimer" | "contact" | "privacy";
 
@@ -33,6 +33,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function DisclaimerPage() {
+  useEffect(() => {
+    document.title = "Disclaimer – Om Panchang";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", "Om Panchang disclaimer: Hindu Panchang, Kundali, Muhurta and festival information is for general informational and educational purposes only. Read our full disclaimer.");
+  }, []);
   return (
     <>
       <Header
@@ -124,6 +129,12 @@ function ContactPage() {
   const [message, setMessage] = useState("");
   const [sent, setSent]       = useState(false);
   const [error, setError]     = useState("");
+
+  useEffect(() => {
+    document.title = "Contact Om Panchang – Get in Touch";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", "Contact the Om Panchang team. Send us questions about Hindu Panchang calculations, report a calculation error, request a feature, or suggest a city. We respond within 2–3 business days.");
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -258,6 +269,11 @@ function ContactPage() {
 }
 
 function PrivacyPage() {
+  useEffect(() => {
+    document.title = "Privacy Policy – Om Panchang";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", "Om Panchang privacy policy: We do not collect personal data. Birth details for Kundali and Baby Names are processed locally in your browser. Learn how we handle ads, cookies and analytics.");
+  }, []);
   return (
     <>
       <Header

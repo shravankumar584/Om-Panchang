@@ -151,9 +151,11 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  // Update meta title for SEO
+  // Update meta title and description for SEO
   useEffect(() => {
     document.title = `Hindu Panchang Calendar ${MONTHS[month]} ${year} – ${city.name} | Om Panchang`;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", `Free monthly Hindu Panchang calendar for ${MONTHS[month]} ${year}, ${city.name}. View daily Tithi, Nakshatra, Yoga, festivals, Ekadashi, Amavasya, Purnima and Pradosh Vrat dates with accurate local timings.`);
   }, [month, year, city.name]);
 
   // ── Single combined effect: build skeleton then fill panchang data ──────────

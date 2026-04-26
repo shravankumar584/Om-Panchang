@@ -381,126 +381,146 @@ type CalendarVariant =
   | "hora-today" | "brahma-muhurta";
 
 const VARIANT_CONFIG: Record<CalendarVariant, {
-  title: string; heading: string; sub: string; defaultTab: ActiveTab;
+  title: string; heading: string; sub: string; description: string; defaultTab: ActiveTab;
 }> = {
   default: {
     title:      "Om Panchang – Hindu Calendar & Vedic Almanac",
     heading:    "Om Panchang",
     sub:        "Hindu Calendar & Vedic Almanac",
+    description: "Free Hindu Panchang and Vedic almanac for {city}. Today's Tithi, Nakshatra, Yoga, sunrise, sunset, Rahu Kalam, festivals, Choghadiya and Muhurta — all computed for your local timezone.",
     defaultTab: "home",
   },
   hindu: {
     title:      "Hindu Calendar {year} – {city} | Om Panchang",
     heading:    "Hindu Calendar",
     sub:        "Panchang, Tithi, Nakshatra & Festivals",
+    description: "Hindu Calendar {year} for {city} with daily Tithi, Nakshatra, Yoga, festivals, Ekadashi and full Vikram Samvat / Shaka Samvat dates. Free, accurate and location-aware.",
     defaultTab: "home",
   },
   telugu: {
     title:      "Telugu Calendar {year} – {city} | Om Panchang",
     heading:    "Telugu Calendar",
     sub:        "తెలుగు పంచాంగం · Panchang, Tithi & Festivals",
+    description: "Telugu Calendar (Telugu Panchangam) {year} for {city}. Daily Tithi, Nakshatra, Karana and major Telugu festivals like Ugadi, Sankranti and Karthika Masam — accurate for your city.",
     defaultTab: "home",
   },
   "vedic-astrology": {
     title:      "Vedic Astrology {year} – {city} | Om Panchang",
     heading:    "Vedic Astrology",
     sub:        "Jyotish · Planets, Kundali & Panchang",
+    description: "Free Vedic Astrology (Jyotish) for {city}: live Navagraha planetary positions, Kundali calculator, Nakshatra, Rashi and daily Panchang using Lahiri Ayanamsa.",
     defaultTab: "home",
   },
   "hindu-astrology": {
     title:      "Hindu Astrology {year} – {city} | Om Panchang",
     heading:    "Hindu Astrology",
     sub:        "Kundali, Nakshatra, Planets & Festivals",
+    description: "Hindu Astrology {year} for {city}. Free Kundali, Nakshatra and planetary positions plus daily Tithi and festivals — built on the same Drik + Lahiri standard used by Indian almanacs.",
     defaultTab: "home",
   },
   kundali: {
     title:      "Kundali Calculator – Free Vedic Birth Chart | Om Panchang",
     heading:    "Kundali Calculator",
     sub:        "Free Vedic Birth Chart & Jyotish Analysis",
+    description: "Free Kundali Calculator (Janma Kundali / Vedic birth chart). Enter your birth date, time and place — get planetary positions, Lagna, Rashi, Nakshatra and dasha periods instantly.",
     defaultTab: "kundali",
   },
   "kundali-milan": {
     title:      "Kundali Milan – Free Horoscope Matching | Om Panchang",
     heading:    "Kundali Milan",
     sub:        "Free Hindu Marriage Compatibility Matching",
+    description: "Free Kundali Milan (Gun Milan / Ashtakoot horoscope matching) for marriage compatibility. Get out-of-36 compatibility score, Mangal Dosha check and Nakshatra koota analysis.",
     defaultTab: "milan",
   },
   "marriage-muhurat": {
     title:      "Marriage Muhurat {year} – Shubh Wedding Dates | Om Panchang",
     heading:    "Marriage Muhurat",
     sub:        "Auspicious Wedding Dates & Shubh Muhurat {year}",
+    description: "Marriage Muhurat {year} — auspicious Hindu wedding dates and Shubh Vivaha Muhurat times for {city}. Filtered by Tithi, Nakshatra, Yoga and avoidance of Rahu Kalam and Bhadra Karana.",
     defaultTab: "muhurtacalc",
   },
   "panchang-today": {
     title:      "Panchang Today – {city} | Om Panchang",
     heading:    "Panchang Today",
     sub:        "Today's Tithi, Nakshatra, Yoga & Karana",
+    description: "Today's Panchang for {city}: Tithi, Nakshatra, Yoga, Karana, Vara, sunrise, sunset, Rahu Kalam, Abhijit Muhurta and Choghadiya — accurate to your local timezone.",
     defaultTab: "panchang",
   },
   "hindu-festivals": {
     title:      "Hindu Festivals {year} – Calendar & Dates | Om Panchang",
     heading:    "Hindu Festivals {year}",
     sub:        "Complete List of Hindu Festivals & Holidays",
+    description: "Complete list of Hindu festivals {year} with accurate dates — Diwali, Holi, Navratri, Janmashtami, Raksha Bandhan, Ganesh Chaturthi and more. Localised to {city}.",
     defaultTab: "festivals",
   },
   "nakshatra-today": {
     title:      "Nakshatra Today – {city} | Om Panchang",
     heading:    "Nakshatra Today",
     sub:        "Today's Lunar Mansion & Star Sign",
+    description: "Today's Nakshatra (lunar mansion) for {city} with start and end times. Find which of the 27 Nakshatras the Moon transits today and what activities it favours.",
     defaultTab: "panchang",
   },
   "rahu-kalam-today": {
     title:      "Rahu Kalam Today – {city} | Om Panchang",
     heading:    "Rahu Kalam Today",
     sub:        "Today's Rahu Kalam, Yamagandam & Gulika",
+    description: "Today's Rahu Kalam, Yamagandam and Gulika Kalam timings for {city}. Know the inauspicious periods to avoid for important activities — calculated from your local sunrise.",
     defaultTab: "panchang",
   },
   "baby-names-nakshatra": {
     title:      "Hindu Baby Names by Nakshatra – Find Auspicious Name | Om Panchang",
     heading:    "Baby Name Finder",
     sub:        "Hindu Names by Janma Nakshatra & Starting Syllable",
+    description: "Find auspicious Hindu baby names by Janma Nakshatra and starting syllable (Naamakshar). Boy and girl names with meanings, organised by all 27 Nakshatras and 108 padas.",
     defaultTab: "babynames",
   },
   "choghadiya-today": {
     title:      "Choghadiya Today {year} – {city} | Auspicious Time | Om Panchang",
     heading:    "Choghadiya Today",
     sub:        "Auspicious & Inauspicious Time Slots for {city}",
+    description: "Today's Choghadiya for {city} — day and night auspicious time slots (Amrit, Shubh, Labh, Char) and inauspicious slots (Rog, Kaal, Udveg) with live current slot indicator.",
     defaultTab: "panchang",
   },
   "ekadashi-dates": {
     title:      "Ekadashi {year} – All 24 Fasting Dates | Om Panchang",
     heading:    "Ekadashi Dates {year}",
     sub:        "Complete list of all Ekadashi fasting days",
+    description: "All Ekadashi fasting dates for {year} with names, vrat start time and parana (fast-breaking) windows for {city}. Includes Mokshada, Vaikuntha, Devshayani Ekadashi and more.",
     defaultTab: "festivals",
   },
   "amavasya-dates": {
     title:      "Amavasya Dates {year} – New Moon Calendar | Om Panchang",
     heading:    "Amavasya Dates {year}",
     sub:        "All new moon days for ancestor rituals & Pitru Tarpan",
+    description: "Amavasya (new moon) dates for {year} with start and end times for {city}. Used for Pitru Tarpan, Shradh and ancestor worship — includes Mahalaya and Somvati Amavasya.",
     defaultTab: "festivals",
   },
   "purnima-dates": {
     title:      "Purnima Dates {year} – Full Moon Calendar | Om Panchang",
     heading:    "Purnima Dates {year}",
     sub:        "All full moon days and their Hindu significance",
+    description: "Purnima (full moon) dates for {year} for {city}. Includes Guru Purnima, Sharad Purnima, Kartik Purnima, Buddha Purnima with vrat windows and Hindu significance.",
     defaultTab: "festivals",
   },
   "pradosh-vrat": {
     title:      "Pradosh Vrat {year} – Dates & Timings | Om Panchang",
     heading:    "Pradosh Vrat {year}",
     sub:        "All Pradosh Vrat dates for Shiva worship",
+    description: "Pradosh Vrat {year} dates with sunset-based puja timings for {city}. Bi-monthly Lord Shiva fast — Soma Pradosh, Bhauma Pradosh, Shani Pradosh — all listed with day-of-week.",
     defaultTab: "festivals",
   },
   "hora-today": {
     title:      "Hora Today – Planetary Hours for {city} | Om Panchang",
     heading:    "Hora Today",
     sub:        "Vedic Planetary Hours for {city}",
+    description: "Today's Hora (Vedic planetary hours) for {city}. See the ruling planet of every hour — Surya, Chandra, Mangal, Budha, Guru, Shukra, Shani — and the activities each Hora favours.",
     defaultTab: "hora",
   },
   "brahma-muhurta": {
     title:      "Brahma Muhurta Today – {city} | Om Panchang",
     heading:    "Brahma Muhurta",
     sub:        "Today's Brahma Muhurta timing for {city}",
+    description: "Today's Brahma Muhurta timing for {city} — the 96-minute window before sunrise that the Vedas, Ayurveda and Yoga regard as the most spiritually beneficial period of the day.",
     defaultTab: "panchang",
   },
 };
@@ -605,7 +625,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
     document.head.appendChild(script);
   }, []);
 
-  // Update browser tab title whenever city or year changes
+  // Update browser tab title and meta description whenever city or year changes
   useEffect(() => {
     const cfg = VARIANT_CONFIG[variant];
     const year = viewDate.getFullYear();
@@ -613,6 +633,11 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       .replace("{city}", selectedCity.name)
       .replace("{year}", String(year));
     document.title = title;
+    const description = cfg.description
+      .replace(/\{city\}/g, selectedCity.name)
+      .replace(/\{year\}/g, String(year));
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", description);
   }, [variant, selectedCity.name, viewDate]);
 
   const getCacheKey = (date: Date, cityName: string) =>
