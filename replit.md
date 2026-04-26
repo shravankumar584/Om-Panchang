@@ -66,6 +66,10 @@ To pass AdSense "low value content" review, we restrict the indexed surface area
 - **Noindexed (NOT in sitemap, `<meta name="robots" content="noindex,follow">` injected)**: city-templated subroutes like `/panchang/<city>`, `/choghadiya/<city>`, `/rahu-kalam-today/<city>`, `/nakshatra-today/<city>`, `/hora-today/<city>`, `/brahma-muhurta/<city>`, and all `/panchang-calendar/...` monthly pages
 
 The `shouldNoindex(path)` helper in `App.tsx` decides this; `RobotsTag` component injects/removes the meta tag on each route. When adding new templated/city pages, list the variant in `CITY_TEMPLATED_VARIANTS` and exclude them from `public/sitemap.xml`.
+
+#### Long-form SEO content (om-panchang web)
+
+Every PanchangPage variant gets a 500–1200 word original article + FAQ section rendered above the footer (component: `src/components/SeoContent.tsx`, content data: `src/lib/seoContent.ts`). The component also injects a JSON-LD `FAQPage` schema script into `<head>` for rich-result eligibility, with cleanup on unmount/variant-change to prevent duplicate schemas. Content is keyed by variant string and covers all 20 PanchangPage variants (default homepage, hindu, telugu, kundali, kundali-milan, marriage-muhurat, vedic-astrology, hindu-astrology, hindu-festivals, ekadashi/amavasya/purnima/pradosh-vrat dates, baby-names-nakshatra, panchang-today, choghadiya-today, nakshatra-today, rahu-kalam-today, hora-today, brahma-muhurta). When adding a new PanchangPage variant, add a matching entry to `SEO_CONTENT` so the variant has substantive original content for SEO/AdSense purposes.
 - Depends on: `@workspace/db`, `@workspace/api-zod`, `@workspace/integrations-openai-ai-server`
 - `pnpm --filter @workspace/api-server run dev` — run the dev server
 - `pnpm --filter @workspace/api-server run build` — production esbuild bundle (`dist/index.cjs`)

@@ -20,6 +20,7 @@ import HoraSection from "@/components/HoraSection";
 import { getUtcOffsetHours } from "@/lib/choghadiya";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
 import VratCalendarSection from "@/components/VratCalendarSection";
+import SeoContent from "@/components/SeoContent";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -1236,6 +1237,9 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
           </div>
         </main>
       )}
+
+      {/* SEO long-form content (variant-aware) */}
+      <SeoContent variant={variant} />
 
       {/* Footer */}
       <footer className="text-center py-6 text-slate-400 text-xs border-t border-indigo-100 bg-white/60 mt-4">
