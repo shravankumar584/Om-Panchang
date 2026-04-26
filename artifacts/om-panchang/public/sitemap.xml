@@ -50,11 +50,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ompanchang.org/hindu-astrology</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://ompanchang.org/kundali</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -98,6 +93,38 @@
     <loc>https://ompanchang.org/baby-names-by-nakshatra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- ===== DAILY PANCHANG WIDGETS (no city — auto-localised) ===== -->
+  <url>
+    <loc>https://ompanchang.org/panchang-today</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/choghadiya-today</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/rahu-kalam-today</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/nakshatra-today</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/hora-today</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/brahma-muhurta</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.75</priority>
   </url>
 
   <!-- ===== PANCHANG TODAY — ALL CITIES ===== -->

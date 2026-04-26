@@ -12,7 +12,9 @@ export function getCanonicalUrl(pathname: string): string {
   if (path === "/hindu-calendar") return "https://ompanchang.org/hindu-calendar";
   if (path === "/telugu-calendar") return "https://ompanchang.org/telugu-calendar";
   if (path === "/vedic-astrology") return "https://ompanchang.org/vedic-astrology";
-  if (path === "/hindu-astrology") return "https://ompanchang.org/hindu-astrology";
+  // /hindu-astrology was consolidated into /vedic-astrology (near-duplicate content).
+  // Canonical points to the survivor so any lingering references collapse correctly.
+  if (path === "/hindu-astrology") return "https://ompanchang.org/vedic-astrology";
   if (path === "/kundali") return "https://ompanchang.org/kundali";
   if (path === "/kundali-milan") return "https://ompanchang.org/kundali-milan";
   if (path === "/marriage-muhurat") return "https://ompanchang.org/marriage-muhurat";
@@ -24,6 +26,9 @@ export function getCanonicalUrl(pathname: string): string {
   if (path === "/pradosh-vrat") return "https://ompanchang.org/pradosh-vrat";
   if (path === "/hora-today") return "https://ompanchang.org/hora-today";
   if (path === "/brahma-muhurta") return "https://ompanchang.org/brahma-muhurta";
+  if (path === "/choghadiya-today") return "https://ompanchang.org/choghadiya-today";
+  if (path === "/nakshatra-today") return "https://ompanchang.org/nakshatra-today";
+  if (path === "/rahu-kalam-today") return "https://ompanchang.org/rahu-kalam-today";
   if (path === "/blog") return "https://ompanchang.org/blog";
   const blogMatch = path.match(/^\/blog\/([a-z0-9-]+)$/);
   if (blogMatch) return `https://ompanchang.org/blog/${blogMatch[1]}`;

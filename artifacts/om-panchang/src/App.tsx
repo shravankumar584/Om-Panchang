@@ -145,6 +145,13 @@ function parseRoute(path: string) {
   };
 }
 
+// Legacy URLs that should redirect to a canonical equivalent.
+// Used for content consolidation (e.g. /hindu-astrology and /vedic-astrology
+// were near-duplicates — we keep /vedic-astrology as the canonical URL).
+const LEGACY_REDIRECTS: Record<string, string> = {
+  "/hindu-astrology": "/vedic-astrology",
+};
+
 function App() {
   const [route, setRoute] = useState(() => parseRoute(window.location.pathname));
 
@@ -158,6 +165,15 @@ function App() {
 
   const { legalPage, monthly, festivalSlug, variant, initialCity } = route;
   const path = window.location.pathname;
+
+  // Redirect legacy / consolidated URLs to their canonical destination.
+  // Render nothing while the browser navigates to avoid a flash of old content.
+  const redirectTarget = LEGACY_REDIRECTS[path];
+  if (redirectTarget) {
+    window.location.replace(redirectTarget + window.location.search + window.location.hash);
+    return null;
+  }
+
   const noindex = shouldNoindex(path);
 
   if (path.startsWith("/unsubscribe")) {
