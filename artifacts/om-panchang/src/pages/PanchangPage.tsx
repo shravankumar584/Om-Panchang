@@ -1278,7 +1278,9 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
           <span>🕉️</span>
         </p>
         <p className="mt-1">Astronomical calculations · Location-aware</p>
-        <div className="flex justify-center gap-4 mt-3 text-indigo-400">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-3 text-indigo-400">
+          <a href="/blog" className="hover:text-indigo-600 transition font-semibold">📖 Blog</a>
+          <span>·</span>
           <a href="/about-us" className="hover:text-indigo-600 transition">About Us</a>
           <span>·</span>
           <a href="/disclaimer" className="hover:text-indigo-600 transition">Disclaimer</a>

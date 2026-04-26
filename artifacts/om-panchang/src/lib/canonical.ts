@@ -24,6 +24,12 @@ export function getCanonicalUrl(pathname: string): string {
   if (path === "/pradosh-vrat") return "https://ompanchang.org/pradosh-vrat";
   if (path === "/hora-today") return "https://ompanchang.org/hora-today";
   if (path === "/brahma-muhurta") return "https://ompanchang.org/brahma-muhurta";
+  if (path === "/blog") return "https://ompanchang.org/blog";
+  const blogMatch = path.match(/^\/blog\/([a-z0-9-]+)$/);
+  if (blogMatch) return `https://ompanchang.org/blog/${blogMatch[1]}`;
+  // Any other /blog/* path (including deep nested or invalid slugs) canonicalises
+  // back to the blog index to avoid creating spurious indexable URLs.
+  if (path.startsWith("/blog/")) return "https://ompanchang.org/blog";
   const festivalMatch = path.match(/^\/(diwali|dhanteras|bhai-dooj|raksha-bandhan|janmashtami|ganesh-chaturthi|navratri|dussehra|karwa-chauth|chhath-puja|guru-purnima|buddha-purnima|akshaya-tritiya|holi|maha-shivratri|ram-navami|hanuman-jayanti|ugadi)(?:-20\d{2})?$/);
   if (festivalMatch) return `https://ompanchang.org/${festivalMatch[1]}`;
   return `https://ompanchang.org${path}`;

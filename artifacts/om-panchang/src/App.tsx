@@ -7,14 +7,27 @@ import MonthlyCalendarPage from "@/pages/MonthlyCalendarPage";
 import FestivalPage from "@/pages/FestivalPage";
 import UnsubscribePage from "@/pages/UnsubscribePage";
 import HoroscopePage from "@/pages/HoroscopePage";
+import BlogPage from "@/pages/BlogPage";
 import { slugToMonthYear } from "@/lib/calendarUtils";
 import { CITIES, slugToCity, getDefaultCityByTimezone, type City } from "@/lib/panchangData";
 import { FESTIVALS } from "@/lib/festivalsData";
 import { ZODIAC_SLUGS } from "@/lib/horoscopeData";
+import { BLOG_SLUGS } from "@/lib/blogData";
 import CanonicalTag from "@/components/CanonicalTag";
 import RobotsTag from "@/components/RobotsTag";
 
 const FESTIVAL_SLUGS = new Set(FESTIVALS.map(f => f.slug));
+
+function detectBlog(path: string): { isIndex: boolean; slug?: string } | null {
+  const segments = path.split("/").filter(Boolean);
+  if (segments[0] !== "blog") return null;
+  if (segments.length === 1) return { isIndex: true };
+  // Only accept exactly /blog/:slug — deeper paths like /blog/x/y are not valid
+  // article URLs and must not be treated as articles (avoids duplicate content).
+  if (segments.length > 2) return { isIndex: false, slug: undefined };
+  const slug = segments[1].toLowerCase();
+  return { isIndex: false, slug };
+}
 
 // Thin/templated routes that should NOT be indexed by search engines.
 // These pages share boilerplate text and only differ by city/date data,
@@ -149,6 +162,24 @@ function App() {
 
   if (path.startsWith("/unsubscribe")) {
     return <QueryClientProvider client={queryClient}><RobotsTag noindex={true} /><UnsubscribePage /></QueryClientProvider>;
+  }
+
+  const blog = detectBlog(path);
+  if (blog) {
+    // Index page is always indexable; detail pages indexable only if the slug matches a real article
+    const isValidArticle = blog.isIndex || (blog.slug && BLOG_SLUGS.has(blog.slug));
+    // For invalid paths (deep nesting or unknown slug), pass a sentinel so BlogPage
+    // shows the 404 view instead of falling back to the index (which would be confusing).
+    const slugToPass = blog.isIndex
+      ? undefined
+      : (blog.slug ?? "__invalid__");
+    return (
+      <QueryClientProvider client={queryClient}>
+        <CanonicalTag />
+        <RobotsTag noindex={!isValidArticle} />
+        <BlogPage slug={slugToPass} />
+      </QueryClientProvider>
+    );
   }
 
   const horoscope = detectHoroscope(path);
