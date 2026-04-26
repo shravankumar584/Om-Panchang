@@ -24,71 +24,51 @@ export interface SeoContent {
 export const SEO_CONTENT: Partial<Record<string, SeoContent>> = {
   default: {
     intro:
-      "Om Panchang is a free, location-aware Hindu almanac (Panchang or Panchangam) that calculates today's Tithi, Nakshatra, Yoga, Karana and Vara along with sunrise, sunset, Rahu Kalam and the festival calendar for the city you actually live in. Whether you are in Delhi, Chennai, New York or London, the times shown here are computed from astronomical positions of the Sun and Moon for your local timezone — not copied from a printed regional almanac.",
+      "Om Panchang is a free, location-aware Hindu almanac that calculates today's Tithi, Nakshatra, Yoga, Karana and Vara along with sunrise, sunset, Rahu Kalam and the festival calendar for the city you actually live in. Whether you are in Delhi, Chennai, New York or London, the times shown are computed from the real positions of the Sun and Moon for your local timezone — not copied from a printed regional almanac.",
     sections: [
       {
-        heading: "What is Panchang and why it matters",
+        heading: "What is Panchang",
         paragraphs: [
-          "Panchang literally means \"five limbs\" — the five astronomical components that together describe the religious quality of any given day in the Hindu calendar. Most Hindu households consult a Panchang before fasting on Ekadashi, doing a puja, scheduling a wedding, breaking ground on a house (Griha Pravesh), or simply choosing the best time to start a new business venture. Even small daily decisions like cutting hair, travelling north, or signing important papers are traditionally guided by it.",
-          "The reason this works is that Panchang is not symbolic — it is a calculation. The Tithi is determined by the angular distance between the Sun and the Moon. The Nakshatra is determined by where the Moon sits among the 27 lunar mansions. The Yoga is the sum of solar and lunar longitudes. None of these change because of where you are on Earth, but the time at which they begin and end shifts by your timezone, and the festivals that depend on sunrise (like Ekadashi or Karwa Chauth) genuinely fall on different calendar days in San Francisco than in Mumbai.",
+          "Panchang literally means \"five limbs\" — the five astronomical components that together describe the religious quality of a day. Hindu households consult it before fasting on Ekadashi, doing a puja, scheduling a wedding, or starting a new business venture. It is not symbolic — it is a calculation based on the angular positions of the Sun and Moon, which is why timings shift with your timezone and why festivals like Karwa Chauth can fall on different calendar days in San Francisco than in Mumbai.",
         ],
       },
       {
-        heading: "The five elements explained",
+        heading: "The five elements",
         paragraphs: [
-          "Each element of the Panchang answers a different practical question:",
+          "Each element answers a different practical question:",
         ],
         bullets: [
-          "Tithi — the lunar day. There are 30 tithis in a lunar month, split into the waxing fortnight (Shukla Paksha) ending in Purnima (full moon) and the waning fortnight (Krishna Paksha) ending in Amavasya (new moon). Tithis like Ekadashi (the 11th lunar day), Chaturdashi (14th) and Amavasya (15th of Krishna Paksha) carry strong religious significance.",
-          "Nakshatra — the lunar mansion. The Moon's path is divided into 27 Nakshatras, each around 13°20′ wide. Your Janma Nakshatra (the Nakshatra at the moment of your birth) is the foundation of Vedic astrology and is used to choose baby names, evaluate horoscope compatibility, and select auspicious dates for personal events.",
-          "Yoga — there are 27 named Yogas, computed by adding the longitudes of Sun and Moon and dividing by 13°20′. Some Yogas like Vishkambha or Vyatipata are considered inauspicious, while Siddha, Shubha and Amrita are considered favourable for spiritual or new-beginning activities.",
-          "Karana — half a Tithi. There are 11 Karanas (4 fixed and 7 movable), each lasting half a lunar day. Karanas are mostly relevant for fine-grained Muhurta calculations and for determining auspicious time slots within a single day.",
-          "Vara — the weekday, ruled by one of the seven classical planets (Surya, Soma, Mangala, Budha, Guru, Shukra, Shani). Each weekday inherits the qualities of its ruling planet, which is why certain rituals are tied to specific days — Hanuman puja on Tuesday and Saturday, Lakshmi puja on Friday, fasting for Lord Vishnu on Thursday.",
-        ],
-      },
-      {
-        heading: "How to use this Panchang day to day",
-        paragraphs: [
-          "Start by checking that the city shown at the top matches your actual location — sunrise and sunset, and therefore everything that depends on them, change with longitude. Once your city is set, the daily Panchang card on the home page shows you the current Tithi, Nakshatra and Vara along with sunrise, sunset and the Rahu Kalam window for today.",
-          "If you are planning anything sensitive — a wedding, a housewarming, signing a property deal, or starting a new venture — open the Muhurta tab, pick the type of activity, and the page will list the next several auspicious windows for your city. For routine decisions, the Choghadiya and Hora widgets break the day down into smaller auspicious and inauspicious slots so you can pick a good half-hour for an important call or meeting.",
-          "Vrat days like Ekadashi, Pradosh, Amavasya and Purnima are highlighted in the calendar with start and end times. Because the Tithi technically changes mid-day, the page tells you when the fast actually begins and ends in your local time, instead of forcing you to guess.",
-        ],
-      },
-      {
-        heading: "Regional variations: Drik vs Vakya, North vs South",
-        paragraphs: [
-          "Hindu astronomy uses two main calculation traditions. The Drik Ganitha (\"observed calculation\") method computes positions from the actual astronomical positions of the Sun and Moon and is used by most modern Panchangs, including this one. The older Vakya method uses simpler formulae that have drifted slightly over the centuries; it is still used by some traditional South Indian almanacs and can show dates one day off from Drik for certain festivals.",
-          "We use the Lahiri Ayanamsa (the standard sidereal correction adopted by the Indian government for civil calendar purposes) and Drik calculations throughout the site. North Indian (Purnimanta) and South Indian (Amanta) traditions also start the lunar month on different days — the Purnimanta month ends on Purnima while the Amanta month ends on Amavasya — but the underlying tithis and festival dates are the same; only the month-name labelling differs.",
+          "Tithi — the lunar day. 30 tithis per lunar month, split into Shukla Paksha (waxing, ending in Purnima) and Krishna Paksha (waning, ending in Amavasya). Ekadashi, Chaturdashi and Amavasya carry strong religious significance.",
+          "Nakshatra — the lunar mansion. 27 Nakshatras of about 13°20′ each. Your Janma Nakshatra is the foundation of Vedic astrology and is used for baby names, horoscope matching and choosing dates.",
+          "Yoga — 27 named Yogas, computed from the combined longitudes of Sun and Moon. Some are favourable for new beginnings (Siddha, Shubha, Amrita), others are avoided (Vishkambha, Vyatipata).",
+          "Karana — half a Tithi. There are 11 Karanas; they are used for fine-grained Muhurta calculations within a single day.",
+          "Vara — the weekday, ruled by one of the seven classical planets. This is why Hanuman puja is on Tuesday/Saturday, Lakshmi puja on Friday, and Vishnu fasting on Thursday.",
         ],
       },
       {
         heading: "Why a location-aware Panchang matters",
         paragraphs: [
-          "A printed regional Panchang from Tamil Nadu will tell you the right Ekadashi sunrise time for Madurai, but it cannot tell you what time Ekadashi sunrise is in San Jose, California. The Hindu diaspora has historically had to manually \"adjust\" festival dates to their local timezone, which often led to confusion — celebrating a vrat on the wrong day, or starting a fast at the wrong sunrise.",
-          "Om Panchang solves this by recomputing everything for your actual city. If you live in Edison, NJ, the Ekadashi vrat sunrise time on the calendar is the actual sunrise in Edison. If you live in Sydney, the sunrise is Sydney's. The festival list, vrat windows, sankalp times and even the auspicious Choghadiya slots are all aligned to where you really are.",
+          "A printed Panchang from Tamil Nadu gives the right Ekadashi sunrise for Madurai but cannot tell you when Ekadashi sunrise is in San Jose. The Hindu diaspora has historically had to manually adjust festival dates to local timezones, which often led to confusion — celebrating a vrat on the wrong day, or starting a fast at the wrong sunrise.",
+          "Om Panchang solves this by recomputing everything for your actual city. If you live in Edison, the Ekadashi sunrise shown is the actual sunrise in Edison. The festival list, vrat windows and Choghadiya slots are all aligned to where you really are.",
         ],
       },
     ],
     faqs: [
       {
         q: "Is the Panchang on Om Panchang accurate?",
-        a: "Yes. We use the Drik Ganitha method with Lahiri Ayanamsa — the same standard used by the Government of India's Rashtriya Panchang. Astronomical positions are computed from Swiss Ephemeris-grade routines and adjusted for your city's exact latitude, longitude and timezone, so timings can vary by ±3 minutes from a regional printed almanac due to standard refraction correction.",
+        a: "Yes. We use the Drik Ganitha method with Lahiri Ayanamsa — the same standard used by the Government of India's Rashtriya Panchang. Astronomical positions are adjusted for your city's exact latitude, longitude and timezone, so timings may vary by ±3 minutes from a regional printed almanac due to standard refraction correction.",
       },
       {
         q: "Why are the timings different from the Panchang my parents use back home?",
-        a: "Because the Sun rises at different times in different places. A festival like Karwa Chauth or Ekadashi is technically tied to the moment of sunrise on a specific Tithi, and that moment is hours apart between India and North America. We recompute everything for your local city, so the date shown is the date you should observe — not the date observed in India.",
+        a: "Because the Sun rises at different times in different places. A festival like Karwa Chauth or Ekadashi is tied to the moment of sunrise on a specific Tithi, and that moment is hours apart between India and North America. We compute everything for your local city, so the date shown is the date you should observe.",
       },
       {
         q: "Can I trust the Muhurta dates for my wedding?",
-        a: "The Muhurta calculator gives you astronomically valid Shubh Muhurta windows based on Tithi, Nakshatra, Yoga, Karana and the avoidance of Rahu Kalam, Yamagandam and Gulika Kalam. For a wedding, we still recommend cross-checking with a family priest who may overlay additional Gotra and ancestral conventions, but the dates listed are auspicious by classical Vedic standards.",
+        a: "The Muhurta calculator gives astronomically valid Shubh Muhurta windows based on Tithi, Nakshatra, Yoga, Karana and the avoidance of Rahu Kalam, Yamagandam and Gulika Kalam. For a wedding, we still recommend cross-checking with a family priest who may apply additional Gotra and ancestral conventions, but the dates listed are auspicious by classical Vedic standards.",
       },
       {
         q: "Do you store any of my data?",
-        a: "No personal data is required to use the daily Panchang, festivals, Choghadiya, Hora or horoscope features — the only thing we store on your device is your selected city. The Kundali calculator processes birth details locally in your browser and does not send them to any server. See our Privacy Policy for details.",
-      },
-      {
-        q: "Is this site free to use forever?",
-        a: "Yes. Om Panchang is and will remain free for all users. We may show non-intrusive ads or offer optional subscription features for advanced reports in the future, but the core daily Panchang, festival calendar, and Muhurta tools will always be free.",
+        a: "No personal data is required to use the daily Panchang, festivals, Choghadiya, Hora or horoscope features — the only thing we store on your device is your selected city. The Kundali calculator processes birth details locally in your browser and does not send them to any server.",
       },
     ],
   },
