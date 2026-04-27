@@ -399,36 +399,62 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🪷",
     gradient: "from-pink-500 via-rose-500 to-amber-500",
     publishDate: "2026-04-26",
-    readTime: 7,
+    readTime: 12,
     intro:
-      "Goddess Lakshmi is the Hindu goddess of wealth, fortune, beauty, and prosperity. As the consort of Lord Vishnu, she represents the active, abundant grace that sustains every household and every kingdom. But Lakshmi is not just material wealth — she is, in truth, every form of well-being.",
+      "Goddess Lakshmi is the Hindu goddess of wealth, fortune, beauty, fertility, and prosperity in all its forms. As the consort of Lord Vishnu, she represents the active, abundant grace that sustains every household, every kingdom, and the universe itself. But Lakshmi is far more than the goddess of money. In Hindu thought she presides over eight distinct kinds of abundance — the Ashta Lakshmi — which include not just material wealth but also food, courage, victory, children, knowledge, and primordial spiritual fortune. She is therefore worshipped not just by traders and householders during Diwali but by anyone seeking any form of well-being. Her image — seated on a fully bloomed lotus, two elephants pouring golden water over her, gold coins flowing from her hand — is one of the most recognizable symbols in all of Hindu iconography. Her worship is especially intense in the months of Kartik (when Diwali falls), Margashirsha, and during Varalakshmi Vrat in Shravana, but she is invoked daily on Fridays in millions of Hindu homes worldwide.",
     sections: [
       {
         heading: "Iconography of Lakshmi",
         paragraphs: [
-          "Lakshmi is depicted as a beautiful four-armed goddess seated or standing on a fully bloomed lotus. Two of her hands hold lotuses, one showers gold coins, and one is raised in the abhaya mudra (the gesture of fearlessness). She wears red and gold — the colours of fortune — and is often flanked by two elephants pouring water from golden pots.",
-          "The lotus on which she rests teaches a profound lesson — even though it grows in muddy water, it remains untouched by the mud. True wealth, Lakshmi reminds us, must rest on the foundation of dharma.",
+          "Lakshmi is depicted as a beautiful four-armed goddess seated or standing on a fully bloomed lotus. Two of her hands hold lotuses (one in each), one showers gold coins, and one is raised in the abhaya mudra (the gesture of fearlessness) granting her devotees safety from want. She wears a deep red or pink sari with gold borders — the colours of fortune, vitality and married auspiciousness — and is bedecked in gold ornaments from head to toe.",
+          "She is most commonly flanked by two white elephants (the Gajalakshmi form) pouring water from golden pots onto her head — a coronation image symbolising royal authority and the abundant rain that brings prosperity to the land. The lotus on which she rests teaches a profound lesson — even though it grows in muddy water, it remains untouched by the mud. True wealth, Lakshmi reminds us, must rest on the foundation of dharma; wealth obtained dishonestly cannot stay where she is invoked sincerely.",
+          "Her vehicle is the white owl (Ulooka), traditionally explained as a symbol of patience and the ability to see in darkness — qualities essential for the wise stewardship of wealth. Some scholars also see in the owl Lakshmi's reminder that wealth attracts those who watch quietly from the shadows, and that vigilance is required to keep her grace.",
         ],
       },
       {
-        heading: "Ashta Lakshmi — Eight Forms",
+        heading: "The Birth of Lakshmi — Samudra Manthan",
         paragraphs: [
-          "Lakshmi is worshipped in eight primary forms (Ashta Lakshmi), each governing a different aspect of abundance. They are: Adi Lakshmi (the primordial), Dhana Lakshmi (monetary wealth), Dhanya Lakshmi (food and harvest), Gaja Lakshmi (royalty and power), Santana Lakshmi (children and progeny), Veera Lakshmi (courage and valour), Vijaya Lakshmi (victory), and Vidya Lakshmi (knowledge and education).",
-          "This eightfold understanding is unique to Hindu thought — it teaches that prosperity is not one thing but many, and that a complete life requires all eight blessings.",
+          "Lakshmi's most famous origin story comes from the Samudra Manthan — the cosmic churning of the ocean of milk recounted in the Vishnu Purana, the Bhagavata Purana, and the Mahabharata. When the devas (gods) had become weakened by Sage Durvasa's curse and lost their kingdom to the asuras (demons), Lord Vishnu instructed both groups to combine their efforts to churn the ocean of milk for the nectar of immortality (amrita). They used Mount Mandara as the churning rod and the great serpent Vasuki as the rope.",
+          "From the churning emerged fourteen great treasures: the divine cow Kamadhenu, the wish-fulfilling tree Kalpavriksha, the moon-god Chandra, Airavata the white elephant, the Halahala poison (which Shiva drank), the celestial physician Dhanvantari with the pot of amrita, and many others. The most beautiful of all that emerged was Goddess Lakshmi herself — rising from the ocean on a fully bloomed lotus, radiant beyond description.",
+          "The devas, asuras, kings, sages and even the gods of the eight directions all sought her hand in marriage. But Lakshmi looked at all the assembled and chose Lord Vishnu as her eternal consort — recognising him as the one being whose dharma matched her own. This story is the source of the Hindu belief that Lakshmi rewards effort but is fickle to those who do not work for her — wealth comes only when one churns through difficulty without giving up, and only stays where dharma is honoured.",
+        ],
+      },
+      {
+        heading: "The Ashta Lakshmi — Eight Forms",
+        paragraphs: [
+          "Lakshmi is worshipped in eight primary forms (Ashta Lakshmi), each governing a different aspect of abundance. Adi Lakshmi is her primordial form, the original Maha Lakshmi from whom the other seven emerge — granting the underlying spiritual fortune that makes any prosperity possible. Dhana Lakshmi grants monetary wealth — gold, currency, and the fluid form of prosperity that businesses and households need.",
+          "Dhanya Lakshmi blesses the harvest and grain stores — the ancient and most fundamental wealth of agricultural societies. Gaja Lakshmi (the elephant Lakshmi) grants royal authority, power, and the kind of wealth that comes with leadership. Santana Lakshmi grants children and the continuation of family lineage — the wealth of progeny that traditional Hindu thought regards as one of the highest blessings.",
+          "Veera Lakshmi (also called Dhairya Lakshmi) grants courage and valour — the inner wealth required to face life's challenges. Vijaya Lakshmi grants victory in undertakings, whether spiritual struggles, court cases, examinations or worldly contests. Vidya Lakshmi grants knowledge and education — the wealth that no thief can steal and that grows when shared. This eightfold understanding is unique to Hindu thought: it teaches that prosperity is not one thing but many, and that a complete life requires all eight blessings working together.",
+        ],
+      },
+      {
+        heading: "Lakshmi and Vishnu — The Inseparable Pair",
+        paragraphs: [
+          "Lakshmi is eternally inseparable from Lord Vishnu. Hindu tradition holds that wherever Vishnu manifests, Lakshmi manifests with him: when he was Rama, she was Sita; when he was Krishna, she appeared as Rukmini; when he is Narayana in Vaikuntha, she is by his side as Sridevi. Her dwelling place on his cosmic body is the Srivatsa — the curl of hair on his chest that is one of his iconographic markers.",
+          "Together they are worshipped as Lakshmi-Narayana — a form to which most Hindu households offer prayers for both spiritual progress and material wellbeing. The theological meaning is profound: consciousness (Vishnu) without prosperity (Lakshmi) cannot sustain the world, but prosperity without consciousness becomes destructive. Only their union creates dharma-aligned abundance. This is why traditional Hindu households worship them together rather than Lakshmi alone — to ensure that wealth comes with the wisdom to use it well.",
         ],
       },
       {
         heading: "Diwali and Lakshmi Puja",
         paragraphs: [
-          "The annual worship of Lakshmi reaches its peak on Diwali night, when families clean and decorate their homes, light oil lamps, and perform Lakshmi Puja. The belief is that Lakshmi visits every clean and well-lit home on the night of Amavasya in Kartik month, blessing the household with prosperity for the coming year.",
-          "Friday is the weekly day dedicated to Lakshmi, and the month of Kartik (October–November) is particularly auspicious for her worship.",
+          "The annual worship of Lakshmi reaches its peak on Diwali night, when families clean and decorate their homes from corner to corner, light hundreds of oil lamps (diyas) in every doorway and window, and perform Lakshmi Puja at the precise muhurat for that year. The belief is that Lakshmi visits every clean and well-lit home on the night of Amavasya (new moon) in Kartik month, blessing the household with prosperity for the coming year and choosing to dwell where she is welcomed.",
+          "The Diwali Lakshmi Puja typically includes a small clay murti or photo of Lakshmi (often paired with Ganesha and Kuber, the god of treasures), a silver coin, fresh marigold flowers, lotus offerings if available, sweets (especially kheer and laddu), and the recitation of the Sri Suktam or Lakshmi Ashtakam. Account books, cash boxes, and key household possessions are placed before her for blessing — particularly in business families, where this is the most important ritual of the year.",
+          "Friday is the weekly day dedicated to Lakshmi, and the entire month of Kartik (October–November) is particularly auspicious for her worship. Many households continue daily Lakshmi puja from Dhanteras through Bhai Dooj — the five days of the Diwali festival — and then transition to weekly Friday worship for the rest of the year.",
         ],
       },
       {
-        heading: "The Story of the Churning",
+        heading: "Other Major Lakshmi Festivals",
         paragraphs: [
-          "Lakshmi's most famous origin story comes from the Samudra Manthan — the cosmic churning of the ocean of milk. When the devas and asuras together churned the ocean using Mount Mandara as the rod and Vasuki as the rope, fourteen treasures emerged. Lakshmi was one of them — she rose from the ocean on a lotus and chose Vishnu as her eternal consort.",
-          "This story is the source of the Hindu belief that Lakshmi is fickle but rewards effort — wealth comes only when one churns through difficulty without giving up.",
+          "Beyond Diwali, several other festivals are dedicated to Lakshmi. Varalakshmi Vrat, observed on the Friday before the full moon in Shravana month (July-August), is one of the most popular Lakshmi vrats in southern India — performed by married women for the prosperity and longevity of their families. The Vrat involves an elaborate puja with a kalasha (sacred pot) representing the goddess and the recitation of her ashtottara (108 names).",
+          "Akshaya Tritiya, on the third day of the bright fortnight in Vaishakha month (April-May), is considered one of the most auspicious days of the year for new beginnings and for buying gold — a tradition that has made it one of the largest gold-buying days in the entire Indian retail calendar. Dhanteras, two days before Diwali, is similarly devoted to wealth: it is the traditional day to buy precious metals, new utensils, or household items, all considered offerings to attract Dhana Lakshmi.",
+        ],
+      },
+      {
+        heading: "How to Worship Lakshmi at Home",
+        paragraphs: [
+          "Lakshmi worship at home is wonderfully simple and can be performed daily by anyone. A small image of Lakshmi (or Lakshmi-Narayana, or Lakshmi-Ganesha-Saraswati for the Diwali grouping), fresh flowers (especially lotus, marigold, and red rose), a ghee or oil lamp, akshat (whole rice grains coloured with turmeric), a small bowl of sweets, and a clean cloth for the altar are sufficient. Begin with a clean and uncluttered space — Lakshmi is famously said never to enter a dirty or chaotic home.",
+          "The simplest daily mantra is \"Om Shri Mahalakshmyai Namah,\" chanted 108 times on a lotus-bead or sphatika (crystal) mala. For more elaborate worship, the Sri Suktam (a Vedic hymn dedicated to Lakshmi from the Rigveda Khila), the Lakshmi Ashtakam, or the Kanakadhara Stotram (composed by Adi Shankaracharya, said to bring streams of gold) are the most powerful texts. Friday evenings, Diwali night, and the Pradosha hour are the most powerful times for her worship.",
+          "Beyond formal puja, Hindu tradition teaches that Lakshmi is attracted by certain daily habits: keeping the home clean, feeding guests and the hungry, treating women in the household with respect, never wasting food or money, and beginning each day with gratitude for what one already has. These daily practices are considered as important as any ritual in welcoming and keeping her grace.",
         ],
       },
     ],
@@ -436,23 +462,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Why are coins given on Diwali?",
         answer:
-          "Coins represent Dhana Lakshmi — the form of the goddess that presides over monetary wealth. Gifting coins on Diwali invites her blessing into the recipient's home.",
+          "Coins represent Dhana Lakshmi — the form of the goddess that presides over monetary wealth. Gifting coins on Diwali (especially silver coins with Lakshmi or Ganesha imprinted) invites her blessing into the recipient's home and is considered an offering that multiplies for both giver and receiver. The tradition has ancient roots in the broader Hindu belief that money circulated with good intent attracts more money.",
       },
       {
         question: "Why does Lakshmi sit on a lotus?",
         answer:
-          "The lotus grows in muddy water yet stays pure. Lakshmi on a lotus teaches that true wealth must remain detached from greed and stay rooted in dharma.",
+          "The lotus grows in muddy water yet stays pure and untouched by the mud — a perfect symbol for wealth that comes through the world but stays untouched by greed. Lakshmi seated on a lotus teaches that true wealth must remain detached from possessiveness and stay rooted in dharma. The lotus also represents spiritual unfoldment, signalling that material prosperity should ultimately support spiritual growth, not replace it.",
       },
       {
         question: "Which day of the week is best for Lakshmi worship?",
         answer:
-          "Friday (Shukravara) is dedicated to Lakshmi. Many devotees observe Vaibhav Lakshmi Vrat on Fridays for prosperity and family well-being.",
+          "Friday (Shukravara) is the day dedicated to Lakshmi and Venus (Shukra), the planetary lord of beauty, harmony and abundance. Many devotees observe Vaibhav Lakshmi Vrat on Fridays — a 16-week vow of fasting and Lakshmi worship for prosperity and family well-being. Friday evenings are also the traditional time for Lakshmi-Narayana puja in Vaishnava households across India.",
+      },
+      {
+        question: "Why is Lakshmi often shown with Ganesha and Saraswati on Diwali?",
+        answer:
+          "The three together represent the complete blessing every household needs: Ganesha removes obstacles to prosperity, Lakshmi grants the wealth itself, and Saraswati grants the wisdom to use that wealth well. Without Ganesha, obstacles block prosperity from arriving. Without Saraswati, wealth without wisdom destroys the household. The trio is therefore worshipped together especially on Diwali — and the combined image is one of the most popular in Hindu households today.",
+      },
+      {
+        question: "Why does Lakshmi have an owl as her vehicle?",
+        answer:
+          "The white owl (Ulooka) traditionally symbolises patience, vigilance, and the ability to see clearly in darkness — qualities essential for the wise stewardship of wealth. Some traditions also explain it as a humbling reminder that wealth is fickle: the owl is associated with the unseen forces that watch from the shadows, and the wise devotee must remain ever-watchful to protect Lakshmi's grace from being taken or misused.",
+      },
+      {
+        question: "Can I do Lakshmi puja at home if I am not from a business family?",
+        answer:
+          "Absolutely yes. The Ashta Lakshmi doctrine makes it clear that Lakshmi grants eight kinds of abundance — including knowledge, courage, children, food, victory, and primordial fortune — not just money. Students worship her for academic success (Vidya Lakshmi), parents for the well-being of children (Santana Lakshmi), patients for health (often through Adi Lakshmi), and households of every kind for general well-being. There is no restriction on who may worship her — only on whether the worship is done with sincerity and a clean heart.",
       },
     ],
     relatedLinks: [
       { label: "Diwali Date & Lakshmi Puja Muhurat", href: "/diwali" },
       { label: "Dhanteras", href: "/dhanteras" },
       { label: "Marriage Muhurat", href: "/marriage-muhurat" },
+      { label: "Lord Vishnu", href: "/blog/lord-vishnu" },
     ],
     relatedSlugs: ["lord-vishnu", "lord-ganesha", "goddess-durga"],
   },
@@ -579,36 +621,62 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🗡️",
     gradient: "from-red-600 via-rose-600 to-purple-700",
     publishDate: "2026-04-26",
-    readTime: 8,
+    readTime: 13,
     intro:
-      "Goddess Durga is the warrior form of the Hindu Divine Mother — the supreme Shakti who took form to defeat the demon Mahishasura when even the gods could not. She is fierce, beautiful, and infinitely loving — and is worshipped with the greatest devotion during the nine nights of Navratri.",
+      "Goddess Durga is the warrior form of the Hindu Divine Mother (Adi Shakti) — the supreme feminine power who took form to defeat the demon Mahishasura when even the assembled gods of the heavens could not. She is fierce, beautiful, and infinitely loving — the same goddess who slays demons in battle is the mother who protects every sincere devotee from harm. Durga is the central deity of one of the four great Hindu denominations (Shaktism), worshipped through countless forms — as the gentle Parvati, the warrior Durga, the fierce Kali, the bright Lalita Tripurasundari, and the wisdom-giving Saraswati. Her primary worship reaches its peak during Navratri — nine nights twice a year when Hindus across India and the world worship the nine Navadurga forms in sequence. The Devi Mahatmyam (also called Durga Saptashati or Chandi Path) — 700 verses describing her victories — is one of the most chanted scriptures in the entire Hindu tradition. To worship Durga is to call upon the cosmic power that holds together all creation and ultimately conquers every form of evil.",
     sections: [
       {
-        heading: "The Slaying of Mahishasura",
+        heading: "The Birth of Durga from the Tejas of the Gods",
         paragraphs: [
-          "The Devi Mahatmyam (Chandi Path) tells how the buffalo demon Mahishasura had defeated all the gods and conquered the heavens. Unable to stop him, the gods combined their energies (tejas) into a single radiant form — and from this divine combination, Goddess Durga emerged.",
-          "She was given weapons by all the gods — Shiva's trident, Vishnu's discus, Indra's thunderbolt, Varuna's conch — and rode into battle on a lion. After a fierce nine-day fight, she slayed Mahishasura on the tenth day. This day is celebrated as Vijaya Dashami or Dussehra — the victory of dharma over adharma.",
+          "The Devi Mahatmyam (a 700-verse scripture from the Markandeya Purana, also known as the Durga Saptashati or Chandi Path) tells how the buffalo demon Mahishasura had defeated all the gods through years of battle and conquered the heavens, driving Indra and the devas into exile. Brahma, Vishnu and Shiva, unable to defeat Mahishasura individually because of a boon that no man and no god could kill him, came together with all the other devas in council.",
+          "From the combined wrath of all the gods (their tejas — radiant power) emerged a single brilliant light that took the form of an extraordinarily beautiful and terrifying goddess — Durga, the unconquerable. She was given weapons by all the gods: Shiva's trident, Vishnu's discus, Indra's thunderbolt, Varuna's conch, Agni's spear, Vayu's bow, Surya's quiver, Yama's rod, and many more. Mounted on a magnificent lion (in some traditions a tiger) given to her by Himavan the mountain god, she rode out alone to face Mahishasura.",
         ],
       },
       {
-        heading: "The Nine Forms — Navadurga",
+        heading: "The Slaying of Mahishasura",
         paragraphs: [
-          "During the nine nights of Navratri, Hindus worship nine different forms of Durga, one each night. They are: Shailaputri (daughter of the mountain), Brahmacharini (the celibate ascetic), Chandraghanta (the one with the half-moon bell), Kushmanda (creator of the cosmic egg), Skandamata (mother of Kartikeya), Katyayani (the warrior born to sage Katyayana), Kalaratri (the dark night), Mahagauri (the radiant white), and Siddhidatri (the granter of perfections).",
-          "Each form represents a different stage of spiritual development — from raw devotion to enlightened wisdom. Worshipping all nine in sequence is believed to bring complete inner transformation.",
+          "Mahishasura sent his entire demon army against her one general at a time — Chiksura, Chamara, Asiloma, Ugra, Bashkala. Durga slew each in turn, sometimes laughing in battle as she dispatched legions of demons at once. Then Mahishasura himself attacked, taking many forms — first a buffalo, then a lion, then a man with a sword, then an elephant — and at each form he was driven back by the goddess.",
+          "After a fierce nine-day battle, Durga finally caught Mahishasura in his half-buffalo, half-man form, pinned him down with her lion, and pierced his heart with her trident on the tenth day. This day is celebrated across India as Vijaya Dashami or Dussehra — the great victory of dharma over adharma, of consciousness over ignorance, of the divine over demonic forces.",
+          "The image of Durga as Mahishasuramardini (slayer of Mahishasura) — her ten arms wielding weapons, her foot pressing down on the demon as her lion attacks him — is the single most reproduced image of the goddess in all of Hindu art. From temple sculptures of the Pala period in 9th-century Bengal to the painted murti panels of modern Durga Puja pandals, the image has been the visual centre of Hindu Shakta worship for over a thousand years.",
+        ],
+      },
+      {
+        heading: "The Navadurga — Nine Forms of the Mother",
+        paragraphs: [
+          "During the nine nights of Navratri (twice a year — Chaitra Navratri in spring and Sharad Navratri in autumn), Hindus worship nine different forms of Durga, one each night. Each form has its own iconography, mantra, and specific blessing. The nine, in the traditional order from the first to the ninth night, are: Shailaputri (daughter of the mountain Himavan), Brahmacharini (the celibate ascetic who performed tapas to win Shiva), Chandraghanta (the one with the half-moon bell), Kushmanda (creator of the cosmic egg), Skandamata (mother of Skanda/Kartikeya), Katyayani (the warrior born to sage Katyayana), Kalaratri (the dark night, fiercest of the nine), Mahagauri (the radiant white form), and Siddhidatri (the granter of all eight perfections).",
+          "Each form represents a different stage of spiritual development — from the early devotion of Shailaputri to the supreme realisation of Siddhidatri. Worshipping all nine in sequence over the nine nights is believed to bring complete inner transformation — a movement from worldly entanglement to spiritual liberation, mirrored in the goddess's own progression from the gentle daughter of the mountain to the granter of supreme accomplishments.",
+          "Different parts of India emphasize different forms. In Bengal, Mahishasuramardini (associated most closely with Katyayani) is the central form. In Gujarat, all nine are worshipped equally during Garba. In South India, the nine days are split into three sets of three — three for Durga, three for Lakshmi, and three for Saraswati — known as the Saraswati Avahan tradition.",
         ],
       },
       {
         heading: "Iconography of the Mother",
         paragraphs: [
-          "Durga is typically shown with eight or ten arms, each holding a different weapon — a sword, trident, discus, conch, bow and arrow, mace, lotus, and thunderbolt. Her vahana (mount) is the lion, representing courage and the conquered ego. Her serene face contrasts with her fierce battle posture, conveying the truth that the divine remains calm even while removing evil.",
-          "She is often called Mahishasuramardini (the slayer of Mahishasura), Sherawali (the lion-rider), Amba, Bhavani, and Adi Shakti.",
+          "Durga is typically shown with eight, ten, or eighteen arms, each holding a different weapon or sacred object. The most common eight to ten weapons are the trident (from Shiva, for piercing the ego), the discus (from Vishnu, for the wheel of time), the bow and arrow (from Vayu, for far-reaching power), the conch (from Varuna, for primordial sound), the thunderbolt (from Indra, for unstoppable force), the sword (for discrimination cutting through ignorance), the mace (for destruction of pride), and the lotus (for spiritual unfoldment).",
+          "Her vahana (mount) is the lion — sometimes a tiger in eastern Indian iconography — representing courage, the conquered ego, and the controlled animal nature within all of us. Her serene face contrasts with her fierce battle posture, conveying a profound truth: the divine remains calm even while removing evil. There is no anger in her destruction — only the dispassionate clearing of what blocks dharma.",
+          "She is known by many names: Mahishasuramardini (the slayer of Mahishasura), Sherawali (the lion-rider), Amba (mother), Bhavani (giver of life), Adi Shakti (primordial power), Chandi (the fierce one), and simply Maa or Devi Maa across northern India.",
         ],
       },
       {
-        heading: "Durga Worship Across India",
+        heading: "The 51 Shakti Peethas",
         paragraphs: [
-          "Bengal celebrates Durga Puja as its grandest festival, with elaborate pandals depicting her with her four children — Lakshmi, Saraswati, Ganesha, and Kartikeya. Gujarat celebrates Navratri with the famous Garba and Dandiya dances. North India observes Durga Ashtami and Ram Navami within the same Navratri period. South India celebrates Bommai Golu with display arrangements of dolls.",
-          "Across all regions, the message is the same — the Divine Mother always answers when sincerely called.",
+          "Across the Indian subcontinent — from Pakistan and Bangladesh to Sri Lanka and Tibet — 51 sacred sites are revered as Shakti Peethas, places where parts of the goddess Sati's body are believed to have fallen during Shiva's grief-stricken Tandava dance after her self-immolation at the Daksha Yagna. Each Peetha is associated with a specific body part and a specific form of the Devi, and pilgrimage to all 51 (or any of them) is one of the highest acts of Shakta devotion.",
+          "Among the most famous Peethas are Kamakhya in Assam (where Sati's womb fell, and the only Peetha where the goddess is worshipped purely as Shakti — a yoni-shaped stone with no anthropomorphic image), Kalighat in Kolkata (where her toes fell), Vaishno Devi in Jammu (one of the most visited pilgrim shrines in all of India), Jwalamukhi in Himachal (where eternal flames worship her), and Hingula in Pakistan's Balochistan. Together, the 51 Shakti Peethas form a spiritual map of the goddess across the entire Indian subcontinent.",
+        ],
+      },
+      {
+        heading: "Navratri Across India",
+        paragraphs: [
+          "Bengal celebrates Sharad Navratri as Durga Puja — its grandest festival of the year. From the sixth day to the tenth, elaborate pandals depict Durga as Mahishasuramardini surrounded by her four children — Lakshmi, Saraswati, Ganesha, and Kartikeya. The artistry of Bengali pandals has UNESCO recognition as intangible cultural heritage. Kolkata becomes a city-wide art exhibition for five days, ending with the visarjan (immersion) of the murtis in the Hooghly river on Vijaya Dashami.",
+          "Gujarat celebrates Navratri with the famous Garba and Dandiya raas — circular folk dances performed each of the nine nights around a central earthen lamp (garbo) representing the goddess. The dances often continue past midnight and have become global Gujarati cultural phenomena celebrated from Surat to Singapore. Maharashtra worships Durga during Navratri while also installing the small kalasha (sacred pot) form known as Ghatasthapana on day one.",
+          "North India observes Durga Ashtami and Ram Navami within the same Navratri period — Ram Navami marks Lord Rama's birth on the ninth day of Chaitra Navratri. Many devotees in the north fast through all nine days, eating only fruits, milk, and special navratri-permitted foods. South India celebrates Bommai Golu (in Tamil Nadu), Bombe Habba (in Karnataka), and Bommala Koluvu (in Andhra) — display arrangements of dolls and figurines stepped up in tiers, telling stories from the Puranas.",
+        ],
+      },
+      {
+        heading: "Worship of Durga at Home and Mantras",
+        paragraphs: [
+          "Durga worship at home is most intense during the nine nights of Navratri but is performed daily in many Shakta households throughout the year. A small image of Durga, red flowers (especially red hibiscus and red roses), a kalasha (sacred pot) filled with water and topped with mango leaves and a coconut, red bangles and a red sari for the goddess, kumkum and turmeric, and a ghee lamp are sufficient. Tuesday and Friday are her weekly days, and the Brahma Muhurta (early morning) and the Pradosh hour (early evening) are her most powerful times.",
+          "The most chanted Durga mantras include the simple \"Om Dum Durgayai Namah\" (her beej mantra), the longer \"Sarva mangala mangalye, Shive sarvartha sadhike, Sharanye trambake Gauri, Narayani namostute\" (a verse from the Devi Mahatmyam praising her as the auspiciousness of all auspiciousness), and the protective Argala Stotram. The Durga Saptashati (also called Chandi Path or Devi Mahatmyam) — 700 verses recited daily by serious devotees — is the most powerful of all Durga texts, especially when chanted during Navratri.",
+          "Many households also undertake the Durga Chalisa (a 40-verse hymn), the Mahishasura Mardini Stotram (composed by Adi Shankaracharya), or sing the popular Navratri bhajans during the nine nights. For those facing serious obstacles or threats, the recitation of the Argala Stotram and the wearing of a small red thread blessed in front of Durga's image are traditional practices for her protection.",
         ],
       },
     ],
@@ -616,23 +684,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Are Durga, Kali and Parvati the same?",
         answer:
-          "Yes — they are different forms of the same Adi Shakti. Parvati is the gentle householder form, Durga is the warrior form, and Kali is the fierce destroyer of ego and evil.",
+          "Yes — they are different forms of the same Adi Shakti (primordial divine feminine). Parvati is the gentle householder form, the wife of Shiva and mother of Ganesha and Kartikeya. Durga is the warrior form, who emerges when dharma is in danger. Kali is the fierce destroyer of ego, time, and ultimately of death itself. All three are emanations of the same supreme goddess, manifested for different cosmic purposes.",
       },
       {
         question: "Why does Durga ride a lion?",
         answer:
-          "The lion represents the controlled animal nature within us. Durga riding a lion teaches that the divine has mastered all wild instincts and rides them with grace.",
+          "The lion (or tiger in eastern Indian traditions) represents the controlled animal nature within us — courage, aggression, and raw power tamed by wisdom. Durga riding a lion teaches that the divine has mastered all wild instincts and rides them with grace. It also signals her royalty: the lion is the king of beasts, and only the queen of the universe could mount one.",
       },
       {
         question: "How many days of Navratri are there?",
         answer:
-          "Nine days. Each day is dedicated to one of the Navadurga forms. The tenth day is Vijaya Dashami (Dussehra), the celebration of her victory.",
+          "Nine nights — and the festival is observed twice a year. Sharad Navratri (autumn, in Ashvin month, September-October) is the most widely celebrated and is followed by Dussehra/Vijaya Dashami on the tenth day. Chaitra Navratri (spring, in Chaitra month, March-April) is followed by Ram Navami on the ninth day. Each of the nine nights is dedicated to one of the Navadurga forms.",
+      },
+      {
+        question: "What is the difference between Navratri and Durga Puja?",
+        answer:
+          "Navratri is the pan-Indian nine-night festival of the Goddess. Durga Puja is the specifically Bengali (and broader eastern Indian) celebration that focuses on the last five days of Sharad Navratri (Mahalaya through Vijaya Dashami) — featuring elaborate pandals, the murti of Durga as Mahishasuramardini, and the immersion ceremony on Dashami. They are the same broader festival celebrated with different regional emphases and rituals.",
+      },
+      {
+        question: "Can men worship Durga during Navratri?",
+        answer:
+          "Absolutely yes. Both men and women worship Durga during Navratri and throughout the year. Many men observe the full nine-day fast, perform Durga Saptashati recitation daily, and take leadership roles in pandal organisation. The Devi Mahatmyam itself was first taught by sage Markandeya to a king and a merchant — both men. There is no gender restriction in Durga worship.",
+      },
+      {
+        question: "Why is the tenth day called Vijaya Dashami?",
+        answer:
+          "Vijaya means \"victory\" and Dashami means \"the tenth day.\" It commemorates two great victories on the same lunar day: Durga's slaying of Mahishasura on the tenth day after her nine-day battle, and Lord Rama's slaying of Ravana on the same tithi in a different yuga. Both stories celebrate the ultimate triumph of dharma over adharma — making Vijaya Dashami the most auspicious day of the entire Hindu calendar for starting new ventures, new education, and new battles for righteous causes.",
       },
     ],
     relatedLinks: [
       { label: "Navratri Dates & Pujas", href: "/navratri" },
       { label: "Dussehra (Vijaya Dashami)", href: "/dussehra" },
       { label: "Today's Panchang", href: "/panchang-today" },
+      { label: "Lord Shiva", href: "/blog/lord-shiva" },
     ],
     relatedSlugs: ["lord-shiva", "goddess-lakshmi", "goddess-saraswati"],
   },
@@ -760,29 +844,61 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "📚",
     gradient: "from-yellow-300 via-amber-400 to-orange-500",
     publishDate: "2026-04-26",
-    readTime: 6,
+    readTime: 12,
     intro:
-      "Goddess Saraswati is the Hindu deity of knowledge, music, art, language, and learning. As the consort of Brahma the creator, she represents the wisdom that any creator must have. She is worshipped by students, teachers, musicians, writers, and seekers of every kind.",
+      "Goddess Saraswati is the Hindu deity of knowledge, music, art, language, learning, and the flowing eloquence of speech. As the consort of Brahma the creator, she represents the wisdom that any creator must possess — for creation without knowledge is mere chaos. She is worshipped by students before examinations, by teachers and scholars at every level, by musicians before performances, by writers and poets seeking inspiration, by classical dancers and visual artists, and by every spiritual seeker on every path. Saraswati holds a unique position in Hindu thought: she is one of the few deities whose worship is genuinely universal — from Vaishnavas to Shaivas to Shaktas to Smartas, every school venerates her, because every school requires knowledge to begin its journey. Her image — serene, dressed in spotless white, seated on a lotus or her swan vehicle, playing the veena while holding a book and a mala — is one of the most calming in all of Hindu iconography. Her primary festival, Vasant Panchami, marks the arrival of spring and is the most auspicious day in the year to begin a child's education, learn an instrument, or start a new book.",
     sections: [
       {
         heading: "Iconography",
         paragraphs: [
-          "Saraswati is depicted as a serene, four-armed goddess dressed in spotless white — the colour of purity and unstained knowledge. She holds a veena (a stringed musical instrument) in two hands, a book of the Vedas in one, and a string of japa beads in another.",
-          "Her vahana is the swan (hamsa) — a bird traditionally said to be able to separate milk from water, representing the ability of true knowledge to discern truth from illusion. She is sometimes depicted seated on a white lotus or beside a river, signifying flowing wisdom.",
+          "Saraswati is depicted as a serene, four-armed goddess dressed in spotless white — the colour of purity, peace, and unstained knowledge. She holds a veena (a stringed musical instrument, often the Mahati or Saraswati veena) in two hands, signifying that knowledge in her tradition is not merely intellectual but musical, harmonious, and creative. In her other hands she holds a book of the Vedas (representing scriptural knowledge) and a string of japa beads or a small water pot (representing meditation and the source of wisdom).",
+          "Her vahana is the swan (hamsa) — a bird traditionally said in Hindu scripture to be able to separate milk from water (the famous neera-ksheera viveka). The hamsa represents the discriminative wisdom that separates truth from illusion, the eternal from the temporary, the essential from the superficial. In some depictions, particularly in southern India, her vahana is a peacock — symbolising the colourful arts of poetry, drama and dance over the more austere swan of pure philosophy.",
+          "She is most often shown seated on a fully bloomed white lotus, sometimes beside a flowing river — both images signalling that wisdom is something that flows, that grows from depths into beauty, and that remains pure regardless of the muddy waters of the world. Unlike Lakshmi (red, gold, ornament-rich) and Durga (multi-armed, weapon-bearing, fierce), Saraswati is calm, white, simple — knowledge personified rather than power or wealth.",
         ],
       },
       {
-        heading: "The Saraswati River",
+        heading: "The Vedic River Saraswati",
         paragraphs: [
-          "Saraswati was originally a river goddess of the Vedic period. The Rigveda speaks of the Saraswati river as one of the seven sacred rivers of the Aryan civilisation, alongside the Ganga and the Yamuna. Modern satellite studies have identified the dried-up bed of an ancient river in Rajasthan and Haryana that may correspond to the Vedic Saraswati.",
-          "Over time, the river goddess became identified with wisdom and learning — water being the natural symbol for the flowing of knowledge.",
+          "Saraswati was originally a river goddess of the Vedic period — long before she became identified primarily with knowledge. The Rigveda (composed roughly 1500-1200 BCE) speaks of the Saraswati river as one of the seven sacred rivers (Sapta Sindhu) of the Aryan civilisation, alongside the Sindhu (Indus), Ganga, Yamuna, Vipasa (Beas), Shutudri (Sutlej), and Parushni (Ravi). The Rigveda's praise of her is extraordinary: she is called \"the best of mothers, the best of rivers, the best of goddesses\" (Rigveda 2.41.16) and is described as flowing from the mountains to the sea with great power.",
+          "Modern satellite studies (especially those using Landsat and IRS imagery from the 1990s onwards) have identified the dried-up bed of an ancient river system in modern Rajasthan and Haryana — the Ghaggar-Hakra channel — that many scholars now associate with the Vedic Saraswati. This river appears to have shifted course and dried up around 1900 BCE due to tectonic activity and climate change, which would explain the ancient Hindu memory of a great river that disappeared into the sands of the Thar desert.",
+          "Over time, as the physical river dried, the goddess Saraswati became identified with wisdom and learning rather than with the river itself — water being the natural symbol for the flowing of knowledge from one mind to another and from one generation to the next. This transition from river goddess to wisdom goddess is one of the most fascinating evolutions in Hindu religious history.",
         ],
       },
       {
-        heading: "Vasant Panchami",
+        heading: "Saraswati and Brahma",
         paragraphs: [
-          "Saraswati's main festival is Vasant Panchami, celebrated on the fifth day (Panchami) of the bright fortnight of Magha month — usually in late January or early February. It marks the arrival of spring and is considered the most auspicious day to begin a child's education (Vidyarambham), to begin learning music or dance, or to start a new book.",
-          "On this day, devotees wear yellow (the colour of mustard flowers and spring), worship books and musical instruments, and feed the poor. Schools and music academies across India hold special Saraswati pujas.",
+          "Saraswati is the consort of Lord Brahma — the creator god of the Hindu Trimurti. The Vedas and Puranas describe her as the source of his creative wisdom: without Saraswati, Brahma's creation would be without form, without language, without melody, without mathematics. The Padma Purana tells how Brahma, on first encountering creation, found himself unable to give it shape or order until Saraswati emerged from his mouth carrying a veena, a book, and a mala — and through her, he was able to organize the universe with the Vedas.",
+          "This origin story is the source of the doctrine that knowledge precedes creation — that no act of bringing something into existence can be truly complete without the wisdom that knows what should exist and how. It is also why writers, scientists, architects, software engineers, and creators of every kind in modern Hindu households still invoke Saraswati before beginning new projects. She is, in the most precise sense, the patron goddess of every creative profession.",
+        ],
+      },
+      {
+        heading: "Vasant Panchami — The Festival of Spring and Learning",
+        paragraphs: [
+          "Saraswati's main festival is Vasant Panchami (also called Saraswati Puja or Sri Panchami), celebrated on the fifth day (Panchami) of the bright fortnight of Magha month — usually in late January or early February. It marks the arrival of spring (vasant) — the season that itself represents the awakening of learning after the introspective winter months. It is also considered the most auspicious day in the entire year to begin a child's formal education (Vidyarambham or Aksharabhyasam), to begin learning a musical instrument or dance form, or to start writing a new book.",
+          "On this day, devotees wear yellow (the colour of mustard flowers, spring sunlight, and Saraswati's blessing), worship books and musical instruments by placing them before the goddess, recite the Saraswati Vandana, and feed the poor — particularly young students. Schools and music academies across India hold special Saraswati pujas, with children often performing classical music and dance recitals as offerings to the goddess.",
+          "In Bengal and the eastern states, Vasant Panchami is celebrated as the major Saraswati Puja of the year — students bring their books to community pandals to be placed before the goddess for blessing, and the day has the same emotional weight in Bengali academic culture that Lakshmi Puja has in business culture. In northern India, Vasant Panchami also marks the symbolic beginning of preparations for Holi forty days later.",
+        ],
+      },
+      {
+        heading: "Saraswati in South India and as Sharada",
+        paragraphs: [
+          "In South India, Saraswati holds an even more central place in Navratri celebrations than in much of the north. The last three days of Sharad Navratri (the seventh, eighth and ninth nights — known as Saraswati Avahan, Saraswati Puja and Saraswati Visarjan) are dedicated to her. On Saraswati Avahan, devotees place their books, musical instruments, accounting ledgers, and tools of their craft before her image. On Saraswati Visarjan, the items are taken back with her blessing — and the tenth day, Vijaya Dashami, becomes the auspicious day for resuming work, study, or any new beginning.",
+          "Saraswati is also worshipped under the name Sharada, particularly in the Sharada Peetham tradition founded by Adi Shankaracharya at Sringeri in the 8th century. The Sringeri Sharada Peetham is one of the four cardinal monasteries (mathas) Shankara established and remains one of the most important centres of Vedic learning in India today. Other major Saraswati temples include the Basar Saraswati Temple in Telangana (one of only two Saraswati-only temples in India), the Sharada Peeth in Pakistan-administered Kashmir (now in ruins but historically a major centre of Sanskrit learning), and the Koothanur Saraswati Temple near Tiruvarur in Tamil Nadu.",
+        ],
+      },
+      {
+        heading: "Saraswati Outside India",
+        paragraphs: [
+          "Saraswati's worship has spread far beyond India through both Hindu and Buddhist traditions. In Japan, she is worshipped as Benzaiten — one of the seven gods of fortune and one of the most popular goddesses in Japanese folk Buddhism. The Japanese form preserves her instrument (a biwa, the Japanese version of the veena), her river association, and her role as patroness of music and arts. In Bali (Indonesia), her annual festival Hari Saraswati is one of the most important religious days, when all books and tools of learning are blessed.",
+          "In China she is known as Biancaitian, in Tibet as Yang Chenma, and in Thailand as Suratsawadi. She is one of the most internationally worshipped Hindu deities — testimony to the universal appeal of a goddess whose blessing is sought by anyone in any culture who seeks knowledge, music, or skill in any art.",
+        ],
+      },
+      {
+        heading: "How to Worship Saraswati and Mantras",
+        paragraphs: [
+          "Saraswati worship at home is wonderfully simple and especially encouraged for households with students. A small image of Saraswati, fresh white or yellow flowers (especially white lotus and yellow marigold), a few books and any musical instrument the family owns placed before her, white sandalwood paste, akshat (whole rice grains), a ghee lamp, and a small bowl of milk or kheer are sufficient. Wednesday is her weekly day in some traditions; Thursday in others; Vasant Panchami is her supreme day. The early morning hours of Brahma Muhurta and the time just before the evening study session are the most auspicious times.",
+          "The most chanted Saraswati mantras are her beej mantra \"Om Aim Saraswatyai Namah\" (chanted 108 times on a sphatika or rudraksha mala), the famous Saraswati Vandana \"Ya Kundendu tushara hara dhavala, ya shubhra vastranvita...\" (a beautiful Sanskrit hymn comparing her to the white moon, snow, and jasmine flowers), and the Saraswati Stotram by Agastya Muni. For students before exams or auditions, the simple chant \"Saraswati Namastubhyam, Varade Kamarupini, Vidyarambham karishyami, Siddhirbhavatu me sada\" — recited three times before opening any book or beginning any practice — is the traditional Hindu invocation taught to children for over a thousand years.",
+          "Beyond formal puja, Hindu tradition teaches that Saraswati is most pleased not by elaborate rituals but by sincere study. Keeping books clean and in order, never placing the foot on a book or musical instrument, never tearing or damaging written material casually, and offering the first hour of the day to learning — these are the daily practices considered the truest form of Saraswati worship by every Hindu teacher across the centuries.",
         ],
       },
     ],
@@ -790,23 +906,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Who is the husband of Saraswati?",
         answer:
-          "Goddess Saraswati is the consort of Lord Brahma — the creator god of the Trimurti. The Vedas describe her as the source of his creative wisdom.",
+          "Goddess Saraswati is the consort of Lord Brahma — the creator god of the Trimurti. The Vedas describe her as the source of his creative wisdom, without which his act of creation could not produce ordered, intelligible reality. The Padma Purana describes her emerging from Brahma's mouth carrying a veena, a book, and a mala — and through her, the universe received language, melody, and structure.",
       },
       {
         question: "Why is Saraswati always shown in white?",
         answer:
-          "White represents purity, clarity, and the unstained nature of true knowledge. It also signifies that wisdom is impartial — it does not favour one person over another.",
+          "White represents purity, clarity, and the unstained nature of true knowledge. It also signifies that wisdom is impartial — it does not favour one person over another, one caste over another, or one nation over another. Knowledge, like white light, contains all the colours of human possibility within itself. The contrast with Lakshmi's red and gold and Durga's red and saffron makes Saraswati visually unmistakable in any Hindu pantheon.",
       },
       {
         question: "When is Saraswati Puja performed?",
         answer:
-          "On Vasant Panchami (5th day of bright fortnight in Magha month, usually late January–early February). She is also widely worshipped on the last three days of Navratri (Saraswati Avahan, Puja, and Visarjan) in many South Indian traditions, when books and instruments are placed before her for blessing.",
+          "On Vasant Panchami (5th day of bright fortnight in Magha month, usually late January–early February). She is also widely worshipped on the last three days of Navratri (Saraswati Avahan, Puja, and Visarjan) in many South Indian and Bengali traditions, when books and instruments are placed before her for blessing. Many households also perform a brief Saraswati puja before the start of every academic year and before any major examination.",
+      },
+      {
+        question: "Why does Saraswati ride a swan?",
+        answer:
+          "The swan (hamsa) in Hindu mythology has the unique ability to separate milk from water — drinking only the milk and leaving the water behind. This represents the discriminative wisdom (viveka) that separates truth from illusion, the eternal from the temporary, the essential from the superficial. By riding the hamsa, Saraswati shows that true wisdom is not just acquiring information but the ability to discern what is worth knowing.",
+      },
+      {
+        question: "What is the difference between Saraswati and Sharada?",
+        answer:
+          "Sharada is one of Saraswati's many names — particularly used in the Sharada Peetham tradition founded by Adi Shankaracharya at Sringeri in 8th-century Karnataka, and in the historical Sharada Peeth of Kashmir. The two refer to the same goddess, but Sharada specifically emphasises her role as the goddess of the autumn (sharad) — the season of clear thought after the monsoon — and as the patron of advanced Vedic learning rather than just elementary education.",
+      },
+      {
+        question: "Should students chant a Saraswati mantra before studying?",
+        answer:
+          "Yes — this is one of the most universal recommendations in Hindu pedagogy across every region and every century. The simplest and most ancient is \"Saraswati Namastubhyam, Varade Kamarupini, Vidyarambham karishyami, Siddhirbhavatu me sada\" (\"Salutations to Saraswati, granter of boons and fulfiller of wishes — I am beginning my studies, may I always meet with success\"). Recited three times before opening any book or starting any practice, it has been the foundational Hindu student prayer for over a thousand years.",
       },
     ],
     relatedLinks: [
       { label: "Today's Panchang", href: "/panchang-today" },
       { label: "All Hindu Festivals", href: "/hindu-festivals" },
       { label: "Baby Names by Nakshatra", href: "/baby-names-by-nakshatra" },
+      { label: "Goddess Durga", href: "/blog/goddess-durga" },
     ],
     relatedSlugs: ["goddess-durga", "goddess-lakshmi", "lord-ganesha"],
   },
