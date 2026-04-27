@@ -349,6 +349,21 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://ompanchang.org/blog/hanuman-chalisa-meaning</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/blog/vishnu-sahasranamam-explained</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://ompanchang.org/blog/gayatri-mantra-meaning</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
 
   <!-- ===== DAILY HOROSCOPE ===== -->
   <url>
