@@ -2,8 +2,10 @@ import { BLOG_ARTICLES } from "@/lib/blogData";
 
 const TRENDING_SLUGS = [
   "hanuman-chalisa-meaning",
-  "vishnu-sahasranamam-explained",
+  "lord-rama",
   "lord-krishna",
+  "lord-surya",
+  "gayatri-mantra-meaning",
   "goddess-lakshmi",
 ];
 
