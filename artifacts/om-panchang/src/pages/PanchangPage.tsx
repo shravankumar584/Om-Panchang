@@ -8,6 +8,7 @@ import TodayDeity from "@/components/TodayDeity";
 import PlanetaryPositions from "@/components/PlanetaryPositions";
 import UpcomingFestivals from "@/components/UpcomingFestivals";
 import FestivalGuidesGrid from "@/components/FestivalGuidesGrid";
+import TrendingBlogBanner from "@/components/TrendingBlogBanner";
 import FindTempleCard from "@/components/FindTempleCard";
 import SubscribeCard from "@/components/SubscribeCard";
 import HoroscopeWidget from "@/components/HoroscopeWidget";
@@ -1043,6 +1044,8 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
               <PlanetaryPositions date={selectedDate} />
               <UpcomingFestivals today={today} onViewAll={() => setActiveTab("festivals")} />
             </div>
+            {/* Trending blog banner — drives discovery of long-form content */}
+            <TrendingBlogBanner />
           </div>
         </main>
       )}
