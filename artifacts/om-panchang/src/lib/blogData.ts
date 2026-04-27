@@ -67,36 +67,61 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🪈",
     gradient: "from-blue-700 via-indigo-700 to-purple-700",
     publishDate: "2026-04-26",
-    readTime: 9,
+    readTime: 12,
     intro:
-      "Lord Krishna is the eighth avatar of Lord Vishnu and one of the most beloved deities in the Hindu pantheon. Worshipped as the divine cowherd, the ideal friend, the perfect statesman, and the eternal teacher of the Bhagavad Gita, Krishna's life spans an extraordinary range — from playful childhood pranks in Vrindavan to the moral counsel he gave Arjuna on the battlefield of Kurukshetra.",
+      "Lord Krishna is the eighth avatar of Lord Vishnu and one of the most beloved deities in the entire Hindu pantheon. He is worshipped simultaneously as the divine cowherd of Vrindavan, the romantic beloved of Radha, the loyal friend of the Pandavas, the brilliant statesman of Dwarka, and the eternal teacher of the Bhagavad Gita. No other deity holds together so many roles — child, lover, king, philosopher, warrior, and sage — within a single life story. His narrative spans the entire range of human experience, which is precisely why he speaks so directly to seekers in every generation. Krishna's life is the subject of three major Sanskrit texts — the Mahabharata (where he plays a central role in the Kurukshetra war), the Bhagavata Purana (which celebrates his childhood and youth in extraordinary detail), and the Harivamsa (an appendix to the Mahabharata that fills in his royal years in Dwarka).",
     sections: [
       {
-        heading: "Birth in Mathura",
+        heading: "Birth in Mathura — The Eighth Child",
         paragraphs: [
-          "Krishna was born on the eighth day (Ashtami) of the dark fortnight of Bhadrapada month — a day celebrated annually as Janmashtami. His parents, Devaki and Vasudeva, were imprisoned by Devaki's tyrant brother Kamsa, who had been told by a celestial voice that her eighth child would be his end.",
-          "On the night of Krishna's birth, the prison locks fell open, the guards were put into deep sleep, and Vasudeva carried the infant across the swollen Yamuna river to Gokul, exchanging him with the newborn daughter of his cousin Nanda and his wife Yashoda. Krishna was thus raised as a cowherd boy, hiding in plain sight from Kamsa.",
+          "Krishna was born on the eighth day (Ashtami) of the dark fortnight of Bhadrapada month — a day celebrated annually as Krishna Janmashtami in homes and temples across the Hindu world. His parents, Devaki and Vasudeva, were imprisoned by Devaki's tyrant brother Kamsa, the king of Mathura, who had been told by a celestial voice (akashvani) that her eighth child would be the cause of his death.",
+          "On the night of Krishna's birth, the Bhagavata Purana describes a series of miraculous events: the prison locks fell open of their own accord, the guards collapsed into deep sleep, and Vasudeva carried the infant out into a violent monsoon storm. He crossed the swollen Yamuna river — its waters miraculously parting and the great serpent Sheshanaga shielding the child from the rain. In Gokul, he exchanged the boy for the newborn daughter of his cousin Nanda and his wife Yashoda, and returned to the prison before dawn.",
+          "When Kamsa came to kill the eighth child, the infant girl rose into the sky as the goddess Yogamaya and warned him that his destroyer was already alive elsewhere. Krishna was thus raised as a humble cowherd in Gokul and later Vrindavan — hidden in plain sight from the king who hunted him.",
         ],
       },
       {
-        heading: "The Vrindavan Years",
+        heading: "The Vrindavan Years — Leelas of the Cowherd Boy",
         paragraphs: [
-          "Krishna's childhood in Vrindavan is the source of countless leelas (divine plays). He stole butter, played his flute under the kadamba trees, danced the Raasa-Lila with the gopis, and lifted Govardhan Hill on his little finger to shelter the villagers from Indra's storm.",
-          "These stories are not mere folklore — saints like Mirabai, Surdas and Chaitanya Mahaprabhu drew their entire spiritual paths from Krishna's Vrindavan leelas. Each tale carries a deep teaching: the gopis represent yearning souls, the butter represents a pure heart, and Govardhan represents God protecting devotees who take refuge in Him.",
+          "Krishna's childhood in Vrindavan is the source of countless leelas (divine plays) that have inspired Hindu poetry, painting, dance and music for two thousand years. He killed the demoness Putana who came in disguise to poison him with her milk. He overturned the cart-demon Shakatasura, lifted Mount Govardhan on his little finger to shelter the villagers from Indra's seven-day storm, and tamed the venomous serpent Kaliya by dancing on its hoods in the Yamuna.",
+          "He stole butter from his mother's kitchen and from every gopi in the village — a leela so beloved that the name Makhanchor (butter thief) is one of his most sung names. He played his flute under the kadamba trees at twilight, calling the gopis (cowherd women) to dance the Raasa-Lila with him in the moonlit meadows of Vrindavan. His love for Radha — the chief gopi — became the single greatest symbol of bhakti in all of Hindu spirituality.",
+          "These stories are not mere folklore. Saints like Mirabai (16th-century Rajasthan), Surdas (16th-century Braj), Chaitanya Mahaprabhu (16th-century Bengal), and the Alvars of Tamil Nadu drew their entire spiritual paths from Krishna's Vrindavan leelas. Each tale carries a deep teaching: the gopis represent yearning souls, the butter represents the pure love of a devotee's heart, and Govardhan represents God protecting devotees who take complete refuge in Him.",
         ],
       },
       {
-        heading: "Krishna in the Mahabharata",
+        heading: "The Mathura Years — Killing Kamsa",
         paragraphs: [
-          "As an adult, Krishna became the king of Dwarka and a central figure in the Mahabharata war. He chose not to fight himself, instead serving as Arjuna's charioteer. On the eve of battle, when Arjuna lost his nerve at the sight of his cousins and teachers in the opposing army, Krishna delivered the 700 verses of the Bhagavad Gita.",
-          "The Gita compresses the entire Hindu philosophical tradition into a single conversation: Karma Yoga (the path of action), Bhakti Yoga (the path of devotion), and Jnana Yoga (the path of knowledge). Its message — perform your duty without attachment to results — remains one of the most quoted spiritual teachings in the world.",
+          "When Krishna and his elder brother Balarama came of age, Kamsa invited them to a great wrestling tournament in Mathura — a trap intended to kill them both. Krishna defeated the king's champion wrestlers Chanura and Mushtika, leapt onto the royal dais, and killed Kamsa exactly as the celestial voice had foretold sixteen years earlier.",
+          "After freeing his birth parents Devaki and Vasudeva and restoring his maternal grandfather Ugrasena to the throne of Mathura, Krishna spent several years studying the Vedas and the martial arts with the sage Sandipani in his ashram at Avantika (modern Ujjain). It was during this period that he laid the philosophical and political foundations for what would become the kingdom of Dwarka.",
         ],
       },
       {
-        heading: "Teachings That Still Guide Hindus",
+        heading: "The Dwarka Years — The Statesman King",
         paragraphs: [
-          "Three teachings of Krishna shape daily Hindu practice. First, dharma must be defended even when it is uncomfortable. Second, devotion (bhakti) is open to everyone — the cowherd women of Vrindavan reached the divine through love, without scriptures or rituals. Third, the soul is eternal and unaffected by birth or death; this knowledge frees us from fear.",
-          "Krishna's most famous promise — \"Whenever there is a decline of dharma, I shall manifest myself\" (Gita 4.7) — is the cornerstone of the avatar doctrine in Hinduism.",
+          "After repeated attacks by Jarasandha (the powerful king of Magadha and Kamsa's father-in-law), Krishna led his Yadava clan in a strategic retreat from Mathura to the western coast of Gujarat, where he founded the magnificent island-city of Dwarka. Here Krishna ruled for many decades as a wise and just king. He married Rukmini (his principal queen), then Satyabhama, Jambavati, Kalindi, Mitravinda, Nagnajiti, Bhadra and Lakshmana — collectively known as the Ashtabharya (eight chief queens).",
+          "From Dwarka, Krishna engaged in the politics of his cousins the Pandavas and Kauravas in Hastinapur. He attempted peace negotiations as Yudhishthira's emissary on the eve of the Kurukshetra war. When the Kauravas refused even five villages for the Pandavas, war became inevitable — and Krishna agreed to serve as Arjuna's charioteer, vowing not to fight himself.",
+        ],
+      },
+      {
+        heading: "The Bhagavad Gita — The Song of God",
+        paragraphs: [
+          "On the eve of the great battle at Kurukshetra, when Arjuna lost his nerve at the sight of his cousins, teachers and elders arrayed in the opposing army, Krishna delivered the 700 verses of the Bhagavad Gita over what the text presents as a brief pause in the battle. The Gita is not a scripture set apart from life — it is taught in the middle of a battlefield, to a man who is paralyzed by moral confusion. That is its enduring power.",
+          "The Gita compresses the entire Hindu philosophical tradition into a single conversation. Krishna explains Karma Yoga (the path of selfless action), Bhakti Yoga (the path of loving devotion), and Jnana Yoga (the path of self-knowledge). He teaches that the soul (atman) is eternal and untouched by birth and death; that performing one's duty without attachment to results is the highest dharma; and that surrender to the divine is the surest path to liberation.",
+          "The Gita's most famous verse — \"Yada yada hi dharmasya glanir bhavati Bharata, abhyutthanam adharmasya, tadatmanam srijamy aham\" (\"Whenever there is a decline of dharma, O Arjuna, I shall manifest myself\") — is the cornerstone of the entire avatar doctrine in Hinduism. It is Krishna himself who articulates the principle that explains all his own incarnations.",
+        ],
+      },
+      {
+        heading: "Krishna's Teachings That Still Guide Hindu Life",
+        paragraphs: [
+          "Three teachings of Krishna shape daily Hindu practice today as completely as they did five thousand years ago. First, dharma must be defended even when defending it is uncomfortable, painful or socially costly. Arjuna had to fight his own teachers and relatives because the cause was just — that lesson alone shapes how Hindus think about justice. Second, devotion (bhakti) is open to absolutely everyone — the cowherd women of Vrindavan reached the divine through pure love, without any access to scripture, ritual, or formal teaching. This is one of Hinduism's most radical egalitarian claims.",
+          "Third, the soul is eternal and unaffected by birth or death; the body is a garment the soul wears and changes. This single teaching — \"Vasamsi jirnani yatha vihaya\" (Gita 2.22) — has consoled grieving Hindus for fifty centuries and underlies the entire Hindu approach to death and rebirth.",
+          "Beyond these, Krishna also taught equanimity in success and failure (samatva), the equality of all beings before the divine, the supreme value of inner work over outer ritual, and the doctrine that all paths sincerely followed lead to the same supreme reality.",
+        ],
+      },
+      {
+        heading: "Where Krishna is Worshipped Today",
+        paragraphs: [
+          "Krishna is worshipped throughout India and the global Hindu diaspora, but four regions hold particular reverence. Mathura and Vrindavan in Uttar Pradesh, his birthplace and childhood home, are the centre of the Braj-bhakti tradition — home to thousands of temples and the famous Banke Bihari, Radha Vallabh and ISKCON Krishna-Balaram temples. Dwarka in Gujarat hosts the Dwarkadhish Temple, one of the four Char Dham pilgrimage sites. Puri in Odisha is home to the Jagannath Temple, where Krishna is worshipped in his unique Jagannath form alongside Balarama and Subhadra.",
+          "Globally, the International Society for Krishna Consciousness (ISKCON), founded by Srila Prabhupada in New York in 1966, has built over 850 Krishna temples in more than 100 countries. The Hare Krishna mantra — \"Hare Krishna Hare Krishna, Krishna Krishna Hare Hare, Hare Rama Hare Rama, Rama Rama Hare Hare\" — is one of the most recognizable Hindu mantras in the world today.",
         ],
       },
     ],
@@ -104,23 +129,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Why is Krishna shown blue?",
         answer:
-          "Blue represents the infinite — the colour of the sky and the ocean. It signifies that Krishna, like the cosmos, is limitless. Some scriptures also mention his complexion as dark like a rain cloud (megha-shyama).",
+          "Blue represents the infinite — the colour of the sky and the ocean. It signifies that Krishna, like the cosmos itself, is limitless. The Bhagavata Purana also describes his complexion as dark like a fresh rain-cloud (megha-shyama), a colour that traditionally evokes rain, abundance, and the sustaining power of nature.",
       },
       {
         question: "What is the difference between Krishna and Vishnu?",
         answer:
-          "Vishnu is the preserver god of the Trimurti. Krishna is the eighth avatar (incarnation) of Vishnu, who took human form to restore dharma during the Dwapara Yuga.",
+          "Vishnu is the preserver god of the Trimurti — eternal, formless and beyond time. Krishna is the eighth avatar (incarnation) of Vishnu, who took human form during the Dwapara Yuga to restore dharma. The Gaudiya Vaishnava tradition (founded by Chaitanya Mahaprabhu) takes this further and considers Krishna the supreme original form of God, of whom Vishnu is an expansion — a theological position not shared by all Vaishnava schools.",
       },
       {
         question: "When is Krishna Janmashtami celebrated?",
         answer:
-          "On the Ashtami (8th day) of the Krishna Paksha (waning fortnight) of the Bhadrapada month, which falls in August or September. The exact date varies each year by the lunar calendar.",
+          "On the Ashtami (8th day) of the Krishna Paksha (waning fortnight) of the Bhadrapada month, which falls in August or September. The exact date varies each year by the lunar calendar. The midnight hour (when Krishna was born) is the most sacred — temples conduct the Janma Abhishekam at exactly midnight, and devotees fast through the day, breaking the fast only after the midnight puja.",
+      },
+      {
+        question: "Who was Radha — was she Krishna's wife?",
+        answer:
+          "Radha was a gopi (cowherd woman) of Vrindavan and Krishna's eternal beloved, but she was not his wife in the conventional sense — Krishna left Vrindavan as a young man and married eight queens in Dwarka. Yet across all of Hindu tradition, Radha is regarded as Krishna's true counterpart — Radha and Krishna together represent the soul and the divine in eternal embrace. The Radha-bhakti tradition treats her as the supreme devotee through whose love alone Krishna can be truly understood.",
+      },
+      {
+        question: "Did Krishna actually exist historically?",
+        answer:
+          "Hindu tradition unanimously holds that Krishna lived around 3228 BCE and departed from the world at the start of the Kali Yuga in 3102 BCE. Modern archaeology has uncovered the submerged remains of an ancient port city off the coast of modern Dwarka in Gujarat, which many scholars associate with the ancient Dwarka of the Krishna narrative. Whether one accepts the historicity of every event in the Mahabharata or treats the texts as sacred history, Krishna's historical reality is a foundational article of belief for almost all Hindus.",
+      },
+      {
+        question: "What are the most important Krishna mantras for daily chanting?",
+        answer:
+          "The most universally chanted are the Mahamantra (\"Hare Krishna Hare Krishna, Krishna Krishna Hare Hare, Hare Rama Hare Rama, Rama Rama Hare Hare\"), the simple \"Om Namo Bhagavate Vasudevaya\" (12 syllables), and the Krishna Ashtakshara \"Om Klim Krishnaya Namah\" (8 syllables). All three can be chanted on a 108-bead japa mala daily, and beginners should start with whichever feels most natural to recite.",
       },
     ],
     relatedLinks: [
       { label: "Krishna Janmashtami Date & Muhurat", href: "/janmashtami" },
       { label: "Today's Panchang", href: "/panchang-today" },
       { label: "All Hindu Festivals", href: "/hindu-festivals" },
+      { label: "Lord Vishnu – Avatars", href: "/blog/lord-vishnu" },
     ],
     relatedSlugs: ["lord-vishnu", "lord-shiva", "significance-of-om"],
   },
@@ -137,36 +178,61 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🕉️",
     gradient: "from-slate-800 via-indigo-900 to-blue-900",
     publishDate: "2026-04-26",
-    readTime: 8,
+    readTime: 12,
     intro:
-      "Lord Shiva, the third deity of the Hindu Trimurti, is at once the wild ascetic on Mount Kailash, the loving husband of Parvati, the cosmic dancer Nataraja, and the destroyer who clears the way for renewal. No other Hindu deity holds together so many seeming contradictions — and that is precisely the point.",
+      "Lord Shiva, the third deity of the Hindu Trimurti, is at once the wild ascetic on Mount Kailash, the loving husband of Parvati and father of Ganesha and Kartikeya, the cosmic dancer Nataraja whose Tandava governs the rhythm of creation, and the destroyer who clears the way for renewal. No other Hindu deity holds together so many seeming contradictions — and that is precisely the point. Shiva represents the totality of existence: the part that can be named and worshipped through form, and the part that lies beyond all form. To his devotees he is Mahadeva (the great god), Bholenath (the innocent one), Adiyogi (the first yogi), Nilakantha (the blue-throated), and Pashupati (lord of all beings). He is worshipped from the Himalayan caves of Kedarnath to the temples of Tamil Nadu, and his worship may well be the oldest continuous form of devotion on the Indian subcontinent — Indus Valley seals dated to 2500 BCE depict a yogic figure with horns and animals around him that many archaeologists identify as a proto-Shiva.",
     sections: [
       {
         heading: "The Many Faces of Shiva",
         paragraphs: [
-          "Shiva appears in four primary forms in Hindu worship. As Adiyogi, he is the original yogi, the source of all spiritual practice. As Nataraja, the cosmic dancer, his Tandava governs the rhythm of creation and dissolution. As Bholenath, the innocent one, he is famously easy to please — a single bilva leaf and a bowl of water are enough to win his blessing. And as Mahadeva, he is the supreme god of gods.",
-          "He is also worshipped in his abstract form as the Shiva Linga — a vertical pillar representing the formless, beginningless, endless nature of consciousness itself.",
+          "Shiva appears in dozens of forms across the Hindu tradition, but four are central. As Adiyogi, he is the original yogi — the source of all spiritual practice, said to have taught the first yogic disciplines to the Saptarishi (seven sages) on the banks of Lake Kantisarovar in the Himalayas. As Nataraja, the cosmic dancer, his Tandava is performed in a circle of fire at the cremation grounds, simultaneously creating, sustaining, dissolving, concealing and revealing the universe — five actions encoded in his five-handed dancing form.",
+          "As Bholenath, the innocent one, he is famously easy to please — the scriptures say a single bilva leaf and a bowl of plain water are enough to win his blessing. This is why Shiva is the favourite deity of the poor and the unlettered: he asks nothing they cannot give. As Mahadeva, he is the supreme god of gods, beyond all other devas, untouched by their politics and limitations.",
+          "He is also worshipped in his abstract form as the Shiva Linga — a vertical pillar representing the formless, beginningless, endless nature of consciousness itself. The Linga is not a phallic symbol as some early colonial scholars wrongly claimed; the word linga simply means \"mark\" or \"sign,\" and the linga is the sign of the formless absolute that cannot be depicted in any anthropomorphic form.",
         ],
       },
       {
-        heading: "Symbols and Their Meaning",
+        heading: "Symbols and Their Meanings",
         paragraphs: [
-          "Every element of Shiva's iconography carries meaning. The crescent moon on his head represents the cyclical nature of time. The Ganga river flowing from his matted hair shows that his being can absorb the entire river of grace and channel it gently to humans. The third eye signifies the wisdom that burns away ignorance. The trishul (trident) represents the three gunas — sattva, rajas, tamas — under his command.",
-          "The serpent Vasuki coiled around his neck shows his mastery over fear and desire. His blue throat (Neelkanth) is a reminder of how he drank the cosmic poison Halahala to save the universe during the churning of the ocean.",
+          "Every element of Shiva's iconography carries meaning. The crescent moon on his head represents the cyclical nature of time and the mind under perfect control. The Ganga river flowing from his matted hair shows that his being can absorb the entire river of grace from heaven and channel it gently to humans on earth — without his cushioning matted locks, the descent of the Ganga would have shattered the planet.",
+          "The third eye on his forehead signifies the wisdom that burns away ignorance — when opened in anger, it reduced the god of love Kamadeva to ashes. The trishul (trident) represents the three gunas — sattva, rajas, tamas — under his command, and also the three powers of will, knowledge and action. The damaru (small two-headed drum) in his hand beats the rhythm of creation; from its sound, the Sanskrit alphabet itself is said to have emerged.",
+          "The serpent Vasuki coiled around his neck shows his mastery over fear and desire. His blue throat (Neelkantha) is a permanent reminder of how he drank the cosmic poison Halahala to save the universe during the churning of the ocean (Samudra Manthan), holding it in his throat rather than swallowing or expelling it. His ash-smeared body reminds us that all material existence ultimately turns to ash — and yet beneath that ash, consciousness remains untouched.",
         ],
       },
       {
-        heading: "Shiva and the Householder Path",
+        heading: "Shiva and Parvati — The Householder Yogi",
         paragraphs: [
-          "Although Shiva is the original ascetic, he is also a model householder. His marriage to Parvati and their sons Ganesha and Kartikeya represent the integration of the spiritual and the worldly. Hindu households often worship Shiva-Parvati as the ideal divine couple, with prayers for marital harmony, healthy children, and prosperity.",
-          "Vrats like Pradosh Vrat (twice a month) and Maha Shivratri (once a year) are dedicated to him, and Mondays (Somvar) are considered his weekly day of worship.",
+          "Although Shiva is the original ascetic, he is also a model householder. His marriage to Parvati — daughter of the Himalayan king Himavan and reincarnation of his first wife Sati — represents the integration of the spiritual and the worldly. Shiva and Parvati had two sons: Ganesha (the elephant-headed remover of obstacles) and Kartikeya (also called Murugan, the warrior god of South India). Their family in the cave at Kailash is the archetype of the divine household in Hindu tradition.",
+          "The Shiva Purana describes the Shiva-Parvati relationship as the union of Purusha (consciousness) and Prakriti (matter) — without one, the other has no existence. This is why so many Hindu households worship Shiva-Parvati together as the ideal divine couple, with daily prayers for marital harmony, healthy children, and prosperity. Many marriage rituals invoke this couple specifically.",
+          "The relationship is also the foundational image for Shaktism — the school of Hinduism that worships the Divine Mother as supreme. In that view, Shiva is the silent witness consciousness, while Shakti (Parvati, Durga, Kali) is the active power that does everything that ever happens.",
+        ],
+      },
+      {
+        heading: "Major Stories of Shiva",
+        paragraphs: [
+          "The Samudra Manthan — the churning of the ocean of milk by the devas and asuras — is one of the most famous stories featuring Shiva. When the lethal Halahala poison emerged from the ocean and threatened to destroy all creation, Shiva alone agreed to consume it. Parvati, fearing for his life, pressed his throat to prevent the poison from descending — and that is how Shiva became Neelkantha, the blue-throated one. The story is celebrated every year during the festival of Maha Shivratri.",
+          "The destruction of Tripura — three flying cities of the asuras that could only be destroyed when aligned and pierced by a single arrow — gave Shiva his name Tripurari (destroyer of Tripura). The story of Daksha Yagna — in which Shiva's first wife Sati immolated herself when her father Daksha insulted Shiva — is the origin of the 51 Shakti Peethas that dot the Indian subcontinent.",
+          "Another beloved tale is Markandeya, the boy who was destined to die at sixteen. While embracing the Shiva Linga in terror as Yama (death) approached, the linga split open and Shiva himself emerged to drive away death — granting Markandeya immortality. This story is the source of the Mahamrityunjaya Mantra, chanted by Hindus for protection from untimely death.",
         ],
       },
       {
         heading: "The Twelve Jyotirlingas",
         paragraphs: [
-          "Across India, twelve great Shiva temples are revered as Jyotirlingas — sites where Shiva manifested as a column of light. They include Somnath in Gujarat, Mahakaleshwar in Ujjain, Kashi Vishwanath in Varanasi, Rameshwaram in Tamil Nadu, and Kedarnath in the Himalayas.",
-          "A pilgrimage to all twelve Jyotirlingas is considered one of the most sacred journeys a Shaiva devotee can undertake.",
+          "Across India, twelve great Shiva temples are revered as Jyotirlingas — sites where Shiva manifested as a column of light (jyoti) when Brahma and Vishnu argued about which of them was supreme. Unable to find either the top or the bottom of the infinite light, both gods bowed before Shiva. The twelve sites are scattered across the subcontinent: Somnath in Gujarat, Mallikarjuna in Andhra Pradesh, Mahakaleshwar in Ujjain, Omkareshwar in Madhya Pradesh, Kedarnath in the Himalayas, Bhimashankar near Pune, Kashi Vishwanath in Varanasi, Trimbakeshwar near Nashik, Vaidyanath in Jharkhand, Nageshwar in Gujarat, Rameshwaram in Tamil Nadu, and Grishneshwar near Aurangabad.",
+          "A pilgrimage to all twelve Jyotirlingas — called the Dwadasha Jyotirlinga Yatra — is considered one of the most sacred journeys a Shaiva devotee can undertake in a lifetime. Each shrine has its own elaborate mythology, its own architectural style, and its own ritual traditions, but together they form the spiritual map of Shiva-bhakti across India.",
+        ],
+      },
+      {
+        heading: "Vrats, Festivals and Weekly Worship",
+        paragraphs: [
+          "Two great vrats are dedicated to Shiva. Pradosh Vrat is observed twice every month, on the trayodashi (13th day) of both lunar fortnights, with a fast broken at sunset (the Pradosh hour) when Shiva is said to dance the Tandava on Mount Kailash. Maha Shivratri, the great night of Shiva, falls on the 14th night of the dark fortnight in Phalgun month — observers fast through the day and remain awake through the night, performing four prahar pujas (one in each three-hour watch).",
+          "Mondays (Somvar) are the weekly day of Shiva worship — the very name Somvar comes from Soma (one of Shiva's names, meaning \"with Uma\") and var (day). The entire month of Sawan (July-August), particularly its Mondays, is considered the most sacred period for Shiva worship in the year. Devotees in North India undertake the Kanwar Yatra — walking hundreds of kilometres barefoot to fetch Ganga water and pour it on Shiva Lingas back home.",
+        ],
+      },
+      {
+        heading: "How to Worship Shiva at Home",
+        paragraphs: [
+          "Shiva is the easiest of all major Hindu deities to worship at home, because he asks for so little. A small Shiva Linga, a bowl, some water, a few bilva (bel) leaves, and a clean cloth to sit on are sufficient. The simplest daily ritual is Abhishekam — pouring water (or, on special days, milk, honey, ghee, curd or sugarcane juice) over the linga while chanting either \"Om Namah Shivaya\" (the panchakshari mantra) or the Mahamrityunjaya Mantra.",
+          "The bilva leaves should be offered with the smooth side facing the linga, in groups of three (representing the three eyes of Shiva). After the abhishekam, the water should be collected and either consumed as prasad or poured at the base of a tree — never thrown away carelessly, as it is considered sanctified. The full ritual takes only ten to fifteen minutes and can be performed any day, but is especially powerful on Mondays and Pradosh hours.",
         ],
       },
     ],
@@ -174,23 +240,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Why is Shiva called the destroyer?",
         answer:
-          "In Hindu cosmology, destruction is not annihilation but transformation. Shiva clears away the old to make space for the new — without dissolution, there can be no creation.",
+          "In Hindu cosmology, destruction is not annihilation but transformation. Shiva clears away the old to make space for the new — without dissolution, there can be no creation. He destroys ignorance, attachment, ego, and ultimately the cycle of rebirth itself. He is therefore not feared but loved as the most compassionate of the Trimurti — destruction in his hands is always liberating.",
       },
       {
         question: "What is the meaning of Om Namah Shivaya?",
         answer:
-          "It means \"I bow to Shiva\" — the five syllables (na-mah-shi-va-ya) represent the five elements (earth, water, fire, air, ether) of which the universe is made. It is Hinduism's most chanted mantra.",
+          "It means \"I bow to Shiva\" — the five syllables (na-mah-shi-va-ya) represent the five elements (earth, water, fire, air, ether) of which the universe is made. It is one of Hinduism's most chanted mantras and is called the Panchakshari (five-syllabled) mantra. With Om added at the start, it becomes a six-syllabled mantra — sometimes called the Shadakshari. It can be chanted aloud, whispered, or mentally — and is suitable for any time of day.",
       },
       {
         question: "Why do devotees pour milk on the Shiva Linga?",
         answer:
-          "Milk symbolises purity and the cooling of fierce energy. The ritual is called Abhishekam and is believed to bring peace, health, and removal of obstacles.",
+          "Milk symbolises purity and the cooling of fierce energy. The ritual is called Abhishekam and is performed with several substances at different times — water (everyday), milk (Mondays and Maha Shivratri), honey, ghee, curd, sugarcane juice, and sandalwood paste. Each substance has its own scriptural significance. The ritual is believed to bring peace, health, and removal of obstacles, and is the simplest form of Shiva worship anyone can perform at home.",
+      },
+      {
+        question: "What is the difference between a Shiva Linga and an idol?",
+        answer:
+          "An idol depicts a deity in human or animal form. The Shiva Linga is deliberately abstract — a vertical pillar (sometimes set in a yoni base) that represents the formless, infinite consciousness which cannot be captured in any anthropomorphic image. It is the only major Hindu deity worshipped primarily through an abstract symbol rather than a figurative form, which is one of the most ancient and unusual features of Shiva worship.",
+      },
+      {
+        question: "Why is Shiva associated with cremation grounds and ash?",
+        answer:
+          "Shiva resides in the cremation ground because he is the lord of dissolution — and the cremation ground is the most direct teacher of impermanence anywhere in the world. The ash he smears on his body is a constant reminder that all material existence ultimately reduces to ash. By worshipping Shiva, devotees confront their own mortality and the mortality of all attachments, which is the foundation of true spiritual freedom.",
+      },
+      {
+        question: "Can women worship the Shiva Linga at home?",
+        answer:
+          "Absolutely yes. There is no scriptural prohibition on women worshipping Shiva or the Shiva Linga at any time — including during menstruation, in the view of most modern teachers and traditions. The Shiva Purana itself contains many stories of female devotees of Shiva, including Parvati herself who performed the most extraordinary tapas to win him as her husband. Women have led Shiva worship in their families and villages for as long as Hinduism has existed.",
       },
     ],
     relatedLinks: [
       { label: "Maha Shivratri Date & Vrat", href: "/maha-shivratri" },
       { label: "Pradosh Vrat Dates", href: "/pradosh-vrat" },
       { label: "Today's Panchang", href: "/panchang-today" },
+      { label: "Significance of Om", href: "/blog/significance-of-om" },
     ],
     relatedSlugs: ["lord-vishnu", "goddess-durga", "significance-of-om"],
   },
@@ -207,36 +289,60 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🌀",
     gradient: "from-amber-400 via-yellow-500 to-orange-600",
     publishDate: "2026-04-26",
-    readTime: 8,
+    readTime: 12,
     intro:
-      "Lord Vishnu is the preserver and protector of the universe in the Hindu Trimurti. While Brahma creates and Shiva dissolves, it is Vishnu who maintains balance — and whenever evil grows powerful enough to threaten dharma, he descends to earth in a specific avatar to set things right.",
+      "Lord Vishnu is the preserver and protector of the universe in the Hindu Trimurti. While Brahma creates and Shiva dissolves, it is Vishnu who maintains balance — sustaining cosmic order, protecting the righteous, and intervening directly whenever dharma is in danger. He is the centre of one of the four great Hindu denominations (Vaishnavism), worshipped under hundreds of names — Narayana, Hari, Vasudeva, Madhava, Govinda, Hrishikesha, Padmanabha — each name a window into a different aspect of the same supreme reality. Vishnu is unique among major Hindu deities for the doctrine of avatara: the teaching that the divine repeatedly descends into the world in specific forms to restore dharma when it collapses. His ten most famous descents — the Dashavatara — span the entire arc of cosmic time from the great flood of the first yuga to the final avatar yet to come at the end of the Kali age. To worship Vishnu is to worship the principle of preservation itself: the gentle, sustaining, dharmic force that holds the universe together.",
     sections: [
+      {
+        heading: "Vishnu in Hindu Cosmology",
+        paragraphs: [
+          "In the Vedic and Puranic cosmology, the universe goes through endless cycles of creation, preservation and dissolution lasting trillions of years. Brahma — born from a lotus that emerges from Vishnu's navel — is the active agent of creation. Shiva is the agent of dissolution. Vishnu, lying on the cosmic serpent Ananta-Shesha in the milky ocean (Kshira Sagara), is the substratum on which the entire cycle takes place. He is described as the only deity who exists between universes, when all else has been dissolved.",
+          "This cosmological role is captured in his most contemplative iconography: Vishnu reclining on Ananta-Shesha, with Lakshmi at his feet, Brahma seated on a lotus emerging from his navel. The image is meditated upon as a complete cosmology in a single picture — preserver, creator, the goddess of abundance, the serpent of infinite time, and the cosmic ocean of unmanifest potential, all in one frame.",
+        ],
+      },
+      {
+        heading: "The Iconography of Vishnu",
+        paragraphs: [
+          "Vishnu is depicted with four arms holding four sacred objects, each laden with meaning. The conch (shankha, named Panchajanya) represents the primordial sound from which the universe emerged — and the call to dharmic action when blown in battle. The discus (Sudarshana Chakra) represents the wheel of time and the mind sharpened to discern truth from illusion. The mace (gada, named Kaumodaki) represents primal power, sovereignty and the strength to enforce cosmic order. The lotus (padma) represents the unfolding consciousness of liberation — pure, untouched by the muddy waters from which it rises.",
+          "His skin is depicted as dark blue or green like a rain-cloud, signifying both his infinite cosmic nature and his role as the giver of rain and sustenance. He wears yellow silk (pitambara) and a sacred Kaustubha jewel on his chest, where the curl of hair called Srivatsa marks the dwelling place of Goddess Lakshmi. His mount is Garuda, the great eagle who is the king of birds and the eternal enemy of serpents and ignorance.",
+        ],
+      },
       {
         heading: "Vishnu and Lakshmi",
         paragraphs: [
-          "Vishnu is depicted with four arms holding the conch (shankha), discus (sudarshana chakra), mace (gada), and lotus (padma). He reclines on the cosmic serpent Ananta-Shesha in the milky ocean (Kshira Sagara), with his consort Goddess Lakshmi at his feet.",
-          "Together, Vishnu and Lakshmi represent the inseparable union of consciousness and prosperity, of the divine principle and the material universe it sustains.",
+          "Vishnu's eternal consort is Goddess Lakshmi — the goddess of prosperity, beauty, and auspiciousness. Hindu tradition holds that wherever Vishnu manifests, Lakshmi manifests with him: when he was Rama, she was Sita; when he was Krishna, she appeared as Rukmini; when he is Narayana in Vaikuntha, she is by his side as Sridevi. The Vishnu-Lakshmi pair represents the inseparable union of consciousness and prosperity, of the divine principle and the material universe it sustains.",
+          "Together they are worshipped as Lakshmi-Narayana — a form to which most Hindu households offer prayers for both spiritual progress and material wellbeing. The Friday night Lakshmi-Narayana puja is a common household tradition, especially in the months of Margashirsha and Kartik. In southern Vaishnava tradition, Vishnu also has two other consorts — Bhudevi (the Earth goddess) and Niladevi — both regarded as additional aspects of the same supreme Shakti.",
         ],
       },
       {
         heading: "The Dashavatara — Ten Incarnations",
         paragraphs: [
-          "The ten avatars (Dashavatara) are: Matsya (the fish who saved the Vedas from the great flood), Kurma (the tortoise who supported Mount Mandara during the churning of the ocean), Varaha (the boar who lifted the earth from the cosmic ocean), Narasimha (the half-man, half-lion who killed the demon Hiranyakashipu), and Vamana (the dwarf who reclaimed the three worlds from King Bali).",
-          "The remaining five are: Parashurama (the warrior-sage), Lord Rama (the ideal king of Ayodhya), Lord Krishna (the divine teacher of the Bhagavad Gita), Buddha (the enlightened one), and Kalki (the future avatar yet to appear at the end of Kali Yuga).",
+          "The ten avatars (Dashavatara) of Vishnu, in their traditional order, are: Matsya (the fish who saved the Vedas and the seven sages from the great flood at the end of the previous kalpa), Kurma (the tortoise who supported Mount Mandara on his back during the churning of the ocean of milk), Varaha (the boar who lifted the earth from the depths of the cosmic ocean after the demon Hiranyaksha submerged it), Narasimha (the half-man, half-lion who killed the demon king Hiranyakashipu to save the boy-devotee Prahlada), and Vamana (the brahmin dwarf who reclaimed the three worlds from the asura king Bali in just three steps).",
+          "The remaining five are: Parashurama (the warrior-sage with an axe who appeared to humble the corrupt warrior caste of his time), Lord Rama (the ideal king of Ayodhya, hero of the Ramayana), Lord Krishna (the divine teacher of the Bhagavad Gita, hero of the Mahabharata), Buddha (regarded by most Hindu traditions as the ninth avatar who taught compassion and the dangers of empty ritual), and Kalki (the future avatar yet to appear at the end of Kali Yuga, riding a white horse and bearing a flaming sword to end the present age).",
+          "The avatars correspond loosely to a developmental sequence — from aquatic life (fish), to amphibian (tortoise), to mammal (boar), to half-human (man-lion), to dwarf, to fully developed human warrior, to ideal king, to philosopher-king, to enlightened teacher, to the future restorer. Some modern interpreters see in this sequence an intuition of biological evolution thousands of years before Darwin.",
         ],
       },
       {
-        heading: "The Significance of Avatars",
+        heading: "The Significance of the Avatar Doctrine",
         paragraphs: [
-          "Each avatar appeared in a specific yuga to address a specific kind of crisis. Matsya saved knowledge during a cosmic flood. Narasimha protected the devotee Prahlad from his tyrannical father. Rama demonstrated the ideal of a king and a son. Krishna revealed the Bhagavad Gita.",
-          "The avatar doctrine is one of Hinduism's most important contributions to world religion — it teaches that the divine is not distant, but actively involved in the world whenever it is needed.",
+          "Each avatar appeared in a specific yuga to address a specific kind of crisis. Matsya saved cosmic knowledge during a flood. Narasimha protected the devotee Prahlada from his tyrannical father. Rama demonstrated the ideal of a king, husband, son, and brother. Krishna revealed the Bhagavad Gita and taught that liberation is possible through devotion alone, without scripture or caste. Buddha came when ritual had become hollow and reminded humanity of compassion.",
+          "The avatar doctrine is one of Hinduism's most important contributions to world religious thought — it teaches that the divine is not distant or indifferent but actively involved in the world whenever the moral order collapses. It is also one of the most inclusive theologies in any religion: by including the Buddha as an avatar, Hinduism formally acknowledged a teacher who rejected the Vedas as still being a manifestation of the same supreme reality.",
+          "The doctrine is grounded in Krishna's own famous statement in the Bhagavad Gita (4.7-8): \"Whenever there is a decline of dharma, O Bharata, and a rise of adharma, then I manifest myself. To protect the righteous, to destroy the wicked, and to re-establish dharma, I take birth age after age.\"",
         ],
       },
       {
-        heading: "Worship of Vishnu",
+        heading: "Vaishnava Schools and Worship",
         paragraphs: [
-          "Vishnu is worshipped as Narayana, Hari, Vasudeva, and many other names. Vaishnavism is one of the four major denominations of Hinduism, and includes traditions like Sri Vaishnavism (Ramanuja), Gaudiya Vaishnavism (Chaitanya), and Madhva Vaishnavism.",
-          "Ekadashi vrat — the fast observed on the 11th day of every fortnight — is dedicated to Lord Vishnu and is the most widely practised devotional fast in Hindu tradition.",
+          "Vaishnavism is one of the four major denominations of Hinduism (alongside Shaivism, Shaktism, and Smarta) and includes several distinct philosophical schools. Sri Vaishnavism, founded by Ramanuja in 11th-century Tamil Nadu, holds the doctrine of Vishishtadvaita (qualified non-dualism). Madhva Vaishnavism, founded by Madhvacharya in 13th-century Karnataka, teaches Dvaita (dualism). Gaudiya Vaishnavism, founded by Chaitanya Mahaprabhu in 16th-century Bengal, focuses on Krishna as the supreme form of God and emphasizes ecstatic devotion through chanting.",
+          "Despite their philosophical differences, all Vaishnava schools share a common devotional core: surrender (sharanagati) to Vishnu as the supreme Lord, daily worship through japa and puja, observance of Ekadashi vrats, and pilgrimage to the great Vishnu shrines — Tirupati Balaji in Andhra Pradesh, Srirangam in Tamil Nadu, Badrinath in the Himalayas, Puri Jagannath in Odisha, and Guruvayoor in Kerala.",
+        ],
+      },
+      {
+        heading: "Vrats, Festivals and How to Worship at Home",
+        paragraphs: [
+          "Ekadashi vrat — the fast observed on the 11th day of every fortnight (twice a month) — is dedicated to Lord Vishnu and is the most widely practised devotional fast in all of Hindu tradition. Each of the 24 Ekadashis in a year has its own name and specific significance, the most important being Vaikuntha Ekadashi (in Margashirsha), Devshayani Ekadashi (when Vishnu is said to begin his four-month cosmic sleep), and Devuthani Ekadashi (when he wakes).",
+          "Friday is the weekly day dedicated to Vishnu and Lakshmi. The most important Vishnu festivals include Vaikuntha Ekadashi, Janmashtami (Krishna's birthday), Ram Navami (Rama's birthday), and Tulsi Vivah (the symbolic marriage of the Tulsi plant to Vishnu, marking the start of the Hindu wedding season).",
+          "To worship Vishnu at home, a small image or photo of Vishnu (or any of his avatars), tulsi leaves (his favourite — never offered to other deities except as adapted from his worship), yellow flowers, ghee lamp, and sandalwood paste are sufficient. Begin with the Vishnu Shadakshari (\"Om Namo Narayanaya\") or the Ashtakshari (\"Om Namo Bhagavate Vasudevaya\") chanted 108 times on a tulsi-bead mala, followed by an offering of fruit, kheer, or any sweet that has been first offered with tulsi leaves.",
         ],
       },
     ],
@@ -244,23 +350,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Who are the wives of Vishnu?",
         answer:
-          "Vishnu's primary consort is Goddess Lakshmi. In southern traditions, he is also said to have Bhudevi (Earth) and Niladevi as consorts, who are aspects of the same Shakti.",
+          "Vishnu's primary consort is Goddess Lakshmi, who incarnates with him in every avatar — as Sita with Rama, as Rukmini with Krishna, as Padmavati at Tirupati. In southern Vaishnava traditions, he is also said to have Bhudevi (the Earth goddess) and Niladevi as consorts, both of whom are regarded as additional aspects of the same supreme Shakti rather than separate goddesses.",
       },
       {
         question: "What is the meaning of Vishnu's discus (Sudarshana Chakra)?",
         answer:
-          "The Sudarshana Chakra represents the wheel of time and the destroyer of ignorance. It is Vishnu's primary weapon for restoring cosmic order.",
+          "The Sudarshana Chakra represents the wheel of time and the destroyer of ignorance. It is Vishnu's primary weapon for restoring cosmic order. The word sudarshana means \"of beautiful sight\" — for the righteous it is a source of grace; for the unrighteous, it is the swift instrument of justice. In some Vaishnava temples, the Sudarshana Chakra is itself worshipped as a deity.",
       },
       {
         question: "Are there only ten avatars of Vishnu?",
         answer:
-          "The Dashavatara is the most famous list, but the Bhagavata Purana mentions 24 avatars. Hindu tradition holds that Vishnu can take any form whenever dharma needs protection.",
+          "The Dashavatara is the most famous list, but the Bhagavata Purana mentions 24 avatars in total, and some traditions speak of innumerable expansions. Hindu tradition holds that Vishnu can take any form whenever dharma needs protection — the ten are simply his most important and well-known appearances. Buddha is the ninth in most lists, and Kalki, the tenth, is yet to come.",
+      },
+      {
+        question: "Why is tulsi (holy basil) sacred to Vishnu?",
+        answer:
+          "Tulsi is regarded in the Padma Purana as a partial incarnation of Lakshmi who chose to take plant form to be eternally close to Vishnu. Every offering made to Vishnu must include at least a single tulsi leaf — without it, the puja is considered incomplete. Most traditional Hindu households grow a tulsi plant in a courtyard or balcony shrine and offer water and a daily lamp to it.",
+      },
+      {
+        question: "What is Vaikuntha?",
+        answer:
+          "Vaikuntha is the eternal abode of Vishnu — described as a divine realm of perfect peace and bliss beyond the cycle of birth and death. Unlike svarga (heaven), which is temporary and from which beings return after their good karma is exhausted, Vaikuntha is permanent moksha — the final liberation. Devotees who reach Vaikuntha are said to take a four-armed form like Vishnu himself and serve him eternally.",
+      },
+      {
+        question: "Is Vishnu the same as Krishna and Rama?",
+        answer:
+          "Yes — Krishna and Rama are both avatars of Vishnu. In Vaishnava theology, the underlying reality is one (Vishnu / Narayana), and Rama, Krishna, Narasimha, Vamana, and the other avatars are forms he takes for specific cosmic purposes. The Gaudiya Vaishnava school takes this further and treats Krishna as the supreme original form of God of whom Vishnu is an expansion — but in mainstream Vaishnavism Vishnu is the supreme reality and the avatars are his manifestations.",
       },
     ],
     relatedLinks: [
       { label: "Ekadashi Dates – All 24 Fasting Days", href: "/ekadashi-dates" },
       { label: "Goddess Lakshmi", href: "/blog/goddess-lakshmi" },
       { label: "Lord Krishna", href: "/blog/lord-krishna" },
+      { label: "Vishnu Sahasranamam Explained", href: "/blog/vishnu-sahasranamam-explained" },
     ],
     relatedSlugs: ["lord-krishna", "goddess-lakshmi", "lord-shiva"],
   },
@@ -347,36 +469,60 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🐘",
     gradient: "from-orange-500 via-red-500 to-pink-500",
     publishDate: "2026-04-26",
-    readTime: 7,
+    readTime: 12,
     intro:
-      "Lord Ganesha — the elephant-headed son of Shiva and Parvati — is invoked before every Hindu ritual, every new home, every wedding, and every new business. He is Vighnaharta (the remover of obstacles) and Vinayaka (the supreme leader). No other deity occupies such a unique place in Hindu daily life.",
+      "Lord Ganesha — the elephant-headed son of Shiva and Parvati — is invoked before every Hindu ritual, every new home, every wedding, every business launch, and every important journey. He is Vighnaharta (the remover of obstacles), Vinayaka (the supreme leader), and Buddhi-Pradayaka (the giver of intellect). No other deity in the entire Hindu pantheon occupies such a unique place in daily life: even devotees of Shiva or Vishnu or the Goddess will invoke Ganesha first before turning to their primary deity. He is the gatekeeper at the threshold between failure and success — and that role is so central to Hindu thought that even the writing of a sacred text or a school examination begins with the words \"Shri Ganeshaya Namah.\" His worship is one of the few features that unites every Hindu tradition without exception.",
     sections: [
       {
         heading: "The Birth of Ganesha",
         paragraphs: [
-          "The most popular birth story of Ganesha comes from the Shiva Purana. Goddess Parvati created a boy from the turmeric paste she used during her bath and asked him to guard the door while she bathed. When Lord Shiva returned and was stopped by this unknown boy, a fierce battle followed and Shiva, in his anger, severed the child's head.",
-          "When Parvati discovered what had happened, she was inconsolable. To restore the child, Shiva asked his ganas to bring the head of the first creature they found facing north. They returned with the head of an elephant, which was joined to the boy's body. He was given the name Ganesha — lord of the ganas — and granted the boon that he would always be worshipped first.",
+          "The most popular birth story of Ganesha comes from the Shiva Purana. Goddess Parvati, alone in her mountain home while Shiva was away in deep meditation, created a boy from the turmeric paste she used during her bath. She breathed life into him and asked him to guard the door of her chamber while she bathed, instructing him to allow no one inside.",
+          "When Lord Shiva returned and was stopped by this unknown boy, a fierce confrontation followed. The boy refused to step aside, and Shiva — not knowing this was Parvati's son — eventually severed the child's head in anger after his ganas (attendants) had failed to overcome him. When Parvati discovered what had happened, her grief was so great that she threatened to dissolve all of creation.",
+          "To restore the child, Shiva asked his ganas to bring the head of the first creature they found facing north — the auspicious direction. They returned with the head of an elephant, which Shiva joined to the boy's body and brought back to life. The reborn boy was given the name Ganesha — lord of the ganas — and granted the boon by Shiva that he would always be worshipped first, before any other deity, in any ritual, anywhere in the world.",
         ],
       },
       {
-        heading: "Symbolism of His Form",
+        heading: "The Symbolism of His Form",
         paragraphs: [
-          "Every part of Ganesha's appearance carries deep meaning. His large head represents wisdom and the power to think big. His large ears teach us to listen more than we speak. His small eyes represent focus and concentration. His broken tusk symbolises the willingness to sacrifice for a higher purpose.",
-          "His large belly represents the ability to digest both the joys and sorrows of life. His mount, the mouse, represents the restless mind that he keeps under perfect control. The modak (sweet) in his hand represents the sweetness of self-realisation that comes to all who follow his path.",
+          "Every part of Ganesha's appearance carries deep meaning, and Hindu teachers traditionally use his form to teach the entire spiritual path. His large head represents wisdom, the power to think big, and the importance of cultivating a spacious mind. His large ears teach us to listen far more than we speak — to be slow with our own opinions and quick to hear others. His small eyes represent focus, concentration, and the ability to see what is essential rather than getting distracted by surfaces.",
+          "His broken tusk symbolises the willingness to sacrifice the small for the great — to give up minor preferences for major purposes. His large belly represents the ability to digest both the joys and sorrows of life without being shaken by either. His four arms hold the goad (ankusha, to direct the mind), the noose (pasha, to restrain wandering desires), the modak (the sweet of self-realisation), and the abhaya mudra (the gesture of fearlessness offered to the devotee).",
+          "His mount, the small mouse (mushak), represents the restless mind and ego that he keeps under perfect control — even though Ganesha is enormous and the mouse is tiny, the elephantine wisdom rides the small ego rather than being ridden by it. The modak in his hand represents the inner sweetness of self-realisation that comes to all who follow his path of discrimination and humility.",
         ],
       },
       {
-        heading: "Ganesh Chaturthi",
+        heading: "The Family of Ganesha",
         paragraphs: [
-          "Ganesh Chaturthi, celebrated on the fourth day of the bright fortnight in Bhadrapada month, is the largest Ganesha festival. Clay murtis of Ganesha are installed in homes and public pandals, worshipped for one to ten days, and then immersed in water (visarjan) — symbolising that even the gods we love must return to their source.",
-          "The festival is observed with the greatest enthusiasm in Maharashtra, Karnataka, Andhra Pradesh, and the Hindu diaspora. Lord Bal Gangadhar Tilak transformed it into a public celebration during the freedom movement to unite Indians.",
+          "Ganesha is the elder son of Shiva and Parvati, and the elder brother of Kartikeya (also known as Murugan, Skanda, or Subrahmanya). The famous story of the race between the two brothers — to see who could circle the world first — perfectly captures Ganesha's wisdom. While Kartikeya raced off on his peacock to circumambulate the entire physical world, Ganesha simply walked once around his parents Shiva and Parvati, declaring that they were his entire world. He won the race and the prize: a magical fruit that conferred wisdom.",
+          "In northern Indian traditions, Ganesha is depicted as a celibate (brahmachari), but in southern and eastern traditions he is married to two wives — Riddhi (prosperity) and Siddhi (spiritual attainment). In some accounts they are also said to have two sons, Shubha (auspiciousness) and Labha (gain). His family iconography is itself a complete teaching: through wisdom (Ganesha), one attains both prosperity (Riddhi) and spiritual fulfilment (Siddhi), and from their union come auspiciousness (Shubha) and gain (Labha) in every undertaking.",
         ],
       },
       {
-        heading: "Names and Mantras",
+        heading: "The Ashtavinayaka and 32 Forms of Ganesha",
         paragraphs: [
-          "Ganesha has 108 names — the most famous of which include Ganapati, Vinayaka, Vighnaharta, Ekadanta, Lambodara, Gajanana, and Siddhi-Vinayaka. The most chanted Ganesha mantra is \"Om Gam Ganapataye Namah\", which is believed to remove obstacles and grant wisdom.",
-          "Wednesday (Budhvara) is associated with Ganesha, and the chaturthi (4th day) of every lunar fortnight is observed as Sankashti Chaturthi or Vinayak Chaturthi by his devotees.",
+          "The Ashtavinayaka are eight ancient Ganesha temples in Maharashtra, located in a roughly circular pattern around Pune. They are believed to have appeared spontaneously (svayambhu — self-manifested) rather than being installed by human hands. The eight are: Mayureshwar at Morgaon, Siddhivinayak at Siddhatek, Ballaleshwar at Pali, Varadavinayak at Mahad, Chintamani at Theur, Girijatmaj at Lenyadri, Vighneshwar at Ozar, and Mahaganapati at Ranjangaon. A pilgrimage to all eight, in the traditional order, is considered the highest Ganesha yatra a devotee can undertake.",
+          "Beyond the Ashtavinayaka, the Mudgala Purana describes 32 forms of Ganesha — each with a specific iconography and a specific blessing. The most popular among these include Bala Ganapati (child form), Taruna Ganapati (youthful form), Heramba Ganapati (with five faces and ten arms, riding a lion), Ekadanta Ganapati (with one tusk), Mahaganapati (with ten arms), and Lakshmi Ganapati (seated with Lakshmi in his lap, granting both wisdom and wealth).",
+        ],
+      },
+      {
+        heading: "Ganesh Chaturthi — The Great Festival",
+        paragraphs: [
+          "Ganesh Chaturthi, celebrated on the fourth day of the bright fortnight of Bhadrapada month (August-September), is the largest Ganesha festival in the entire Hindu calendar. Clay murtis of Ganesha are installed in homes and public pandals on the first day. Daily worship continues for one and a half, three, five, seven, or up to ten days, with offerings of modak, durva grass (Ganesha's favourite herb), and red hibiscus flowers. The festival concludes with the visarjan — the immersion of the murti in a body of water, symbolising that even the gods we love must return to their source.",
+          "The festival is observed with the greatest enthusiasm in Maharashtra, Karnataka, Andhra Pradesh, Goa, and the Hindu diaspora. Lord Bal Gangadhar Tilak transformed Ganesh Chaturthi from a private household festival into a great public celebration during the Indian freedom movement (starting in 1893 in Pune), using it to bring people of all castes and communities together at a time when the British had banned political assemblies. That public dimension continues to define Ganesh Chaturthi today — the largest pandals in Mumbai, like Lalbaugcha Raja, attract millions of visitors over the ten days.",
+        ],
+      },
+      {
+        heading: "Names, Mantras and Weekly Worship",
+        paragraphs: [
+          "Ganesha has 108 names — the most famous of which include Ganapati, Vinayaka, Vighnaharta, Ekadanta (one-tusked), Lambodara (with the great belly), Gajanana (elephant-faced), Heramba, Vakratunda (with the curved trunk), and Siddhi-Vinayaka. The most chanted Ganesha mantra is the Ganapati Beej Mantra: \"Om Gam Ganapataye Namah,\" which is believed to remove obstacles, grant wisdom, and bring success in any undertaking when chanted daily on a 108-bead mala.",
+          "For more elaborate worship, the Ganesha Atharvashirsha (a Sanskrit hymn from the Atharva Veda dedicated to Ganesha) is the most powerful text — recited daily by serious devotees, especially during Ganesh Chaturthi and on every Sankashti Chaturthi (the fourth day of the dark fortnight, observed monthly in his honour).",
+          "Wednesday (Budhvara) is associated with Ganesha, and the chaturthi (4th day) of every lunar fortnight is observed by his devotees — Vinayak Chaturthi in the bright fortnight and Sankashti Chaturthi in the dark fortnight. Sankashti Chaturthi observers fast through the day and break the fast only after sighting the moon at night.",
+        ],
+      },
+      {
+        heading: "How to Worship Ganesha at Home",
+        paragraphs: [
+          "Ganesha is the easiest deity to worship at home and the perfect first deity for someone new to Hindu practice. A small image of Ganesha, fresh durva grass (ideally 21 blades — his special offering), red flowers (especially hibiscus), modak or any sweet, sandalwood paste, and a ghee lamp are all that are needed. Begin every puja, every important task, every journey, and every new venture with the words \"Om Shri Ganeshaya Namah\" — even just chanted mentally before starting.",
+          "On Wednesdays, Sankashti Chaturthi, and during the Ganesh Chaturthi festival, perform a more elaborate puja: light the diya, apply sandalwood and kumkum to his forehead, offer durva grass and red flowers, present the modak as naivedya (food offering), chant the Ganapati Atharvashirsha or 108 names, and conclude with arati. The ritual takes only fifteen to twenty minutes but transforms the day's work — putting Ganesha first means starting from a place of wisdom, calm, and freedom from obstacles.",
         ],
       },
     ],
@@ -384,23 +530,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Why is Ganesha worshipped first?",
         answer:
-          "Lord Shiva granted Ganesha the boon that he would be worshipped before any other deity in any ritual. This is why every Hindu puja begins with \"Om Shri Ganeshaya Namah\".",
+          "Lord Shiva granted Ganesha the boon that he would be worshipped before any other deity in any ritual, anywhere in the world, by anyone. This is why every Hindu puja, every wedding, every temple consecration, every business opening, and even the writing of every sacred Sanskrit text begins with the words \"Om Shri Ganeshaya Namah.\" Worshipping him first ensures that the obstacles to the main worship itself are removed before it begins.",
       },
       {
         question: "Why does Ganesha have a broken tusk?",
         answer:
-          "Several stories explain this. The most famous says he broke his own tusk to use as a pen while writing down the Mahabharata as Sage Vyasa dictated it. It teaches us to sacrifice the small for the great.",
+          "Several stories explain this. The most famous says he broke his own tusk to use as a pen while writing down the entire Mahabharata as Sage Vyasa dictated it without pause — Ganesha had agreed to write only on condition that Vyasa never stopped. When his original pen broke, he broke off his own tusk to continue. The story teaches us to sacrifice the small for the great and to always have a backup plan when undertaking great work.",
       },
       {
         question: "What is the favourite food of Ganesha?",
         answer:
-          "Modak — a sweet rice-flour dumpling filled with jaggery and coconut. It represents the inner sweetness that spiritual practice brings.",
+          "Modak — a sweet rice-flour dumpling filled with jaggery, coconut and cardamom. It is offered in groups of 21 during Ganesh Chaturthi puja. The modak represents the inner sweetness that spiritual practice brings — sweet on the inside but requiring the patient breaking of the outer shell to reach. Other favourite offerings include laddu (especially motichoor), durva grass (21 blades) and red hibiscus flowers.",
+      },
+      {
+        question: "Why does Ganesha ride a mouse?",
+        answer:
+          "The mouse (mushak) represents the restless mind, ego, and material desire — small in size but capable of nibbling through every barrier. By riding the mouse, Ganesha demonstrates the ideal: the higher wisdom guides the lower ego, rather than the other way around. The image of the enormous elephant-deity riding a tiny mouse is a deliberate visual paradox that teaches the entire spiritual path in one image.",
+      },
+      {
+        question: "What is the meaning of \"Om Gam Ganapataye Namah\"?",
+        answer:
+          "It is the Ganapati Beej Mantra. Om is the primordial sound; Gam is Ganesha's seed-syllable (beeja-akshara) — the vibrational essence of his presence; Ganapataye means \"to the lord of the ganas\" (Ganesha); and Namah means \"I bow.\" Chanted 108 times daily on a mala, it is believed to remove obstacles in any sphere of life and grant the wisdom needed to overcome challenges.",
+      },
+      {
+        question: "Can I do Ganesh Chaturthi at home with a small clay idol?",
+        answer:
+          "Absolutely yes — and this is the most traditional way. Buy or make a small unfired clay idol (eco-friendly), install it on the morning of Ganesh Chaturthi with a simple puja, perform daily worship for one and a half, three, five, seven, or ten days as your family tradition dictates, and immerse it in a bucket of water at home on the final day. The clay dissolves naturally and the water can be poured at the base of a tulsi or other sacred plant.",
       },
     ],
     relatedLinks: [
       { label: "Ganesh Chaturthi Date & Muhurat", href: "/ganesh-chaturthi" },
       { label: "Today's Panchang", href: "/panchang-today" },
       { label: "Marriage Muhurat", href: "/marriage-muhurat" },
+      { label: "Lord Shiva", href: "/blog/lord-shiva" },
     ],
     relatedSlugs: ["lord-shiva", "goddess-durga", "namakaran-ceremony"],
   },
@@ -487,36 +649,61 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     emoji: "🪯",
     gradient: "from-orange-600 via-red-600 to-rose-700",
     publishDate: "2026-04-26",
-    readTime: 7,
+    readTime: 13,
     intro:
-      "Lord Hanuman, the vanara (monkey) devotee of Lord Rama, is one of the most beloved deities in Hinduism. He is the perfect embodiment of bhakti (devotion), strength, courage, and selfless service. Worshipping Hanuman is said to instantly remove fear and grant the strength to face any challenge.",
+      "Lord Hanuman, the vanara (monkey) devotee of Lord Rama, is one of the most beloved deities in the entire Hindu world. He is the perfect embodiment of bhakti (devotion), shakti (strength), buddhi (intellect), seva (selfless service), and brahmacharya (lifelong celibacy in service of the divine). Worshipping Hanuman is said to instantly remove fear, grant the courage to face any challenge, and bring victory in any righteous struggle. He is also one of the eight Chiranjivis — beings believed to live on through all four yugas — and Hindu tradition holds that Hanuman is still present in the world today, appearing wherever the Ramayana is sincerely recited or where devotees call him with a pure heart. From the Sankat Mochan Hanuman temples of Varanasi to the cliffs of the Salasar shrine in Rajasthan, from the towering 33-metre statue in Karnataka to the tiny home shrines of millions of Hindu families worldwide, Hanuman is the deity Hindus turn to first when they need protection, courage, and the strength to keep going.",
     sections: [
       {
         heading: "Birth and Childhood",
         paragraphs: [
-          "Hanuman was born to Anjana, a celestial nymph, and Kesari, a vanara king. His divine father was Lord Vayu (the wind god), which is why Hanuman is also called Pavanaputra and Vayuputra. He was born on the full moon day of Chaitra month — celebrated as Hanuman Jayanti.",
-          "As a child, Hanuman once tried to swallow the Sun, mistaking it for a fruit. Indra struck him with his thunderbolt, breaking his jaw — which is how Hanuman got his name (\"hanu\" means jaw). Furious at his son's injury, Vayu withdrew air from the world. To pacify him, the gods blessed the child with extraordinary boons — strength greater than any creature, the ability to change size and shape, and immortality.",
+          "Hanuman was born to Anjana — a celestial nymph (apsara) cursed to take the form of a vanara — and Kesari, a noble vanara king of Sumeru. His divine father was Lord Vayu (the wind god), which is why Hanuman is also called Pavanaputra (son of the wind), Vayuputra, and Maruti. His exact birth, by traditional reckoning, took place on the full moon day of Chaitra month at sunrise — a moment celebrated annually as Hanuman Jayanti across India.",
+          "As a child, Hanuman was extraordinarily playful and immensely strong. The most famous story of his childhood describes how he once leapt up into the sky to swallow the rising Sun, mistaking its red disc for a ripe fruit. Indra, the king of the gods, struck him with his thunderbolt to protect the sun, breaking the child's jaw and sending him plummeting to earth. The Sanskrit word for jaw is hanu — and that is how the boy received the name Hanuman.",
+          "Furious at his son's injury, Vayu (the wind god) withdrew air from the entire world, suffocating all living beings. To pacify him and restore breath to creation, the gods came together and blessed the child with extraordinary boons: strength greater than any creature in the universe, the ability to change his size and shape at will, immortality through all four yugas, immunity from any weapon, and the gift of remembering all his powers only when reminded by another. This last gift would become crucial in the Ramayana.",
         ],
       },
       {
-        heading: "The Ramayana",
+        heading: "The Meeting with Lord Rama",
         paragraphs: [
-          "Hanuman's role in the Ramayana is so central that without him, the story cannot be told. He met Lord Rama in the Kishkindha forest while Rama was searching for Sita, and from that moment became the most loyal devotee in all of Hindu tradition.",
-          "He leaped across the ocean to Lanka, found Sita in the Ashoka Vatika, burned down Lanka, brought back her message, carried the Sanjivani mountain to save Lakshmana, and fought countless rakshasas in the great war. Through all of it, his only motivation was service to Rama.",
+          "Hanuman's role in the Ramayana begins in the Kishkindha forest, where Lord Rama and his brother Lakshmana had come searching for Sita after her abduction by Ravana. Hanuman, then minister to the exiled vanara prince Sugriva, was sent to find out who these two princely strangers were. Disguising himself as a wandering brahmin, Hanuman approached them — and the moment he heard Rama speak, he recognized him as the supreme Lord and fell at his feet.",
+          "From that moment on, Hanuman became the most loyal devotee in all of Hindu tradition. He brought about the friendship between Rama and Sugriva that led to the recovery of Sugriva's kingdom; he then assembled the great vanara army that would invade Lanka. The Ramayana describes Hanuman's devotion to Rama in lines that have moved Hindu hearts for two and a half thousand years: \"Where there is Rama, there is Hanuman; and where Hanuman serves, there Rama dwells.\"",
         ],
       },
       {
-        heading: "Hanuman as Chiranjeevi",
+        heading: "Crossing the Ocean — The Sundara Kanda",
         paragraphs: [
-          "Hanuman is one of the eight Chiranjeevis — beings believed to live on through all four yugas. Hindu tradition holds that Hanuman is still present in the world today, appearing wherever the Ramayana is sincerely recited or where devotees call him with pure heart.",
-          "This is why so many Hanuman temples have a continuous chanting tradition — and why devotees believe their prayers to him are answered with extraordinary speed.",
+          "The Sundara Kanda — the fifth book of Valmiki's Ramayana — is dedicated almost entirely to Hanuman's leap across the ocean to find Sita. When the vanara army reached the southern shore and could not figure out how to cross the hundred-yojana ocean to Lanka, the wise bear Jambavan reminded Hanuman of his forgotten boons. The reminder restored Hanuman to his full power, and he expanded his form to the size of a mountain and leapt across the sea in a single bound, defeating obstacles like the demoness Surasa and the shadow-catching rakshasi Sinhika along the way.",
+          "In Lanka, Hanuman shrunk himself to the size of a cat to search the city undetected, finally finding Sita in the Ashoka Vatika — held captive but unbroken in her devotion to Rama. He gave her Rama's signet ring as proof of his identity, received her message in return, and then deliberately allowed himself to be captured by Ravana's forces so that he could deliver Rama's warning directly. When the demons set fire to his tail, Hanuman used the flames to burn down most of Lanka before leaping back across the ocean to deliver Sita's message and the news of Lanka's defences.",
+          "The Sundara Kanda is the most read and recited part of the entire Ramayana. Many Hindu families read it together over five days during difficult times, believing that Hanuman's victory in the Sundara Kanda brings about victory in their own situations.",
         ],
       },
       {
-        heading: "The Hanuman Chalisa",
+        heading: "Saving Lakshmana with the Sanjivani Mountain",
         paragraphs: [
-          "Composed by the saint-poet Tulsidas, the Hanuman Chalisa is a 40-verse hymn praising Hanuman. Reciting it daily — especially on Tuesdays and Saturdays, the days associated with Hanuman — is believed to remove fear, grant strength, and protect against negative influences.",
-          "The Chalisa is one of the most widely recited prayers in the Hindu world. Many devotees commit it to memory and recite it during difficult times.",
+          "During the great war in Lanka, Lakshmana was struck unconscious by Indrajit's deadly Shakti weapon. The army's physician Sushena said the only cure was the sanjivani herb that grew on the Dronagiri mountain in the Himalayas — and it had to be brought before sunrise or Lakshmana would die. Hanuman immediately leapt north, but on reaching the mountain he could not identify which specific plant was the sanjivani.",
+          "Rather than risk delay, Hanuman simply uprooted the entire Dronagiri mountain and carried it south to Lanka, glowing in the night sky as he flew. The image of Hanuman flying with a mountain in one hand and his mace in the other has become one of the most iconic in all of Hindu art, and is the subject of Chaupai 18 of the Hanuman Chalisa.",
+          "When Lakshmana was revived, Hanuman returned the mountain to its original place in the Himalayas — but not before villages there had taken some of the herbs that grew on it, which is why parts of the Garhwal Himalayas are still known for medicinal plants today.",
+        ],
+      },
+      {
+        heading: "Hanuman as a Chiranjivi",
+        paragraphs: [
+          "Hanuman is one of the eight Chiranjivis — beings believed to live on through all four yugas. Hindu tradition holds that he is still present in the world today, appearing wherever the Ramayana is sincerely recited or where devotees call him with a pure heart. The Mahabharata, set thousands of years after the Ramayana, contains a famous episode where Hanuman appears to Bhima in the forest to teach him humility and to prophesy the Pandavas' victory. He also appears on Arjuna's flag during the Kurukshetra war as Kapidhwaja — \"the one with the monkey banner.\"",
+          "Many Hindu families and saints across the centuries have reported personal experiences of Hanuman's presence — Tulsidas himself is said to have first met Hanuman in disguise before meeting Lord Rama in vision. This is why so many Hanuman temples have a continuous chanting tradition (akhanda Ramayana, akhanda Hanuman Chalisa) — devotees believe Hanuman's presence is real and immediate wherever sincere worship is offered.",
+        ],
+      },
+      {
+        heading: "Major Hanuman Temples in India",
+        paragraphs: [
+          "Among the thousands of Hanuman temples across India, several are especially renowned. The Sankat Mochan Hanuman Temple in Varanasi, founded by Tulsidas himself in the 16th century, is famous for relieving devotees from sankat (crisis). The Mehandipur Balaji Temple in Rajasthan is associated with relief from negative energies and difficult astrological influences. The Salasar Balaji Temple, also in Rajasthan, is unique in showing Hanuman with a beard and moustache — and is one of the most visited Hanuman shrines in northern India.",
+          "In southern India, the Namakkal Anjaneyar Temple in Tamil Nadu features a magnificent open-air statue facing the Ranganatha temple — Hanuman eternally with hands folded in prayer toward Lord Vishnu. The Jakhu Temple in Shimla is built where Hanuman is said to have rested while flying north for the sanjivani herb. And the recent towering 33-metre statue at Anjanadri Hill in Karnataka — believed by many to be Hanuman's actual birthplace — has become one of the largest pilgrimage sites in southern India.",
+        ],
+      },
+      {
+        heading: "Worship of Hanuman, Mantras and the Chalisa",
+        paragraphs: [
+          "Hanuman worship is famously simple and accessible. A small image or photo of Hanuman, sindoor (vermilion) and sesame oil, red flowers (especially red hibiscus), boondi or jaggery, a coconut, and a ghee lamp are sufficient. Tuesday (Mangalvara) and Saturday (Shanivara) are the two most powerful days of the week, with the early morning Brahma Muhurta and the evening Pradosh hour being the most sacred times.",
+          "The most chanted Hanuman mantra is simply \"Om Hanumate Namah\" or the longer \"Om Shri Hanumate Namah,\" repeated 108 times on a tulsi or rudraksha mala. The Hanuman Chalisa, composed by Tulsidas in the 16th century in 40 simple verses of Awadhi, is the most popular Hanuman text in the entire Hindu world — chanted daily by hundreds of millions of devotees and recommended for protection, courage, and removal of fear. (See our companion article on the Hanuman Chalisa for the full meaning of all 40 verses.)",
+          "For more intensive worship, devotees recite the Sundara Kanda over a five-day period, the Hanuman Bahuk (also by Tulsidas) for relief from physical illness, or the Bajrang Baan when facing serious crisis. Hanuman is also the deity most commonly worshipped during the seven-and-a-half-year Sade Sati period of Saturn (Shani), because tradition holds that Hanuman has the power to mitigate Shani's harsher influences.",
         ],
       },
     ],
@@ -524,23 +711,39 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       {
         question: "Why is Hanuman shown holding a mountain?",
         answer:
-          "It refers to the Ramayana episode where Hanuman flew to the Himalayas to find the Sanjivani herb to save Lakshmana. Unable to identify the specific herb, he carried the entire mountain back to Lanka.",
+          "It refers to the Ramayana episode where Hanuman flew to the Himalayas to find the Sanjivani herb to save the unconscious Lakshmana. Unable to identify the specific herb in time, he uprooted the entire Dronagiri mountain and carried it back to Lanka — a feat referenced in Chaupai 18 of the Hanuman Chalisa and depicted in countless paintings and statues across India.",
       },
       {
         question: "Which day of the week is dedicated to Hanuman?",
         answer:
-          "Tuesday (Mangalvara) and Saturday (Shanivara) are both considered auspicious for Hanuman worship. Many devotees observe partial fasts on these days.",
+          "Tuesday (Mangalvara) and Saturday (Shanivara) are both considered auspicious for Hanuman worship. Tuesday is associated with Mars (Mangal) and Hanuman's role as a warrior; Saturday with Shani and Hanuman's role in mitigating its difficult influences. Many devotees observe partial fasts on these days, eating only one meal and that without grains or salt.",
       },
       {
         question: "What is the meaning of orange (sindoor) on Hanuman's body?",
         answer:
-          "When Hanuman saw Sita applying sindoor (vermilion) and learned it was for Rama's long life, he covered his entire body with sindoor — believing more sindoor would mean even longer life for Rama. This is why his murtis are coloured orange-red.",
+          "When Hanuman saw Sita applying sindoor (vermilion) to the parting of her hair and learned that it was for Lord Rama's long life, he reasoned that more sindoor would mean even longer life for Rama — and covered his entire body with sindoor as an offering. Rama was so moved that he declared anyone who offered sindoor mixed with sesame or jasmine oil to Hanuman would receive his special blessing. This is why his murtis are coloured orange-red and why sindoor abhishekam is one of the most popular Hanuman rituals.",
+      },
+      {
+        question: "Can women worship Hanuman?",
+        answer:
+          "Absolutely yes. Despite an old folk belief in some regions that Hanuman's lifelong brahmacharya (celibacy) makes worship by women restricted, this has no scriptural basis whatsoever. Women have always worshipped Hanuman freely — and many of the most famous Hanuman bhaktas in modern times have been women. Restrictions, where they exist, are usually limited to specific puja roles in certain traditional temples — not to home worship or chanting.",
+      },
+      {
+        question: "What is the connection between Hanuman and Saturn (Shani)?",
+        answer:
+          "There are two famous stories. In one, Hanuman rescued Shani from Ravana's prison; grateful, Shani promised never to trouble any sincere devotee of Hanuman. In another, Shani once tried to climb on Hanuman's shoulder during his quest for Sita; Hanuman trapped him under his weight until Shani agreed to be merciful to all Hanuman bhaktas. This is why those undergoing Sade Sati (the seven-and-a-half-year period of Shani) are traditionally advised to chant the Hanuman Chalisa daily and visit Hanuman temples on Saturdays.",
+      },
+      {
+        question: "Where is Hanuman believed to have been born?",
+        answer:
+          "Several sites claim to be Hanuman's birthplace. The most widely accepted in modern Hindu tradition is Anjanadri Hill in Hampi, Karnataka — named for his mother Anjana — which now hosts the towering 33-metre Hanuman statue. Other claims include Anjaneri Hill near Trimbakeshwar in Maharashtra, Kishkindha in Karnataka, and the Anjani Parvat in Anjan village, Jharkhand. All four are pilgrimage sites visited by Hanuman devotees today.",
       },
     ],
     relatedLinks: [
       { label: "Hanuman Jayanti Date", href: "/hanuman-jayanti" },
       { label: "Ram Navami Date & Puja", href: "/ram-navami" },
       { label: "Today's Panchang", href: "/panchang-today" },
+      { label: "Hanuman Chalisa – Verse-by-Verse Meaning", href: "/blog/hanuman-chalisa-meaning" },
     ],
     relatedSlugs: ["lord-vishnu", "lord-shiva", "significance-of-om"],
   },
