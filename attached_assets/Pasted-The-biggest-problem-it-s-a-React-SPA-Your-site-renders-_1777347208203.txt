@@ -1,0 +1,54 @@
+The biggest problem — it's a React SPA                    
+
+  Your site renders everything via JavaScript. When Google first crawls a page, it sees this in the raw HTML:
+
+  <div id="root"></div>
+
+  That's it. No text, no headings, no content. Google has to execute the JavaScript first to see the actual content 
+  — and it doesn't always do this reliably, especially for newer sites. This is almost certainly why Google sees
+  "low content."                                                                                                    
+                                                            
+  ---
+  Current SEO Status — Honest Scorecard
+                                                                                                                    
+  ┌──────────────────────────────────┬────────────────────────────────────┬──────────┐
+  │              Factor              │               Status               │  Impact  │                              
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤
+  │ JS-rendered content              │ ⚠️  SPA — Google may not see text   │ Critical │                              
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤
+  │ Meta tags set via JS (useEffect) │ ⚠️  Not in initial HTML             │ High     │                              
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Sitemap                          │ ✅ Exists and updated              │ Good     │                              
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Structured data (JSON-LD)        │ ✅ Article + FAQ schema            │ Good     │
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Article word count               │ ✅ 1500–2000 words each            │ Good     │
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Number of articles               │ ✅ 30 now                          │ Decent   │
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Page speed                       │ ⚠️  249KB JS bundle for blog data   │ Medium   │
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Internal linking                 │ ✅ Related articles, relatedLinks  │ Good     │
+  ├──────────────────────────────────┼────────────────────────────────────┼──────────┤                              
+  │ Domain age                       │ ❓ Unknown — new sites rank slowly │ Medium   │
+  └──────────────────────────────────┴────────────────────────────────────┴──────────┘                              
+                                                            
+  ---                                                                                                               
+  The Real Fix — Prerendering                               
+                             
+  The proper solution is prerendering — generating static HTML for each blog page at build time so Google sees real
+  content without executing JS.                                                                                     
+   
+  Options from easiest to hardest:                                                                                  
+                                                            
+  ┌─────────────────────────────┬──────────────────────────┬─────────────────────────────────────┐                  
+  │           Option            │          Effort          │            What it does             │
+  ├─────────────────────────────┼──────────────────────────┼─────────────────────────────────────┤                  
+  │ Prerender.io (service)      │ Low — add one script tag │ Serves pre-rendered HTML to bots    │
+  ├─────────────────────────────┼──────────────────────────┼─────────────────────────────────────┤
+  │ Vite SSG plugin (vite-ssg)  │ Medium — some config     │ Generates static HTML at build time │                  
+  ├─────────────────────────────┼──────────────────────────┼─────────────────────────────────────┤                  
+  │ Migrate to Astro or Next.js │ High — big refactor      │ Full SSR/SSG, best long-term SEO    │                  
+  └─────────────────────────────┴──────────────────────────┴─────────────────────────────────────┘                  
+                                                            
+  ---                                                                        
