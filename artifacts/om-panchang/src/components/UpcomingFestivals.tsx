@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { getUpcomingFestivals } from "@/lib/panchangData";
 import { gcalUrl } from "@/lib/i18n";
 import { FESTIVALS } from "@/lib/festivalsData";
+import { getDeityBlogForFestival, navigateToDeityBlog } from "@/lib/festivalDeityBlog";
 
 // Map of festival-name keywords → dedicated landing page slug
 const FESTIVAL_SLUG_MAP: { match: string; slug: string }[] = [
@@ -116,6 +117,7 @@ export default function UpcomingFestivals({ today, count = 10, onViewAll }: Prop
               <div className="flex-1 min-w-0">
                 {names.map((name, i) => {
                   const slug = getFestivalSlug(name);
+                  const deity = getDeityBlogForFestival(name);
                   const inner = (
                     <>
                       <span className="text-base leading-none">{getFestivalIcon(name)}</span>
@@ -124,12 +126,27 @@ export default function UpcomingFestivals({ today, count = 10, onViewAll }: Prop
                       </p>
                     </>
                   );
-                  return slug ? (
-                    <a key={i} href={`/${slug}`} className="group flex items-center gap-1.5" title={`Read about ${name}`}>
-                      {inner}
-                    </a>
-                  ) : (
-                    <div key={i} className="flex items-center gap-1.5">{inner}</div>
+                  return (
+                    <div key={i}>
+                      {slug ? (
+                        <a href={`/${slug}`} className="group flex items-center gap-1.5" title={`Read about ${name}`}>
+                          {inner}
+                        </a>
+                      ) : (
+                        <div className="flex items-center gap-1.5">{inner}</div>
+                      )}
+                      {deity && (
+                        <button
+                          type="button"
+                          onClick={() => navigateToDeityBlog(deity.slug)}
+                          className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-indigo-600 hover:text-indigo-800 hover:underline transition"
+                          title={`Read about ${deity.deityName}`}
+                        >
+                          <span>📖</span>
+                          <span>Read about {deity.deityName}</span>
+                        </button>
+                      )}
+                    </div>
                   );
                 })}
                 <p className="text-xs text-slate-400 mt-0.5">{formatDate(dateStr)}</p>

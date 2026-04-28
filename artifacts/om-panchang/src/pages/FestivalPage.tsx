@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { FESTIVALS, FestivalDetail, getCurrentOrNextOccurrence, getFestivalBySlug } from "@/lib/festivalsData";
 import FindTempleCard from "@/components/FindTempleCard";
 import { getCanonicalUrl } from "@/lib/canonical";
+import { getDeityBlogForFestival, navigateToDeityBlog } from "@/lib/festivalDeityBlog";
 
 interface Props {
   slug: string;
@@ -112,6 +113,7 @@ export default function FestivalPage({ slug }: Props) {
   const isPast = days < 0;
 
   const related = festival.related.map(s => FESTIVALS.find(f => f.slug === s)).filter(Boolean) as FestivalDetail[];
+  const deityBlog = getDeityBlogForFestival(festival.name);
 
   return (
     <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #f0f0ff 0%, #e8e8f8 50%, #f5f0ff 100%)" }}>
@@ -165,6 +167,24 @@ export default function FestivalPage({ slug }: Props) {
               </div>
 
               <p className="text-slate-700 mt-5 leading-relaxed">{festival.shortDescription}</p>
+
+              {deityBlog && (
+                <button
+                  type="button"
+                  onClick={() => navigateToDeityBlog(deityBlog.slug)}
+                  className="mt-5 group w-full text-left bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 border border-amber-200 rounded-xl px-4 py-3 transition flex items-center gap-3"
+                  title={`Read the full guide on ${deityBlog.deityName}`}
+                >
+                  <span className="text-2xl flex-shrink-0">📖</span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-amber-800 text-xs font-bold uppercase tracking-wide">Related Deity Guide</span>
+                    <span className="block text-indigo-900 font-semibold text-sm mt-0.5 group-hover:text-indigo-700">
+                      Read the full guide on {deityBlog.deityName}
+                    </span>
+                  </span>
+                  <span className="text-indigo-700 group-hover:translate-x-0.5 transition-transform font-bold">→</span>
+                </button>
+              )}
             </div>
           </div>
         </section>
