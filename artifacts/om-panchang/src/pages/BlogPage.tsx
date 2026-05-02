@@ -7,6 +7,7 @@ import {
   getRelatedArticles,
 } from "@/lib/blogData";
 import { getCanonicalUrl } from "@/lib/canonical";
+import ShareBar from "@/components/ShareBar";
 
 interface Props {
   slug?: string;
@@ -299,6 +300,12 @@ function BlogDetail({ article }: { article: BlogArticle }) {
             </section>
           ))}
         </article>
+
+        <ShareBar 
+          title={article.title}
+          summary={article.excerpt}
+          url={url}
+        />
 
         {/* Useful links sidebar (inline on this layout) */}
         {article.relatedLinks.length > 0 && (

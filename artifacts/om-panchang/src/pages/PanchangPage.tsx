@@ -17,11 +17,13 @@ import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
 import ChoghadiyaWidget from "@/components/ChoghadiyaWidget";
 import ChoghadiyaSection from "@/components/ChoghadiyaSection";
-import HoraSection from "@/components/HoraSection";
 import { getUtcOffsetHours } from "@/lib/choghadiya";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
 import VratCalendarSection from "@/components/VratCalendarSection";
 import SeoContent from "@/components/SeoContent";
+import ShareBar from "@/components/ShareBar";
+import SpiritualInsights from "@/components/SpiritualInsights";
+import { getCanonicalUrl } from "@/lib/canonical";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -1039,13 +1041,25 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                 onViewAll={() => setActiveTab("panchang")}
               />
             )}
+
+            {sp && <SpiritualInsights panchang={sp} />}
+            
             {/* Planets + Festivals preview */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <PlanetaryPositions date={selectedDate} />
               <UpcomingFestivals today={today} onViewAll={() => setActiveTab("festivals")} />
             </div>
+
             {/* Trending blog banner — drives discovery of long-form content */}
             <TrendingBlogBanner />
+
+            {sp && (
+              <ShareBar 
+                title={`Om Panchang - Today's Auspicious Timings (${selectedCity.name})`}
+                summary={`📅 ${selectedDateFormatted}\n✨ View today's Tithi, Nakshatra, and Choghadiya timings on Om Panchang.`}
+                url={getCanonicalUrl(window.location.pathname)}
+              />
+            )}
           </div>
         </main>
       )}
@@ -1089,12 +1103,21 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                         {item.sub && <p className="text-xs text-slate-400 mt-0.5">{item.sub}</p>}
                       </div>
                     </div>
-                  ))}
-                </div>
-              ) : <p className="text-slate-400 text-sm text-center py-10">Loading panchang data…</p>}
-            </div>
-            {/* Choghadiya full table */}
-            {sp && (
+                    ))}
+                    </div>
+                    ) : <p className="text-slate-400 text-sm text-center py-10">Loading panchang data…</p>}
+                    </div>
+
+                    {sp && <SpiritualInsights panchang={sp} />}
+
+                    {sp && (
+                    <ShareBar 
+                    title={`Daily Panchang for ${selectedCity.name} - ${selectedDateFormatted}`}                        summary={`🪔 Tithi: ${translateTithi(sp.tithi, "en")}\n⭐ Nakshatra: ${translateNakshatra(sp.nakshatra, "en")}\n🌅 Sunrise: ${sp.sunrise} | 🌇 Sunset: ${sp.sunset}`}
+                        url={getCanonicalUrl(window.location.pathname)}
+                      />
+                    )}
+                    {/* Choghadiya full table */}
+                    {sp && (
               <ChoghadiyaSection
                 date={selectedDate}
                 sunrise={sp.sunrise}
@@ -1295,6 +1318,42 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
           <a href="/contact-us" className="hover:text-indigo-600 transition">Contact Us</a>
           <span>·</span>
           <a href="/privacy-policy" className="hover:text-indigo-600 transition">Privacy Policy</a>
+        </div>
+
+        {/* Popular Locations - Boosts Indexing of City Pages */}
+        <div className="mt-8 pt-6 border-t border-indigo-50/50 max-w-5xl mx-auto px-4">
+          <p className="text-[10px] font-bold text-indigo-300 uppercase tracking-widest mb-3">Popular Locations</p>
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5">
+            {[
+              "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Jaipur", "Lucknow", "Varanasi",
+              "New York", "London", "Chicago", "San Francisco", "Sydney", "Dubai", "Singapore", "Toronto", "Kuala Lumpur"
+            ].map(cityName => {
+              const city = CITIES.find(c => c.name === cityName);
+              if (!city) return null;
+              return (
+                <a 
+                  key={cityName} 
+                  href={`/panchang-${cityToSlug(cityName)}`}
+                  className="text-[10px] text-slate-400 hover:text-indigo-500 transition"
+                >
+                  {cityName}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Knowledge Hub - Boosts Authority for AdSense */}
+        <div className="mt-6 pt-6 border-t border-indigo-50/50 max-w-5xl mx-auto px-4 pb-4">
+          <p className="text-[10px] font-bold text-indigo-300 uppercase tracking-widest mb-3">Knowledge Hub</p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+            <a href="/blog/hanuman-chalisa-meaning" className="text-[11px] text-slate-500 hover:text-indigo-600 font-medium transition">Hanuman Chalisa</a>
+            <a href="/blog/lord-krishna" className="text-[11px] text-slate-500 hover:text-indigo-600 font-medium transition">Lord Krishna</a>
+            <a href="/blog/lord-rama" className="text-[11px] text-slate-500 hover:text-indigo-600 font-medium transition">Lord Rama</a>
+            <a href="/blog/gayatri-mantra-meaning" className="text-[11px] text-slate-500 hover:text-indigo-600 font-medium transition">Gayatri Mantra</a>
+            <a href="/blog/goddess-lakshmi" className="text-[11px] text-slate-500 hover:text-indigo-600 font-medium transition">Goddess Lakshmi</a>
+            <a href="/blog/lord-surya" className="text-[11px] text-slate-500 hover:text-indigo-600 font-medium transition">Lord Surya</a>
+          </div>
         </div>
       </footer>
 
