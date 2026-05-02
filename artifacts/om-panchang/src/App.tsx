@@ -15,6 +15,7 @@ import { ZODIAC_SLUGS } from "@/lib/horoscopeData";
 import { BLOG_SLUGS } from "@/lib/blogData";
 import CanonicalTag from "@/components/CanonicalTag";
 import RobotsTag from "@/components/RobotsTag";
+import TrendingBlogTicker from "@/components/TrendingBlogTicker";
 
 const FESTIVAL_SLUGS = new Set(FESTIVALS.map(f => f.slug));
 
@@ -191,6 +192,7 @@ function App() {
       : (blog.slug ?? "__invalid__");
     return (
       <QueryClientProvider client={queryClient}>
+        <TrendingBlogTicker />
         <CanonicalTag />
         <RobotsTag noindex={!isValidArticle} />
         <BlogPage slug={slugToPass} />
@@ -202,6 +204,7 @@ function App() {
   if (horoscope) {
     return (
       <QueryClientProvider client={queryClient}>
+        <TrendingBlogTicker />
         <CanonicalTag />
         <RobotsTag noindex={noindex} />
         <HoroscopePage slug={horoscope.sign} />
@@ -209,11 +212,12 @@ function App() {
     );
   }
 
-  if (legalPage === "about") return <QueryClientProvider client={queryClient}><RobotsTag noindex={noindex} /><AboutPage /></QueryClientProvider>;
-  if (legalPage)             return <QueryClientProvider client={queryClient}><RobotsTag noindex={noindex} /><LegalPage page={legalPage} /></QueryClientProvider>;
-  if (festivalSlug)          return <QueryClientProvider client={queryClient}><RobotsTag noindex={noindex} /><FestivalPage slug={festivalSlug} /></QueryClientProvider>;
+  if (legalPage === "about") return <QueryClientProvider client={queryClient}><TrendingBlogTicker /><RobotsTag noindex={noindex} /><AboutPage /></QueryClientProvider>;
+  if (legalPage)             return <QueryClientProvider client={queryClient}><TrendingBlogTicker /><RobotsTag noindex={noindex} /><LegalPage page={legalPage} /></QueryClientProvider>;
+  if (festivalSlug)          return <QueryClientProvider client={queryClient}><TrendingBlogTicker /><RobotsTag noindex={noindex} /><FestivalPage slug={festivalSlug} /></QueryClientProvider>;
   if (monthly)               return (
     <QueryClientProvider client={queryClient}>
+      <TrendingBlogTicker />
       <CanonicalTag />
       <RobotsTag noindex={noindex} />
       <MonthlyCalendarPage
@@ -227,6 +231,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <TrendingBlogTicker />
       <CanonicalTag />
       <RobotsTag noindex={noindex} />
       <PanchangPage
