@@ -17,12 +17,14 @@ import KundaliMilanSection from "@/components/KundaliMilanSection";
 import BabyNamesSection from "@/components/BabyNamesSection";
 import ChoghadiyaWidget from "@/components/ChoghadiyaWidget";
 import ChoghadiyaSection from "@/components/ChoghadiyaSection";
+import HoraSection from "@/components/HoraSection";
 import { getUtcOffsetHours } from "@/lib/choghadiya";
 import MuhuratCalculator from "@/components/MuhuratCalculator";
 import VratCalendarSection from "@/components/VratCalendarSection";
 import SeoContent from "@/components/SeoContent";
 import ShareBar from "@/components/ShareBar";
 import SpiritualInsights from "@/components/SpiritualInsights";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { getCanonicalUrl } from "@/lib/canonical";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -933,6 +935,11 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
         </div>
       </header>
 
+      <Breadcrumbs items={[
+        { label: selectedCity.name, href: `/panchang-${cityToSlug(selectedCity.name)}` },
+        { label: VARIANT_CONFIG[variant].heading.split(' {city}')[0] || "Panchang" }
+      ]} />
+
       {/* ===== HOME TAB ===== */}
       {activeTab === "home" && (
         <main className="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
@@ -1198,6 +1205,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
         <main className="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
           {Sidebar}
           <div className="flex-1 space-y-4">
+            <Breadcrumbs items={[{ label: "Hindu Festivals" }]} />
             {/* Sub-tab toggle */}
             <FestivalsSubTabs variant={variant} />
           </div>
@@ -1209,6 +1217,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
         <main className="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
           {Sidebar}
           <div className="flex-1 space-y-4">
+            <Breadcrumbs items={[{ label: "Planetary Positions" }]} />
             <PlanetaryPositions date={selectedDate} />
             <div className="bg-white rounded-2xl shadow-sm card-glow border border-indigo-100 p-5">
               <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-3">🔭 About Vedic Astronomy</p>
@@ -1239,6 +1248,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       {/* ===== GUIDE TAB ===== */}
       {activeTab === "guide" && (
         <main className="max-w-7xl mx-auto px-4 py-5">
+          <Breadcrumbs items={[{ label: "Vedic Guide" }]} />
           <ReferenceSection />
         </main>
       )}
@@ -1246,6 +1256,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       {/* ===== KUNDALI TAB ===== */}
       {activeTab === "kundali" && (
         <main className="max-w-7xl mx-auto px-4 py-5">
+          <Breadcrumbs items={[{ label: "Kundali" }]} />
           <KundaliSection />
         </main>
       )}
@@ -1253,6 +1264,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       {/* ===== MILAN (MATCH) TAB ===== */}
       {activeTab === "milan" && (
         <main className="max-w-4xl mx-auto px-4 py-5">
+          <Breadcrumbs items={[{ label: "Kundali Milan" }]} />
           <KundaliMilanSection />
         </main>
       )}
@@ -1260,22 +1272,24 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
       {/* ===== MUHURTA CALCULATOR TAB ===== */}
       {activeTab === "muhurtacalc" && (
         <main className="max-w-4xl mx-auto px-4 py-5">
+          <Breadcrumbs items={[{ label: "Muhurat Calculator" }]} />
           <MuhuratCalculator />
         </main>
       )}
 
       {/* ===== BABY NAMES TAB ===== */}
       {activeTab === "babynames" && (
-        <main className="max-w-3xl mx-auto">
+        <main className="max-w-3xl mx-auto px-4 py-5">
+          <Breadcrumbs items={[{ label: "Baby Names" }]} />
           <BabyNamesSection />
         </main>
       )}
 
       {/* ===== HORA TAB ===== */}
       {activeTab === "hora" && (
-        <main className="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto w-full">
-          {Sidebar}
+        <main className="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
           <div className="flex-1 min-w-0">
+            <Breadcrumbs items={[{ label: "Hora Timings" }]} />
             {sp ? (
               <HoraSection
                 date={selectedDate}

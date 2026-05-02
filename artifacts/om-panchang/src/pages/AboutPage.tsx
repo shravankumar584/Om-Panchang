@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AboutPage() {
   useEffect(() => {
@@ -28,6 +29,8 @@ export default function AboutPage() {
           ← Back to Om Panchang
         </a>
       </div>
+
+      <Breadcrumbs items={[{ label: "About Us" }]} />
 
       <div className="max-w-3xl mx-auto px-5 py-10 space-y-8">
 

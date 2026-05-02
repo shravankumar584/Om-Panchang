@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 type LegalVariant = "disclaimer" | "contact" | "privacy";
 
@@ -45,6 +46,7 @@ function DisclaimerPage() {
         title="Disclaimer"
         sub="Important information about Om Panchang"
       />
+      <Breadcrumbs items={[{ label: "Disclaimer" }]} />
       <div className="max-w-2xl mx-auto px-6 py-8">
         <p className="text-xs text-slate-400 mb-6">Last updated: April 2026</p>
 
@@ -163,6 +165,7 @@ function ContactPage() {
         title="Contact Us"
         sub="We'd love to hear from you"
       />
+      <Breadcrumbs items={[{ label: "Contact Us" }]} />
       <div className="max-w-xl mx-auto px-6 py-8">
         {sent ? (
           <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-center">
@@ -281,6 +284,7 @@ function PrivacyPage() {
         title="Privacy Policy"
         sub="How we handle your information"
       />
+      <Breadcrumbs items={[{ label: "Privacy Policy" }]} />
       <div className="max-w-2xl mx-auto px-6 py-8">
         <p className="text-xs text-slate-400 mb-6">Last updated: April 2026</p>
 

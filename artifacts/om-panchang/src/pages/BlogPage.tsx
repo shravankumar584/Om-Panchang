@@ -8,6 +8,7 @@ import {
 } from "@/lib/blogData";
 import { getCanonicalUrl } from "@/lib/canonical";
 import ShareBar from "@/components/ShareBar";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 interface Props {
   slug?: string;
@@ -106,6 +107,8 @@ function BlogIndex() {
           </p>
         </div>
       </header>
+
+      <Breadcrumbs items={[{ label: "Blog" }]} />
 
       <main className="max-w-5xl mx-auto px-5 py-10 space-y-10">
         {grouped.map((group) => (
@@ -253,17 +256,15 @@ function BlogDetail({ article }: { article: BlogArticle }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50/30 font-sans">
+      <Breadcrumbs items={[
+        { label: "Blog", href: "/blog" },
+        { label: article.category, href: `/blog?category=${article.category.toLowerCase()}` },
+        { label: article.cardTitle }
+      ]} />
+
       {/* Hero */}
       <header className={`bg-gradient-to-br ${article.gradient} text-white`}>
         <div className="max-w-3xl mx-auto px-6 py-12">
-          <nav className="text-xs text-white/70 mb-4 flex items-center gap-2 flex-wrap">
-            <a href="/" className="hover:text-white">Om Panchang</a>
-            <span>›</span>
-            <a href="/blog" className="hover:text-white">Blog</a>
-            <span>›</span>
-            <span className="text-white/90">{article.category}</span>
-          </nav>
-
           <div className="flex items-start gap-4">
             <span className="text-6xl flex-shrink-0">{article.emoji}</span>
             <div>

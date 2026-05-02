@@ -4,6 +4,7 @@ import {
   getFestivalsForDate, cityToSlug, slugToCity,
 } from "@/lib/panchangData";
 import { monthToSlug, slugToMonthYear } from "@/lib/calendarUtils";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const MONTHS = [
   "January","February","March","April","May","June",
@@ -316,6 +317,12 @@ export default function MonthlyCalendarPage({ initialMonth, initialYear, initial
           </div>
         </div>
       </header>
+
+      <Breadcrumbs items={[
+        { label: city.name, href: `/panchang-${cityToSlug(city.name)}` },
+        { label: "Calendar", href: "/monthly-calendar" },
+        { label: `${MONTHS[month]} ${year}` }
+      ]} />
 
       {/* SEO intro text */}
       <div className="no-print max-w-7xl mx-auto px-4 pt-4 pb-1">

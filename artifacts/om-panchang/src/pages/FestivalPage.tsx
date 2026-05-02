@@ -3,6 +3,7 @@ import { FESTIVALS, FestivalDetail, getCurrentOrNextOccurrence, getFestivalBySlu
 import FindTempleCard from "@/components/FindTempleCard";
 import { getCanonicalUrl } from "@/lib/canonical";
 import { getDeityBlogForFestival, navigateToDeityBlog } from "@/lib/festivalDeityBlog";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 interface Props {
   slug: string;
@@ -129,6 +130,11 @@ export default function FestivalPage({ slug }: Props) {
           </a>
         </div>
       </header>
+
+      <Breadcrumbs items={[
+        { label: "Festivals", href: "/hindu-festivals" },
+        { label: festival.name }
+      ]} />
 
       <article className="max-w-5xl mx-auto px-5 py-8 space-y-6">
         {/* Hero */}

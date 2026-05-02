@@ -4,6 +4,7 @@ import { ZODIAC_SIGNS, getZodiacBySlug, type ZodiacSign } from "@/lib/horoscopeD
 import { getCanonicalUrl } from "@/lib/canonical";
 import SubscribeCard from "@/components/SubscribeCard";
 import FindTempleCard from "@/components/FindTempleCard";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 interface Props {
   slug?: string; // when undefined we render the index page
@@ -37,13 +38,14 @@ function HoroscopeIndex() {
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       <header className="panchang-gradient text-white">
         <div className="max-w-6xl mx-auto px-4 py-10">
-          <a href="/" className="text-indigo-200 text-sm hover:text-white">← Om Panchang</a>
           <h1 className="text-3xl md:text-4xl font-bold mt-2">Daily Horoscope</h1>
           <p className="text-indigo-100 mt-2 max-w-2xl">
             Free Vedic daily horoscope (rashifal) for all 12 zodiac signs. Pick your rashi to read today's prediction for love, career, health, finances and your lucky number.
           </p>
         </div>
       </header>
+
+      <Breadcrumbs items={[{ label: "Horoscope" }]} />
 
       <main className="max-w-6xl mx-auto px-4 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -146,6 +148,11 @@ function HoroscopeDetail({ sign }: { sign: ZodiacSign }) {
           </div>
         </div>
       </header>
+
+      <Breadcrumbs items={[
+        { label: "Horoscope", href: "/horoscope" },
+        { label: sign.english }
+      ]} />
 
       <main className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-5">
