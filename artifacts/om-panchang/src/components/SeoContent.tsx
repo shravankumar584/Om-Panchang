@@ -77,7 +77,7 @@ export default function SeoContent({ variant }: Props) {
             <h2 className="text-2xl font-bold text-indigo-900 border-b border-indigo-100 pb-2 mb-4">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-5">
+            <div className="space-y-3">
               {content.faqs.map((f, i) => (
                 <div key={i} className="bg-indigo-50/40 rounded-lg p-5 border border-indigo-100">
                   <h3 className="font-semibold text-indigo-900 mb-2">

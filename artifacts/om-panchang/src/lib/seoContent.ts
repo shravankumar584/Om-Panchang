@@ -24,32 +24,31 @@ export interface SeoContent {
 export const SEO_CONTENT: Partial<Record<string, SeoContent>> = {
   default: {
     intro:
-      "Om Panchang is a free, location-aware Hindu almanac that calculates today's Tithi, Nakshatra, Yoga, Karana and Vara along with sunrise, sunset, Rahu Kalam and the festival calendar for the city you actually live in. Whether you are in Delhi, Chennai, New York or London, the times shown are computed from the real positions of the Sun and Moon for your local timezone — not copied from a printed regional almanac.",
+      "Om Panchang is a free, location-aware Hindu almanac that calculates today's Tithi, Nakshatra, Yoga, Karana, and Vara along with sunrise, sunset, Rahu Kalam, and festival timings for your exact location. Whether you are in Delhi, London, or New York, all times are computed dynamically based on the Sun and Moon's actual positions for your local timezone.",
     sections: [
       {
-        heading: "What is Panchang",
+        heading: "What is Panchang?",
         paragraphs: [
-          "Panchang literally means \"five limbs\" — the five astronomical components that together describe the religious quality of a day. Hindu households consult it before fasting on Ekadashi, doing a puja, scheduling a wedding, or starting a new business venture. It is not symbolic — it is a calculation based on the angular positions of the Sun and Moon, which is why timings shift with your timezone and why festivals like Karwa Chauth can fall on different calendar days in San Francisco than in Mumbai.",
+          "Panchang literally means 'five limbs' — the astronomical components that define the religious quality of a day. Hindu households consult it for fasting, pujas, weddings, and business ventures. It is an objective calculation based on solar and lunar positions, which is why timings must be adjusted for your specific timezone.",
         ],
       },
       {
-        heading: "The five elements",
+        heading: "The Five Elements of Time",
         paragraphs: [
-          "Each element answers a different practical question:",
+          "Each limb answers a specific practical question for the seeker:",
         ],
         bullets: [
-          "Tithi — the lunar day. 30 tithis per lunar month, split into Shukla Paksha (waxing, ending in Purnima) and Krishna Paksha (waning, ending in Amavasya). Ekadashi, Chaturdashi and Amavasya carry strong religious significance.",
-          "Nakshatra — the lunar mansion. 27 Nakshatras of about 13°20′ each. Your Janma Nakshatra is the foundation of Vedic astrology and is used for baby names, horoscope matching and choosing dates.",
-          "Yoga — 27 named Yogas, computed from the combined longitudes of Sun and Moon. Some are favourable for new beginnings (Siddha, Shubha, Amrita), others are avoided (Vishkambha, Vyatipata).",
-          "Karana — half a Tithi. There are 11 Karanas; they are used for fine-grained Muhurta calculations within a single day.",
-          "Vara — the weekday, ruled by one of the seven classical planets. This is why Hanuman puja is on Tuesday/Saturday, Lakshmi puja on Friday, and Vishnu fasting on Thursday.",
+          "Tithi — The lunar day. Influences religious observances like Ekadashi and Amavasya.",
+          "Nakshatra — The lunar mansion (27 sectors). Crucial for naming, matching, and astrology.",
+          "Yoga — Derived from the combined longitudes of Sun and Moon. Determines auspicious energy.",
+          "Karana — Half a Tithi, used for precise Muhurta timing within a day.",
+          "Vara — The weekday, associated with specific planetary worship rituals.",
         ],
       },
       {
-        heading: "Why a location-aware Panchang matters",
+        heading: "Why a Localized Panchang Matters",
         paragraphs: [
-          "A printed Panchang from Tamil Nadu gives the right Ekadashi sunrise for Madurai but cannot tell you when Ekadashi sunrise is in San Jose. The Hindu diaspora has historically had to manually adjust festival dates to local timezones, which often led to confusion — celebrating a vrat on the wrong day, or starting a fast at the wrong sunrise.",
-          "Om Panchang solves this by recomputing everything for your actual city. If you live in Edison, the Ekadashi sunrise shown is the actual sunrise in Edison. The festival list, vrat windows and Choghadiya slots are all aligned to where you really are.",
+          "A printed almanac from India is geographically bound. The Hindu diaspora often faced confusion because festival timings and sunrise-based fasting (like Ekadashi) change depending on your location. Om Panchang solves this by recomputing timings for your actual city, ensuring you celebrate at the correct time.",
         ],
       },
     ],
