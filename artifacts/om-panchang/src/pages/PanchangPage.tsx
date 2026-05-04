@@ -1000,11 +1000,11 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
                         <div className="space-y-0.5">
                           {day.panchang ? (
                             <>
-                              <p className={`text-xs font-semibold leading-tight truncate ${day.isSelected ? "text-indigo-100" : "text-indigo-700"}`}>{tTithi(day.panchang.tithi)}</p>
+                              <p className={`text-[9px] font-semibold leading-tight ${day.isSelected ? "text-indigo-100" : "text-indigo-700"}`}>{tTithi(day.panchang.tithi)}</p>
                               {(() => {
                                 const lbl = tithiWindowLabel(day.panchang, day.date, selectedCity.timezone);
                                 return lbl ? (
-                                  <p className={`text-[9px] leading-tight truncate ${day.isSelected ? "text-indigo-200" : "text-indigo-400"}`} title={lbl}>{lbl}</p>
+                                  <p className={`text-[8px] leading-tight ${day.isSelected ? "text-indigo-200" : "text-indigo-400"}`}>{lbl}</p>
                                 ) : null;
                               })()}
                               <p className={`text-[10px] leading-tight truncate hidden sm:block ${day.isSelected ? "text-indigo-200" : "text-slate-400"}`}>{tNakshatra(day.panchang.nakshatra)}</p>
