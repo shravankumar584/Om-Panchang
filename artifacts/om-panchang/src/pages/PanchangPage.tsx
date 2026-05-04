@@ -25,6 +25,7 @@ import SeoContent from "@/components/SeoContent";
 import ShareBar from "@/components/ShareBar";
 import SpiritualInsights from "@/components/SpiritualInsights";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import EventCountdown from "@/components/EventCountdown";
 import { getCanonicalUrl } from "@/lib/canonical";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -782,6 +783,7 @@ export default function PanchangPage({ variant = "default", initialCity }: { var
   // Sidebar: common across tabs
   const Sidebar = (
     <aside className="w-full lg:w-72 flex-shrink-0 space-y-4">
+      <EventCountdown />
       <TodayDeity date={selectedDate} />
       <div className="bg-white rounded-2xl shadow-sm card-glow overflow-hidden border border-indigo-100">
         <div className="panchang-gradient px-4 py-3">
