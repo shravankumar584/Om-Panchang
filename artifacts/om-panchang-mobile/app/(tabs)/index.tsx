@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  ActivityIndicator, Alert, Modal, Platform, Pressable, ScrollView,
+  ActivityIndicator, Alert, Animated, Linking, Modal, Platform, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -8,7 +8,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useCity } from "@/contexts/CityContext";
-import { computeDayPanchang, type DayPanchang } from "@/lib/panchangData";
+import { computeDayPanchang, getUpcomingFestivals, type DayPanchang } from "@/lib/panchangData";
+import { getUtcOffsetHours } from "@/lib/choghadiya";
 import { useColors } from "@/hooks/useColors";
 import { MonthCardList } from "@/components/MonthCardList";
 import { router } from "expo-router";
@@ -62,14 +63,22 @@ export default function TodayScreen() {
               <Text style={styles.headerDate}>{formatDate(today)}</Text>
             </View>
           </View>
-          <Pressable
-            style={styles.cityButton}
-            onPress={() => { setShowCityModal(true); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); }}
-          >
-            <Feather name="map-pin" size={12} color="#C7D2FE" />
-            <Text style={styles.cityButtonText} numberOfLines={1}>{selectedCity.name}</Text>
-            <Feather name="chevron-down" size={12} color="#C7D2FE" />
-          </Pressable>
+          <View style={styles.headerActions}>
+            <Pressable
+              style={styles.cityButton}
+              onPress={() => { setShowCityModal(true); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); }}
+            >
+              <Feather name="map-pin" size={12} color="#C7D2FE" />
+              <Text style={styles.cityButtonText} numberOfLines={1}>{selectedCity.name}</Text>
+              <Feather name="chevron-down" size={12} color="#C7D2FE" />
+            </Pressable>
+            <Pressable
+              style={styles.infoButton}
+              onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/about"); }}
+            >
+              <Feather name="info" size={18} color="#C7D2FE" />
+            </Pressable>
+          </View>
         </View>
       </LinearGradient>
 
@@ -130,7 +139,19 @@ export default function TodayScreen() {
             <DetailRow label="Moon Sign (Rashi)" value={panchang.moonsign} colors={colors} />
           </SectionCard>
 
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>            
+          {panchang && <TodayDeityCard date={today} colors={colors} />}
+          {panchang && <EventCountdownCard colors={colors} today={today} />}
+          {panchang && (
+            <VedicClockCard
+              sunrise={panchang.sunrise}
+              sunset={panchang.sunset}
+              timezone={selectedCity.timezone}
+              cityName={selectedCity.name}
+              colors={colors}
+            />
+          )}
+
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.sectionTitle, { color: colors.primary }]}>Vedic Tools</Text>
             <View style={styles.toolsGrid}>
               <Pressable
@@ -158,6 +179,24 @@ export default function TodayScreen() {
                 <Text style={[styles.toolDesc, { color: "#BE185D" }]}>Compatibility</Text>
               </Pressable>
             </View>
+            <View style={[styles.toolsGrid, { marginTop: 10 }]}>
+              <Pressable
+                style={[styles.toolCard, { backgroundColor: "#FEF3C7", borderColor: "#FCD34D" }]}
+                onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/horoscope"); }}
+              >
+                <Text style={styles.toolEmoji}>♈</Text>
+                <Text style={[styles.toolName, { color: "#92400E" }]}>Horoscope</Text>
+                <Text style={[styles.toolDesc, { color: "#B45309" }]}>12 Rashis</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.toolCard, { backgroundColor: "#ECFDF5", borderColor: "#6EE7B7" }]}
+                onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/calendar"); }}
+              >
+                <Text style={styles.toolEmoji}>📅</Text>
+                <Text style={[styles.toolName, { color: "#065F46" }]}>Calendar</Text>
+                <Text style={[styles.toolDesc, { color: "#047857" }]}>Month Grid</Text>
+              </Pressable>
+            </View>
           </View>
 
           <View style={styles.monthHeader}>
@@ -165,6 +204,24 @@ export default function TodayScreen() {
             <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>Daily Tithi, Nakshatra &amp; Sun timings for {selectedCity.name}</Text>
           </View>
           <MonthCardList city={selectedCity} mode="panchang" />
+
+          <View style={styles.footerLinks}>
+            <Pressable onPress={() => router.push("/about")}>
+              <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>About</Text>
+            </Pressable>
+            <Text style={[styles.footerDot, { color: colors.mutedForeground }]}>·</Text>
+            <Pressable onPress={() => router.push("/legal")}>
+              <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>Privacy</Text>
+            </Pressable>
+            <Text style={[styles.footerDot, { color: colors.mutedForeground }]}>·</Text>
+            <Pressable onPress={() => router.push("/legal")}>
+              <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>Disclaimer</Text>
+            </Pressable>
+            <Text style={[styles.footerDot, { color: colors.mutedForeground }]}>·</Text>
+            <Pressable onPress={() => Linking.openURL("mailto:ompanchang.org@gmail.com")}>
+              <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>Contact</Text>
+            </Pressable>
+          </View>
         </ScrollView>
       ) : null}
 
@@ -240,6 +297,202 @@ export default function TodayScreen() {
   );
 }
 
+// ─── Today's Deity ───────────────────────────────────────────────────────────
+
+const DEITIES = [
+  { name: "Surya",   sanskrit: "सूर्य",   emoji: "☀️", blessing: "Vitality, health and self-confidence",        weekday: "Sunday" },
+  { name: "Shiva",   sanskrit: "शिव",     emoji: "🔱", blessing: "Inner peace, transformation and liberation",  weekday: "Monday" },
+  { name: "Hanuman", sanskrit: "हनुमान्", emoji: "🙏", blessing: "Courage, strength and devotion",              weekday: "Tuesday" },
+  { name: "Ganesha", sanskrit: "गणेश",   emoji: "🐘", blessing: "Removal of obstacles, wisdom and new beginnings", weekday: "Wednesday" },
+  { name: "Vishnu",  sanskrit: "विष्णु",  emoji: "🪷", blessing: "Preservation, prosperity and dharma",         weekday: "Thursday" },
+  { name: "Lakshmi", sanskrit: "लक्ष्मी", emoji: "💛", blessing: "Wealth, abundance and good fortune",          weekday: "Friday" },
+  { name: "Shani",   sanskrit: "शनि",    emoji: "⚖️", blessing: "Discipline, justice and karmic balance",      weekday: "Saturday" },
+];
+
+function TodayDeityCard({ date, colors }: { date: Date; colors: ReturnType<typeof useColors> }) {
+  const deity = DEITIES[date.getDay()];
+  if (!deity) return null;
+  return (
+    <View style={[styles.deityCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={styles.deityLeft}>
+        <View style={[styles.deityIconCircle, { backgroundColor: colors.secondary }]}>
+          <Text style={styles.deityEmoji}>{deity.emoji}</Text>
+        </View>
+        <View style={styles.deityInfo}>
+          <Text style={[styles.deityLabel, { color: colors.mutedForeground }]}>Today's Deity · {deity.weekday}</Text>
+          <Text style={[styles.deityName, { color: colors.foreground }]}>{deity.name}</Text>
+          <Text style={[styles.deitySanskrit, { color: colors.mutedForeground }]}>{deity.sanskrit}</Text>
+        </View>
+      </View>
+      <Text style={[styles.deityBlessing, { color: colors.mutedForeground }]}>{deity.blessing}</Text>
+    </View>
+  );
+}
+
+// ─── Event Countdown ─────────────────────────────────────────────────────────
+
+function EventCountdownCard({ colors, today }: { colors: ReturnType<typeof useColors>; today: Date }) {
+  const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; mins: number } | null>(null);
+  const [festName, setFestName] = useState("");
+
+  useEffect(() => {
+    const festivals = getUpcomingFestivals(today, 90);
+    const next = festivals.find(f => f.daysLeft > 0);
+    if (!next) return;
+    setFestName(next.names[0] ?? "");
+    const targetDate = new Date(next.dateStr + "T00:00:00");
+
+    function update() {
+      const diff = targetDate.getTime() - Date.now();
+      if (diff <= 0) { setTimeLeft(null); return; }
+      setTimeLeft({
+        days:  Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        mins:  Math.floor((diff % 3600000) / 60000),
+      });
+    }
+    update();
+    const id = setInterval(update, 60000);
+    return () => clearInterval(id);
+  }, [today]);
+
+  if (!timeLeft || !festName) return null;
+
+  return (
+    <View style={[styles.countdownCard, { backgroundColor: colors.primary }]}>
+      <Text style={styles.countdownLabel}>Next Festival</Text>
+      <Text style={styles.countdownName}>{festName}</Text>
+      <View style={styles.countdownRow}>
+        {[
+          { val: timeLeft.days,  unit: "Days" },
+          { val: timeLeft.hours, unit: "Hrs" },
+          { val: timeLeft.mins,  unit: "Min" },
+        ].map(({ val, unit }) => (
+          <View key={unit} style={styles.countdownBox}>
+            <View style={[styles.countdownInner, { backgroundColor: "rgba(255,255,255,0.15)" }]}>
+              <Text style={styles.countdownNum}>{String(val).padStart(2, "0")}</Text>
+            </View>
+            <Text style={styles.countdownUnit}>{unit}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+// ─── Vedic Clock ─────────────────────────────────────────────────────────────
+
+function parseCityTimeMins(timeStr: string): number | null {
+  if (!timeStr || timeStr === "N/A") return null;
+  const clean = timeStr.replace(/ /g, " ").trim();
+  const match = clean.match(/(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)/i);
+  if (!match) return null;
+  let h = parseInt(match[1] ?? "0");
+  const m = parseInt(match[2] ?? "0");
+  const meridiem = (match[3] ?? "AM").toUpperCase();
+  if (meridiem === "PM" && h !== 12) h += 12;
+  if (meridiem === "AM" && h === 12) h = 0;
+  return h * 60 + m;
+}
+
+function VedicClockCard({ sunrise, sunset, timezone, cityName, colors }: {
+  sunrise: string; sunset: string; timezone: string; cityName: string;
+  colors: ReturnType<typeof useColors>;
+}) {
+  const [now, setNow] = useState(() => new Date());
+  const barWidth = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const cityTimeStr = useMemo(() => {
+    return new Intl.DateTimeFormat("en-IN", {
+      hour: "2-digit", minute: "2-digit", second: "2-digit",
+      hour12: true, timeZone: timezone,
+    }).format(now);
+  }, [now, timezone]);
+
+  const { ghati, pal, vipal, percentDay, isDaytime } = useMemo(() => {
+    const utcOffset = getUtcOffsetHours(timezone);
+    const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+    const cityMs = utcMs + utcOffset * 3600000;
+    const cityNow = new Date(cityMs);
+    const cityMins = cityNow.getHours() * 60 + cityNow.getMinutes();
+    const cityTotalMs = (cityNow.getHours() * 3600 + cityNow.getMinutes() * 60 + cityNow.getSeconds()) * 1000;
+
+    const riseMins = parseCityTimeMins(sunrise);
+    const setMins = parseCityTimeMins(sunset);
+    if (riseMins == null || setMins == null) {
+      return { ghati: "--", pal: "--", vipal: "--", percentDay: 0, isDaytime: false };
+    }
+
+    const dayDurMs = (setMins - riseMins) * 60000;
+    const elapsedMs = cityTotalMs - riseMins * 60000;
+    const clampedElapsed = Math.max(0, Math.min(dayDurMs, elapsedMs));
+    const pct = clampedElapsed / dayDurMs;
+
+    const DAY_MS = 24 * 3600000;
+    const totalVipal = Math.max(0, Math.round((elapsedMs / DAY_MS) * 216000));
+    const g = Math.floor(totalVipal / 3600);
+    const p = Math.floor((totalVipal % 3600) / 60);
+    const v = totalVipal % 60;
+
+    return {
+      ghati: String(g).padStart(2, "0"),
+      pal: String(p).padStart(2, "0"),
+      vipal: String(v).padStart(2, "0"),
+      percentDay: pct,
+      isDaytime: cityMins >= riseMins && cityMins < setMins,
+    };
+  }, [now, sunrise, sunset, timezone]);
+
+  useEffect(() => {
+    Animated.timing(barWidth, {
+      toValue: Math.min(1, percentDay),
+      duration: 600,
+      useNativeDriver: false,
+    }).start();
+  }, [percentDay, barWidth]);
+
+  return (
+    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <Text style={[styles.sectionTitle, { color: colors.primary }]}>⏱️ Vedic Time</Text>
+      <Text style={[styles.vedicClock, { color: colors.foreground }]}>{cityTimeStr}</Text>
+      <Text style={[styles.vedicCity, { color: colors.mutedForeground }]}>{cityName} local time</Text>
+      <View style={[styles.ghatiRow, { backgroundColor: colors.secondary }]}>
+        {[{ val: ghati, label: "Ghati" }, { val: pal, label: "Pal" }, { val: vipal, label: "Vipal" }].map(({ val, label }, i) => (
+          <React.Fragment key={label}>
+            {i > 0 && <Text style={[styles.ghatiSep, { color: colors.mutedForeground }]}>:</Text>}
+            <View style={styles.ghatiUnit}>
+              <Text style={[styles.ghatiNum, { color: colors.primary }]}>{val}</Text>
+              <Text style={[styles.ghatiLabel, { color: colors.mutedForeground }]}>{label}</Text>
+            </View>
+          </React.Fragment>
+        ))}
+      </View>
+      <View style={styles.barWrap}>
+        <View style={styles.barRow}>
+          <Text style={[styles.barLabel, { color: colors.mutedForeground }]}>🌅 {sunrise}</Text>
+          <Text style={[styles.barLabel, { color: colors.mutedForeground }]}>🌇 {sunset}</Text>
+        </View>
+        <View style={[styles.barTrack, { backgroundColor: colors.muted }]}>
+          <Animated.View style={[styles.barFill, {
+            width: barWidth.interpolate({ inputRange: [0, 1], outputRange: ["0%", "100%"] }),
+            backgroundColor: isDaytime ? "#F59E0B" : "#6366F1",
+          }]} />
+        </View>
+      </View>
+      <Text style={[styles.ghatiNote, { color: colors.mutedForeground }]}>
+        1 Day = 60 Ghati · 1 Ghati = 60 Pal · 1 Pal = 60 Vipal
+      </Text>
+    </View>
+  );
+}
+
+// ─── Section Card ─────────────────────────────────────────────────────────────
+
 function SectionCard({ title, children, colors }: { title: string; children: React.ReactNode; colors: ReturnType<typeof useColors> }) {
   return (
     <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>      
@@ -273,7 +526,9 @@ const styles = StyleSheet.create({
   headerOm: { fontSize: 28 },
   headerTitle: { color: "#FFFFFF", fontSize: 26, fontWeight: "700", fontFamily: "Inter_700Bold" },
   headerDate: { color: "#E0E7FF", fontSize: 14, marginTop: 2, fontFamily: "Inter_500Medium" },
+  headerActions: { flexDirection: "row", alignItems: "center", gap: 8 },
   cityButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "rgba(255,255,255,0.14)", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 14, maxWidth: 140 },
+  infoButton: { padding: 4 },
   cityButtonText: { color: "#FFFFFF", fontSize: 12, fontFamily: "Inter_600SemiBold" },
   scroll: { flex: 1 },
   content: { paddingHorizontal: 16, paddingTop: 16, gap: 14 },
@@ -307,4 +562,40 @@ const styles = StyleSheet.create({
   toolEmoji: { fontSize: 22 },
   toolName: { fontSize: 15, fontFamily: "Inter_700Bold" },
   toolDesc: { fontSize: 12, fontFamily: "Inter_500Medium" },
+  // TodayDeity
+  deityCard: { borderWidth: 1, borderRadius: 18, padding: 14, gap: 10 },
+  deityLeft: { flexDirection: "row", alignItems: "center", gap: 12 },
+  deityIconCircle: { width: 52, height: 52, borderRadius: 26, justifyContent: "center", alignItems: "center" },
+  deityEmoji: { fontSize: 28 },
+  deityInfo: { flex: 1 },
+  deityLabel: { fontSize: 11, fontFamily: "Inter_500Medium" },
+  deityName: { fontSize: 18, fontFamily: "Inter_700Bold", marginTop: 2 },
+  deitySanskrit: { fontSize: 12, fontFamily: "Inter_400Regular" },
+  deityBlessing: { fontSize: 13, fontFamily: "Inter_400Regular", lineHeight: 18 },
+  // EventCountdown
+  countdownCard: { borderRadius: 18, padding: 16, alignItems: "center", gap: 6 },
+  countdownLabel: { color: "rgba(255,255,255,0.7)", fontSize: 10, fontFamily: "Inter_700Bold", textTransform: "uppercase", letterSpacing: 2 },
+  countdownName: { color: "#FFFFFF", fontSize: 18, fontFamily: "Inter_700Bold", textAlign: "center" },
+  countdownRow: { flexDirection: "row", gap: 12, marginTop: 4 },
+  countdownBox: { alignItems: "center", gap: 4 },
+  countdownInner: { borderRadius: 10, width: 54, height: 54, justifyContent: "center", alignItems: "center" },
+  countdownNum: { color: "#FFFFFF", fontSize: 20, fontFamily: "Inter_700Bold" },
+  countdownUnit: { color: "rgba(255,255,255,0.7)", fontSize: 10, fontFamily: "Inter_700Bold", textTransform: "uppercase", letterSpacing: 1 },
+  // VedicClock
+  vedicClock: { fontSize: 28, fontFamily: "Inter_700Bold", textAlign: "center", letterSpacing: 1 },
+  vedicCity: { fontSize: 12, fontFamily: "Inter_400Regular", textAlign: "center", marginTop: -4 },
+  ghatiRow: { flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 12, paddingVertical: 10, paddingHorizontal: 16, gap: 4 },
+  ghatiUnit: { alignItems: "center", flex: 1 },
+  ghatiNum: { fontSize: 22, fontFamily: "Inter_700Bold" },
+  ghatiLabel: { fontSize: 10, fontFamily: "Inter_500Medium" },
+  ghatiSep: { fontSize: 20, fontFamily: "Inter_700Bold", marginBottom: 10 },
+  barWrap: { gap: 6 },
+  barRow: { flexDirection: "row", justifyContent: "space-between" },
+  barLabel: { fontSize: 11, fontFamily: "Inter_400Regular" },
+  barTrack: { height: 8, borderRadius: 4, overflow: "hidden" },
+  barFill: { height: "100%", borderRadius: 4 },
+  ghatiNote: { fontSize: 11, fontFamily: "Inter_400Regular", textAlign: "center" },
+  footerLinks: { flexDirection: "row", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: 6, paddingVertical: 8 },
+  footerLink: { fontSize: 12, fontFamily: "Inter_500Medium" },
+  footerDot: { fontSize: 12 },
 });

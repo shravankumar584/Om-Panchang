@@ -27,6 +27,11 @@ function RootLayoutNav() {
       <Stack.Screen name="hora" options={{ headerShown: true, title: "Hora" }} />
       <Stack.Screen name="kundali" options={{ headerShown: true, title: "Kundali" }} />
       <Stack.Screen name="kundali-milan" options={{ headerShown: true, title: "Kundali Milan" }} />
+      <Stack.Screen name="horoscope" options={{ headerShown: false }} />
+      <Stack.Screen name="festival/[slug]" options={{ headerShown: false }} />
+      <Stack.Screen name="calendar" options={{ headerShown: false }} />
+      <Stack.Screen name="about" options={{ headerShown: false }} />
+      <Stack.Screen name="legal" options={{ headerShown: false }} />
     </Stack>
   );
 }

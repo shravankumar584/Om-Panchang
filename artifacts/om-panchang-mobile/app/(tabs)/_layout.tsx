@@ -24,6 +24,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "sparkles", selected: "sparkles" }} />
         <Label>Festivals</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="choghadiya">
+        <Icon sf={{ default: "clock.badge.checkmark", selected: "clock.badge.checkmark.fill" }} />
+        <Label>Choghadiya</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="planets">
         <Icon sf={{ default: "moon.stars", selected: "moon.stars.fill" }} />
         <Label>Planets</Label>
@@ -99,6 +103,18 @@ function ClassicTabLayout() {
               <SymbolView name="sparkles" tintColor={color} size={24} />
             ) : (
               <Feather name="star" size={22} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="choghadiya"
+        options={{
+          title: "Choghadiya",
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="clock.badge.checkmark.fill" tintColor={color} size={24} />
+            ) : (
+              <Feather name="check-circle" size={22} color={color} />
             ),
         }}
       />
