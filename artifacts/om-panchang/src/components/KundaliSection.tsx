@@ -529,11 +529,12 @@ export default function KundaliSection() {
           <p className="text-indigo-200 text-sm">Hindu Astrology Birth Chart</p>
         </div>
         <div className="p-5 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-xs font-semibold text-indigo-600 uppercase tracking-wide block mb-1">Birth Date</label>
               <input
-                type="date" value={birthDate}
+                type="date"
+                value={birthDate}
                 onChange={e => setBirthDate(e.target.value)}
                 className="w-full px-3 py-2 rounded-xl border border-indigo-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
@@ -541,7 +542,8 @@ export default function KundaliSection() {
             <div>
               <label className="text-xs font-semibold text-indigo-600 uppercase tracking-wide block mb-1">Birth Time</label>
               <input
-                type="time" value={birthTime}
+                type="time"
+                value={birthTime}
                 onChange={e => setBirthTime(e.target.value)}
                 className="w-full px-3 py-2 rounded-xl border border-indigo-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
