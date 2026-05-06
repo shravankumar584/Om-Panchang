@@ -1,16 +1,48 @@
-import React, { useMemo } from "react";
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Platform, Pressable, ScrollView, StyleSheet, Text, View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import { getPlanetaryPositions, type PlanetPosition } from "@/lib/panchangData";
+import { router } from "expo-router";
+import { BLOG_ARTICLES, BLOG_CATEGORIES, type BlogArticle } from "@/lib/blogData";
 import { useColors } from "@/hooks/useColors";
 
-export default function PlanetsScreen() {
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+const GRADIENT_COLORS: Record<string, [string, string]> = {
+  "from-blue-700 via-indigo-700 to-purple-700": ["#1D4ED8", "#7C3AED"],
+  "from-orange-700 via-red-700 to-pink-700":    ["#C2410C", "#BE185D"],
+  "from-emerald-700 via-teal-700 to-cyan-700":  ["#047857", "#0E7490"],
+  "from-purple-700 via-violet-700 to-indigo-700": ["#7E22CE", "#4338CA"],
+  "from-rose-700 via-pink-700 to-fuchsia-700":  ["#BE123C", "#A21CAF"],
+  "from-amber-700 via-orange-700 to-red-700":   ["#B45309", "#C2410C"],
+  "from-indigo-800 via-blue-700 to-sky-600":    ["#3730A3", "#0284C7"],
+  "from-teal-700 via-emerald-700 to-green-700": ["#0F766E", "#15803D"],
+  "from-violet-800 via-purple-700 to-fuchsia-600": ["#5B21B6", "#A21CAF"],
+  "from-sky-700 via-blue-700 to-indigo-700":    ["#0369A1", "#4338CA"],
+  "from-green-700 via-emerald-700 to-teal-700": ["#15803D", "#0F766E"],
+  "from-red-700 via-rose-700 to-pink-700":      ["#B91C1C", "#BE185D"],
+};
+
+function getGradient(tailwind: string): [string, string] {
+  return GRADIENT_COLORS[tailwind] ?? ["#4338CA", "#7C3AED"];
+}
+
+export default function ArticlesTabScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === "web" ? 67 : insets.top;
-  const today = useMemo(() => new Date(), []);
-  const planets = useMemo(() => getPlanetaryPositions(today), [today]);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const filtered = activeCategory === "all"
+    ? BLOG_ARTICLES
+    : BLOG_ARTICLES.filter(a => a.category === activeCategory);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -18,81 +50,132 @@ export default function PlanetsScreen() {
         colors={[colors.headerStart, colors.headerEnd]}
         style={[styles.header, { paddingTop: topPad + 12 }]}
       >
-        <Text style={styles.headerTitle}>Navagraha</Text>
-        <Text style={styles.headerSub}>Planetary positions in Sidereal zodiac</Text>
+        <View style={styles.heroRow}>
+          <Text style={styles.heroEmoji}>📖</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.heroTitle}>Hindu Knowledge Hub</Text>
+            <Text style={styles.heroSub}>Deities · Panchang · Mantras · Culture</Text>
+          </View>
+        </View>
       </LinearGradient>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={[styles.filterScroll, { borderBottomColor: colors.border, backgroundColor: colors.card }]}
+        contentContainerStyle={styles.filterContent}
+      >
+        <Pressable
+          style={[styles.filterChip, { borderColor: colors.border, backgroundColor: colors.muted },
+            activeCategory === "all" && { backgroundColor: colors.primary, borderColor: colors.primary }]}
+          onPress={() => setActiveCategory("all")}
+        >
+          <Text style={[styles.filterLabel, { color: colors.mutedForeground },
+            activeCategory === "all" && { color: "#FFFFFF" }]}>All</Text>
+        </Pressable>
+        {BLOG_CATEGORIES.map(cat => (
+          <Pressable
+            key={cat.name}
+            style={[styles.filterChip, { borderColor: colors.border, backgroundColor: colors.muted },
+              activeCategory === cat.name && { backgroundColor: colors.primary, borderColor: colors.primary }]}
+            onPress={() => setActiveCategory(cat.name)}
+          >
+            <Text style={styles.filterEmoji}>{cat.emoji}</Text>
+            <Text style={[styles.filterLabel, { color: colors.mutedForeground },
+              activeCategory === cat.name && { color: "#FFFFFF" }]}>{cat.name}</Text>
+          </Pressable>
+        ))}
+      </ScrollView>
 
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[styles.content, { paddingBottom: Platform.OS === "web" ? 34 + 84 : insets.bottom + 84 }]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          {planets.map((planet, idx) => (
-            <PlanetRow key={planet.name} planet={planet} colors={colors} isLast={idx === planets.length - 1} />
-          ))}
-        </View>
-
-        <View style={[styles.infoCard, { backgroundColor: colors.muted }]}>
-          <Text style={[styles.infoTitle, { color: colors.foreground }]}>About Vedic Astronomy</Text>
-          <Text style={[styles.infoText, { color: colors.mutedForeground }]}>
-            Planetary positions are calculated in the Sidereal (Nirayana) zodiac using the Lahiri Ayanamsa to correct for the precession of equinoxes. The nine Navagrahas influence auspicious periods, dashas, and life events in Vedic astrology.
-          </Text>
-        </View>
+        {activeCategory === "all" ? (
+          BLOG_CATEGORIES.map(cat => {
+            const articles = BLOG_ARTICLES.filter(a => a.category === cat.name);
+            if (articles.length === 0) return null;
+            return (
+              <View key={cat.name} style={styles.categorySection}>
+                <View style={styles.catHeaderRow}>
+                  <Text style={styles.catEmoji}>{cat.emoji}</Text>
+                  <View>
+                    <Text style={[styles.catName, { color: colors.foreground }]}>{cat.name}</Text>
+                    <Text style={[styles.catDesc, { color: colors.mutedForeground }]}>{cat.description}</Text>
+                  </View>
+                </View>
+                {articles.map(article => (
+                  <ArticleCard key={article.slug} article={article} colors={colors} />
+                ))}
+              </View>
+            );
+          })
+        ) : (
+          filtered.map(article => (
+            <ArticleCard key={article.slug} article={article} colors={colors} />
+          ))
+        )}
       </ScrollView>
     </View>
   );
 }
 
-function PlanetRow({ planet, colors, isLast }: { planet: PlanetPosition; colors: ReturnType<typeof useColors>; isLast: boolean }) {
-  const deg = Math.floor(planet.degInSign);
-  const min = Math.round((planet.degInSign - deg) * 60);
-
+function ArticleCard({ article, colors }: { article: BlogArticle; colors: ReturnType<typeof useColors> }) {
+  const [start, end] = getGradient(article.gradient);
   return (
-    <View style={[styles.planetRow, { borderBottomWidth: isLast ? 0 : StyleSheet.hairlineWidth, borderBottomColor: colors.border }]}>
-      <View style={[styles.symbolContainer, { backgroundColor: colors.secondary }]}>
-        <Text style={[styles.symbol, { color: colors.primary }]}>{planet.symbol}</Text>
-      </View>
-      <View style={styles.planetInfo}>
-        <View style={styles.planetNameRow}>
-          <Text style={[styles.planetName, { color: colors.foreground }]}>{planet.name}</Text>
-          <Text style={[styles.planetNameEn, { color: colors.mutedForeground }]}>{planet.nameEn}</Text>
+    <Pressable
+      style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+      onPress={() => router.push(`/blog/${article.slug}`)}
+    >
+      <LinearGradient colors={[start, end]} style={styles.cardHero}>
+        <Text style={styles.cardEmoji}>{article.emoji}</Text>
+        <View style={styles.cardHeroText}>
+          <Text style={styles.cardCategory}>{article.category}</Text>
+          <Text style={styles.cardTitle}>{article.cardTitle}</Text>
         </View>
-        <Text style={[styles.zodiac, { color: colors.primary }]}>{planet.zodiacSign} ({planet.zodiacEn})</Text>
+      </LinearGradient>
+      <View style={styles.cardBody}>
+        <Text style={[styles.cardExcerpt, { color: colors.mutedForeground }]} numberOfLines={3}>
+          {article.excerpt}
+        </Text>
+        <View style={styles.cardMeta}>
+          <Text style={[styles.cardDate, { color: colors.mutedForeground }]}>{formatDate(article.publishDate)}</Text>
+          <Text style={[styles.cardRead, { color: colors.primary }]}>{article.readTime} min read →</Text>
+        </View>
       </View>
-      <View style={styles.planetRight}>
-        <Text style={[styles.degrees, { color: colors.foreground }]}>{deg}° {min}'</Text>
-        {planet.isRetrograde && (
-          <View style={[styles.retroBadge, { backgroundColor: "#FEE2E2" }]}>
-            <Text style={styles.retroText}>℞</Text>
-          </View>
-        )}
-      </View>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
   header: { paddingHorizontal: 16, paddingBottom: 16 },
-  headerTitle: { fontSize: 22, fontWeight: "700", color: "#FFFFFF", fontFamily: "Inter_700Bold" },
-  headerSub: { fontSize: 13, color: "#C7D2FE", marginTop: 2, fontFamily: "Inter_400Regular" },
+  heroRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+  heroEmoji: { fontSize: 36 },
+  heroTitle: { color: "#FFFFFF", fontSize: 20, fontFamily: "Inter_700Bold" },
+  heroSub: { color: "#C7D2FE", fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 2 },
+  filterScroll: { borderBottomWidth: StyleSheet.hairlineWidth, maxHeight: 52 },
+  filterContent: { flexDirection: "row", paddingHorizontal: 14, paddingVertical: 10, gap: 8 },
+  filterChip: { borderRadius: 20, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 5, flexDirection: "row", alignItems: "center", gap: 4 },
+  filterEmoji: { fontSize: 12 },
+  filterLabel: { fontSize: 12, fontFamily: "Inter_600SemiBold" },
   scroll: { flex: 1 },
-  content: { padding: 16, gap: 12 },
+  content: { padding: 14, gap: 10 },
+  categorySection: { gap: 8 },
+  catHeaderRow: { flexDirection: "row", alignItems: "center", gap: 10, marginTop: 6, marginBottom: 2 },
+  catEmoji: { fontSize: 22 },
+  catName: { fontSize: 15, fontFamily: "Inter_700Bold" },
+  catDesc: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 1 },
   card: { borderRadius: 16, borderWidth: 1, overflow: "hidden" },
-  planetRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 16, paddingVertical: 12, gap: 12 },
-  symbolContainer: { width: 40, height: 40, borderRadius: 10, justifyContent: "center", alignItems: "center" },
-  symbol: { fontSize: 18, fontFamily: "Inter_700Bold" },
-  planetInfo: { flex: 1 },
-  planetNameRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  planetName: { fontSize: 15, fontFamily: "Inter_600SemiBold" },
-  planetNameEn: { fontSize: 12, fontFamily: "Inter_400Regular" },
-  zodiac: { fontSize: 13, fontFamily: "Inter_500Medium", marginTop: 2 },
-  planetRight: { alignItems: "flex-end", gap: 4 },
-  degrees: { fontSize: 14, fontFamily: "Inter_600SemiBold" },
-  retroBadge: { borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
-  retroText: { fontSize: 11, color: "#DC2626", fontFamily: "Inter_700Bold" },
-  infoCard: { borderRadius: 16, padding: 16, gap: 8 },
-  infoTitle: { fontSize: 14, fontFamily: "Inter_700Bold" },
-  infoText: { fontSize: 13, fontFamily: "Inter_400Regular", lineHeight: 20 },
+  cardHero: { flexDirection: "row", alignItems: "center", gap: 12, padding: 14 },
+  cardEmoji: { fontSize: 36 },
+  cardHeroText: { flex: 1 },
+  cardCategory: { color: "rgba(255,255,255,0.7)", fontSize: 10, fontFamily: "Inter_600SemiBold", textTransform: "uppercase", letterSpacing: 0.5 },
+  cardTitle: { color: "#FFFFFF", fontSize: 14, fontFamily: "Inter_700Bold", marginTop: 2, lineHeight: 20 },
+  cardBody: { padding: 12, gap: 8 },
+  cardExcerpt: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18 },
+  cardMeta: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  cardDate: { fontSize: 11, fontFamily: "Inter_400Regular" },
+  cardRead: { fontSize: 12, fontFamily: "Inter_600SemiBold" },
 });
