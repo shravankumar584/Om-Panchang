@@ -125,7 +125,7 @@ function ClassicTabLayout() {
       <Tabs.Screen
         name="planets"
         options={{
-          title: "Planets",
+          title: "Articles",
           tabBarIcon: ({ color }) =>
             isIOS ? (
               <SymbolView name="moon.stars.fill" tintColor={color} size={24} />
@@ -137,7 +137,7 @@ function ClassicTabLayout() {
       <Tabs.Screen
         name="vedic-tools"
         options={{
-          title: "Tools",
+          title: "Planets",
           tabBarIcon: ({ color }) =>
             isIOS ? (
               <SymbolView name="square.grid.2x2.fill" tintColor={color} size={24} />
