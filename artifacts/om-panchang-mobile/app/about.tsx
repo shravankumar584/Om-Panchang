@@ -137,6 +137,10 @@ export default function AboutScreen() {
 
         {/* Footer links */}
         <View style={styles.footerRow}>
+          <Pressable onPress={() => router.push("/blog")}>
+            <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>Blog</Text>
+          </Pressable>
+          <Text style={[styles.footerDot, { color: colors.mutedForeground }]}>·</Text>
           <Pressable onPress={() => router.push("/legal")}>
             <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>Disclaimer</Text>
           </Pressable>

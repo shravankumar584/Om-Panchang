@@ -196,6 +196,14 @@ export default function TodayScreen() {
                 <Text style={[styles.toolName, { color: "#065F46" }]}>Calendar</Text>
                 <Text style={[styles.toolDesc, { color: "#047857" }]}>Month Grid</Text>
               </Pressable>
+              <Pressable
+                style={[styles.toolCard, { backgroundColor: "#F0F9FF", borderColor: "#7DD3FC" }]}
+                onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/blog"); }}
+              >
+                <Text style={styles.toolEmoji}>📖</Text>
+                <Text style={[styles.toolName, { color: "#0C4A6E" }]}>Learn</Text>
+                <Text style={[styles.toolDesc, { color: "#075985" }]}>Articles</Text>
+              </Pressable>
             </View>
           </View>
 
@@ -234,6 +242,10 @@ export default function TodayScreen() {
           </View>
 
           <View style={styles.footerLinks}>
+            <Pressable onPress={() => router.push("/blog")}>
+              <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>Blog</Text>
+            </Pressable>
+            <Text style={[styles.footerDot, { color: colors.mutedForeground }]}>·</Text>
             <Pressable onPress={() => router.push("/about")}>
               <Text style={[styles.footerLink, { color: colors.mutedForeground }]}>About</Text>
             </Pressable>
