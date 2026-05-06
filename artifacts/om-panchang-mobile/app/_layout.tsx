@@ -30,6 +30,8 @@ function RootLayoutNav() {
       <Stack.Screen name="horoscope" options={{ headerShown: false }} />
       <Stack.Screen name="festival/[slug]" options={{ headerShown: false }} />
       <Stack.Screen name="calendar" options={{ headerShown: false }} />
+      <Stack.Screen name="blog/index" options={{ headerShown: false }} />
+      <Stack.Screen name="blog/[slug]" options={{ headerShown: false }} />
       <Stack.Screen name="about" options={{ headerShown: false }} />
       <Stack.Screen name="legal" options={{ headerShown: false }} />
     </Stack>
