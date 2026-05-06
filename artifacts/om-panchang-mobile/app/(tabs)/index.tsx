@@ -57,7 +57,7 @@ export default function TodayScreen() {
       >
         <View style={styles.headerRow}>
           <View style={styles.headerLeft}>
-            <Text style={styles.headerOm}>ॐ</Text>
+            <Text style={[styles.headerOm, { color: colors.accent }]}>ॐ</Text>
             <View>
               <Text style={styles.headerTitle}>Om Panchang</Text>
               <Text style={styles.headerDate}>{formatDate(today)}</Text>
@@ -204,6 +204,34 @@ export default function TodayScreen() {
             <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>Daily Tithi, Nakshatra &amp; Sun timings for {selectedCity.name}</Text>
           </View>
           <MonthCardList city={selectedCity} mode="panchang" />
+
+          <View style={styles.vedicToolsHeader}>
+            <Text style={[styles.monthTitle, { color: colors.primary }]}>VEDIC TOOLS</Text>
+            <Text style={[styles.monthSub, { color: colors.mutedForeground }]}>Quick access to classic calendar tools</Text>
+          </View>
+          <View style={styles.vedicToolsRow}>
+            <Pressable
+              style={[styles.vedicToolPill, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/hora"); }}
+            >
+              <Text style={styles.vedicToolIcon}>⏳</Text>
+              <Text style={[styles.vedicToolText, { color: colors.foreground }]}>Hora</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.vedicToolPill, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/kundali"); }}
+            >
+              <Text style={styles.vedicToolIcon}>🪷</Text>
+              <Text style={[styles.vedicToolText, { color: colors.foreground }]}>Kundali</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.vedicToolPill, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); router.push("/kundali-milan"); }}
+            >
+              <Text style={styles.vedicToolIcon}>💞</Text>
+              <Text style={[styles.vedicToolText, { color: colors.foreground }]}>Milan</Text>
+            </Pressable>
+          </View>
 
           <View style={styles.footerLinks}>
             <Pressable onPress={() => router.push("/about")}>
@@ -547,6 +575,11 @@ const styles = StyleSheet.create({
   monthHeader: { marginTop: 8, marginBottom: 2, gap: 2 },
   monthTitle: { fontSize: 15, fontWeight: "700", fontFamily: "Inter_700Bold", letterSpacing: 1 },
   monthSub: { fontSize: 13, fontFamily: "Inter_400Regular" },
+  vedicToolsHeader: { marginTop: 18, marginBottom: 6, gap: 2 },
+  vedicToolsRow: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
+  vedicToolPill: { flexGrow: 1, flexBasis: "31%", borderWidth: 1, borderRadius: 14, paddingVertical: 12, paddingHorizontal: 10, alignItems: "center" },
+  vedicToolIcon: { fontSize: 18, marginBottom: 4 },
+  vedicToolText: { fontSize: 12, fontFamily: "Inter_600SemiBold" },
   modalContainer: { flex: 1, paddingTop: 20 },
   modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 18, paddingBottom: 14, borderBottomWidth: 1 },
   modalTitle: { fontSize: 20, fontWeight: "700", fontFamily: "Inter_700Bold" },
