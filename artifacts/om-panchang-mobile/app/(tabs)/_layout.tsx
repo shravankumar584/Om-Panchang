@@ -32,6 +32,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "moon.stars", selected: "moon.stars.fill" }} />
         <Label>Planets</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="vedic-tools">
+        <Icon sf={{ default: "square.grid.2x2", selected: "square.grid.2x2.fill" }} />
+        <Label>Tools</Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
@@ -127,6 +131,18 @@ function ClassicTabLayout() {
               <SymbolView name="moon.stars.fill" tintColor={color} size={24} />
             ) : (
               <Feather name="moon" size={22} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="vedic-tools"
+        options={{
+          title: "Tools",
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="square.grid.2x2.fill" tintColor={color} size={24} />
+            ) : (
+              <Feather name="grid" size={22} color={color} />
             ),
         }}
       />
